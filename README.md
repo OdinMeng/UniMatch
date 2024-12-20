@@ -1,4 +1,5 @@
 # FinalDeliveryTemplate
+https://trello.com/b/hf1vaJ2f/capstone-project-to-do-list
 
 This repository serves as a **template** for the final project, providing a pre-structured framework to streamline development. The structure includes placeholders for key modules, assets, and utilities required for a fully functional chatbot integrated with Streamlit and LangChain.
 
