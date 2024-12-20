@@ -1,0 +1,522 @@
+[
+  {
+    "Intention": "order_status",
+    "Message": "Can you provide the status of my order #12345?",
+    "Id": 1
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What is the current status of my order #67890?",
+    "Id": 2
+  },
+  {
+    "Intention": "order_status",
+    "Message": "I\u2019d like to know the delivery date for order #54321.",
+    "Id": 3
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Where is my order #98765 right now?",
+    "Id": 4
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Please update me on the status of order #11223.",
+    "Id": 5
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the expected delivery time for order #44556?",
+    "Id": 6
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you check the status of my order #77889?",
+    "Id": 7
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Is my order #33445 still on track for delivery?",
+    "Id": 8
+  },
+  {
+    "Intention": "order_status",
+    "Message": "When can I expect my order #55667 to arrive?",
+    "Id": 9
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What is the latest update on order #88990?",
+    "Id": 10
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you tell me the location of my order #22334?",
+    "Id": 11
+  },
+  {
+    "Intention": "order_status",
+    "Message": "I need the status of my order #66778, please.",
+    "Id": 12
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Has my order #99887 shipped yet?",
+    "Id": 13
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s happening with my order #44567?",
+    "Id": 14
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you confirm the delivery date for order #12321?",
+    "Id": 15
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Where is my package for order #76543?",
+    "Id": 16
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Please let me know the status of order #87654.",
+    "Id": 17
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the current status of my order #23456?",
+    "Id": 18
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you provide an update on order #34567?",
+    "Id": 19
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Is order #45678 out for delivery?",
+    "Id": 20
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the tracking status for my order #56789?",
+    "Id": 21
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you check if order #67890 has been dispatched?",
+    "Id": 22
+  },
+  {
+    "Intention": "order_status",
+    "Message": "When should I expect my order #78901 to arrive?",
+    "Id": 23
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the status of my order #89012?",
+    "Id": 24
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you tell me if order #90123 is delayed?",
+    "Id": 25
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the delivery status for order #12345?",
+    "Id": 26
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you give me an update on order #23456?",
+    "Id": 27
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Where is my order #34567 currently located?",
+    "Id": 28
+  },
+  {
+    "Intention": "order_status",
+    "Message": "What\u2019s the expected arrival time for order #45678?",
+    "Id": 29
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Can you provide the current status of my order #56789?",
+    "Id": 30
+  },
+  {
+    "Intention": "order_status",
+    "Message": "Is there any update on my order #67890?",
+    "Id": 31
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to place an order for this product.",
+    "Id": 32
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you help me order it?",
+    "Id": 33
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I'd like to finalize my order for the gadget.",
+    "Id": 34
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please proceed with ordering this item.",
+    "Id": 35
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019m ready to order the product I selected.",
+    "Id": 36
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Let\u2019s go ahead and place an order for it.",
+    "Id": 37
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019d like to order this product now.",
+    "Id": 38
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you confirm my order for this item?",
+    "Id": 39
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to complete my order for the gadget.",
+    "Id": 40
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please help me order this product.",
+    "Id": 41
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019m looking to place an order for it.",
+    "Id": 42
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you assist me in ordering this item?",
+    "Id": 43
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019d like to go ahead and order it.",
+    "Id": 44
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please process my order for this product.",
+    "Id": 45
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to finalize my order for it.",
+    "Id": 46
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you help me with ordering this gadget?",
+    "Id": 47
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019m ready to place an order for the item.",
+    "Id": 48
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Let\u2019s finalize the order for this product.",
+    "Id": 49
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to order this gadget right now.",
+    "Id": 50
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please help me finalize my order for it.",
+    "Id": 51
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019d like to place an order for this item.",
+    "Id": 52
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you assist me in placing an order for it?",
+    "Id": 53
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to go ahead and order this product.",
+    "Id": 54
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please proceed with my order for the gadget.",
+    "Id": 55
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019m ready to order this item now.",
+    "Id": 56
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you help me complete my order for it?",
+    "Id": 57
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019d like to finalize my order for this gadget.",
+    "Id": 58
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please help me place an order for this product.",
+    "Id": 59
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I want to order it as soon as possible.",
+    "Id": 60
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Can you assist me in ordering this product?",
+    "Id": 61
+  },
+  {
+    "Intention": "create_order",
+    "Message": "I\u2019d like to go ahead and finalize my order.",
+    "Id": 62
+  },
+  {
+    "Intention": "create_order",
+    "Message": "Please process my order for this item.",
+    "Id": 63
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you tell me the features of the latest iPhone?",
+    "Id": 64
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What are the specifications of the Samsung Galaxy S21?",
+    "Id": 65
+  },
+  {
+    "Intention": "product_information",
+    "Message": "How much does the MacBook Air cost?",
+    "Id": 66
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Is there a warranty for this product?",
+    "Id": 67
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the model number of the Sony WH-1000XM4?",
+    "Id": 68
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you provide a description of the Google Nest Hub?",
+    "Id": 69
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What colors are available for the Dell XPS 13?",
+    "Id": 70
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Does the Fitbit Charge 5 have GPS?",
+    "Id": 71
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the battery life of the Nintendo Switch?",
+    "Id": 72
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Are there any discounts on the Bose SoundLink?",
+    "Id": 73
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the weight of the HP Spectre x360?",
+    "Id": 74
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you give me the dimensions of the LG OLED TV?",
+    "Id": 75
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What brand is the product I'm looking at?",
+    "Id": 76
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Is this product compatible with Android devices?",
+    "Id": 77
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What type of charger does the OnePlus 9 use?",
+    "Id": 78
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you tell me about the camera features of the Pixel 6?",
+    "Id": 79
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the storage capacity of the iPad Pro?",
+    "Id": 80
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Are there any reviews for the ASUS ROG Zephyrus?",
+    "Id": 81
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the refresh rate of the Samsung Odyssey G7?",
+    "Id": 82
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you explain the smart features of the Philips Hue lights?",
+    "Id": 83
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the price range for wireless earbuds?",
+    "Id": 84
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Does the Apple Watch Series 7 have cellular options?",
+    "Id": 85
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What are the main features of the GoPro Hero 10?",
+    "Id": 86
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you tell me about the sound quality of the JBL Flip 5?",
+    "Id": 87
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the release date for the new Xbox console?",
+    "Id": 88
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Is there a return policy for this product?",
+    "Id": 89
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What accessories are included with the Canon EOS R?",
+    "Id": 90
+  },
+  {
+    "Intention": "product_information",
+    "Message": "Can you provide information on the warranty for the Surface Pro?",
+    "Id": 91
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What is the difference between the iPhone 13 and 14?",
+    "Id": 92
+  },
+  {
+    "Intention": "product_information",
+    "Message": "How does the battery compare between the Galaxy Note 20 and 21?",
+    "Id": 93
+  },
+  {
+    "Intention": "product_information",
+    "Message": "What are the best features of the Razer Blade 15?",
+    "Id": 94
+  },
+  {
+    "Intention": "None",
+    "Message": "What's your favorite way to spend a weekend?",
+    "Id": 95
+  },
+  {
+    "Intention": "None",
+    "Message": "I just finished a great book, any recommendations?",
+    "Id": 96
+  },
+  {
+    "Intention": "None",
+    "Message": "Do you think pineapple belongs on pizza?",
+    "Id": 97
+  },
+  {
+    "Intention": "None",
+    "Message": "I love rainy days; they make me feel cozy.",
+    "Id": 98
+  },
+  {
+    "Intention": "None",
+    "Message": "Have you ever tried meditating? It\u2019s quite relaxing.",
+    "Id": 99
+  },
+  {
+    "Intention": "None",
+    "Message": "What\u2019s the most interesting place you\u2019ve ever visited?",
+    "Id": 100
+  },
+  {
+    "Intention": "None",
+    "Message": "I enjoy cooking; do you have a favorite recipe?",
+    "Id": 101
+  },
+  {
+    "Intention": "None",
+    "Message": "What\u2019s your opinion on the latest movie trends?",
+    "Id": 102
+  },
+  {
+    "Intention": "None",
+    "Message": "I\u2019ve been thinking about starting a new hobby.",
+    "Id": 103
+  },
+  {
+    "Intention": "None",
+    "Message": "How do you usually celebrate your birthday?",
+    "Id": 104
+  }
+]
