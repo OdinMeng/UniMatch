@@ -4,10 +4,10 @@ from typing import Callable, Dict, Optional
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI
 
-from company_name.chatbot.agents.agent1 import Agent1
-from company_name.chatbot.chains.chain3 import ReasoningChain3, ResponseChain3
-from company_name.chatbot.memory import MemoryManager
-from company_name.chatbot.router.loader import load_intention_classifier
+from UniMatch.chatbot.agents.agent1 import Agent1
+from UniMatch.chatbot.chains.chain3 import ReasoningChain3, ResponseChain3
+from UniMatch.chatbot.memory import MemoryManager
+from UniMatch.chatbot.router.loader import load_intention_classifier
 
 
 class MainChatbot:

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "Areas" (
 
 CREATE TABLE IF NOT EXISTS "Users" (
   "IDUser" INTEGER PRIMARY KEY,
-  "Name" TEXT,
+  "Username" TEXT UNIQUE,
   "Age" INTEGER,
   "Password" TEXT,
   "CountryCode" TEXT,
