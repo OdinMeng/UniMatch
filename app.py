@@ -4,7 +4,7 @@ This file should be the entrypoint of your Streamlit App.
 
 from dotenv import load_dotenv  # Import dotenv to load environment variables
 
-from company_name import MainChatbot  # Import the chatbot class
+from UniMatch import MainChatbot  # Import the chatbot class
 
 
 def main(bot: MainChatbot):

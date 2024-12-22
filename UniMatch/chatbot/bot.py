@@ -4,8 +4,9 @@ from typing import Callable, Dict, Optional
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI
 
-from UniMatch.chatbot.agents.agent1 import Agent1
-from UniMatch.chatbot.chains.chain3 import ReasoningChain3, ResponseChain3
+# from UniMatch.chatbot.agents.agent1 import Agent1
+from UniMatch.chatbot.chains.controlchain import ControlChain, DiscourageUserChain
+
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
 
@@ -23,36 +24,36 @@ class MainChatbot:
         # Configure the language model with specific parameters for response generation
         self.llm = ChatOpenAI(temperature=0.0, model="gpt-4o-mini")
 
+        # Import filter classifier
+        self.filter = ControlChain(llm = self.llm)
+        self.discourager = DiscourageUserChain(llm = self.llm)
+
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
-            "product_information": {
-                "reasoning": ReasoningChain3(llm=self.llm),  # Reasoning chain
-                "response": self.add_memory_to_runnable(
-                    ResponseChain3(llm=self.llm)  # Response chain with memory
-                ),
-            }
         }
 
-        self.agent_map = {
-            "order": self.add_memory_to_runnable(Agent1(llm=self.llm).agent_executor)
-        }
+        # self.agent_map = {
+        #     "order": self.add_memory_to_runnable(Agent1(llm=self.llm).agent_executor)
+        # }
 
-        self.rag = self.add_memory_to_runnable(
-            RAGPipeline(
-                index_name="rag",
-                embeddings_model="text-embedding-3-small",
-                llm=self.llm,
-                memory=True,
-            ).rag_chain
-        )
+        # self.rag = self.add_memory_to_runnable(
+        #    RAGPipeline(
+        #        index_name="rag",
+        #        embeddings_model="text-embedding-3-small",
+        #        llm=self.llm,
+        #        memory=True,
+        #   ).rag_chain
+        #)
 
         # Map of intentions to their corresponding handlers
+        """
         self.intent_handlers: Dict[Optional[str], Callable[[Dict[str, str]], str]] = {
             "product_information": self.handle_product_information,
             "create_order": self.handle_order_intent,
             "order_status": self.handle_order_intent,
             "support_information": self.handle_support_information,
         }
+        """
 
         # Load the intention classifier to determine user intents
         self.intention_classifier = load_intention_classifier()
@@ -149,6 +150,7 @@ class MainChatbot:
             )
             return None
 
+    '''
     def handle_product_information(self, user_input: Dict):
         """Handle the product information intent by processing user input and providing a response.
 
@@ -167,36 +169,15 @@ class MainChatbot:
         # Generate a response using the output of the reasoning chain
         response = response_chain.invoke(reasoning_output, config=self.memory_config)
 
-        return response.content
-
-    def handle_order_intent(self, user_input: Dict):
-        """Handle the order intent by processing user input and providing a response.
-
-        Args:
-            user_input: The input text from the user.
-
-        Returns:
-            The content of the response after processing through the chains.
-        """
-        # Retrieve the agent for the order intent
-        agent = self.get_agent("order")
-
-        # Process user input through the agent
-        response = agent.invoke(
-            {
-                "customer_id": self.user_id,
-                "customer_input": user_input["customer_input"],
-            },
-            config=self.memory_config,
-        )
-
-        return response["output"]
+        return response.content    
+    '''
 
     def handle_unknown_intent(self, user_input: Dict[str, str]) -> str:
         """Handle unknown intents by providing a chitchat response.
 
         Args:
             user_input: The input text from the user.
+        
 
         Returns:
             The content of the response after processing through the new chain.
@@ -245,6 +226,16 @@ class MainChatbot:
         Returns:
             The content of the response after processing through the chains.
         """
+        # Filter harmful messages
+        process_filter = self.filter.invoke(user_input)
+        is_harmful = process_filter.is_harmful
+        
+        # If harmful
+        if is_harmful:
+            return self.discourager.invoke(user_input).content
+        
+        # If NOT harmful
+        return 'Request accepted'
         # Classify the user's intent based on their input
         intention = self.get_user_intent(user_input)
 

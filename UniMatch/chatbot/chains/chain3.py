@@ -7,8 +7,8 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 from pydantic import BaseModel, Field
 
-from company_name.chatbot.chains.base import PromptTemplate, generate_prompt_templates
-from company_name.data.loader import load_database_file
+from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
+from UniMatch.data.loader import load_database_file
 
 # Define the product database as a dictionary with product categories
 PRODUCT_DATABASE = {

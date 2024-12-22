@@ -6,7 +6,7 @@ from langchain.schema.runnable.base import Runnable
 from langchain_community.utilities.sql_database import SQLDatabase
 from pydantic import BaseModel
 
-from company_name.chatbot.chains.base import PromptTemplate, generate_prompt_templates
+from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 
 class OrderInformation(BaseModel):
