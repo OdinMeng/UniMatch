@@ -72,18 +72,36 @@ The chatbot should retrieve and present information about the specific product o
   Describe how you generated messages for each user intention. Did you create the messages manually, use synthetic data, or leverage a dataset? Specify the method used and tools/scripts for generating the data.  
   Where are the generated messages stored (e.g., in a file, database, or another format)?
 
+For each intention we synthetically generated 50 messages, through LLMs (see the script `UniMatch/chatbot/router/generate_intentions.ipynb`), with an additional of 25 irrelevant messages.
+
 ### 5.2 Semantic Router Training
+- **Encoder Type**
+We had mainly two choices for our router, regarding the encoder. Either we could have used an encoder from HuggingFace, or from OpenAI. To determine which one was the best for our intentions, we decided to train two baseline semantic routers and evaluated their accuracy scores accordingly; the one which showed the least signs of overfitting was picked for hyperparamter tuning.
 
-- **Hyperparameters**:  
-  Report which encoder was used in the semantic router.  
-  Report the aggregation method and the `top_k` parameter used for selecting the most relevant results.
+Output: OpenAI encoder had an 0.87 of accuracy on train and 0.93 on validation, while HuggingFace encoder had 0.77 on train and 0.85 on validation.
 
-### 5.3 Post-Processing for Accuracy Improvement
+Therefore, we picked the OpenAI encoder as it showed the best results. Let us note that the fact that the validation score is higher than the accuracy score; this might suggest a mild risk of underfitting.
 
-- **Post-Processing Techniques**:  
-  If you applied any post-processing techniques to enhance the router's accuracy, describe them here.  
-  For example, did you use a Large Language Model (LLM) for additional refinement?  
-  Explain how these techniques were integrated into the pipeline and any custom code or algorithms used.
+- **Other Hyperparameters: Aggregation method and Top K**
+To decide on the aggregation method, we decided to test each one of them and chose the one with the best result, as done similarly with encoders.
+
+**Results** (tabular format):
+| Aggregate | Train | Validate |
+| --------- | ----- | -------- |
+| mean      | 0,89  | 0,98     |
+| max       | 0,90  | 0,98     |
+| sum       | 0,88  | 0,93     |
+
+We choose `aggregation=max` as it had the best train and evaluation score.
+
+Then to decide the `top_k` parameter, we decided to do the same as above with the following candidates of `top_k`: k=2 (low), k=5 (average), k=10 (high).
+
+**Results**: No variations in scores, meaning that in our case `top_k` is not influential. Therefore chose k=5, as it is the midpoint.
+
+**Note**: A better alternative to this approach would have to use a GridSearchCV-similar approach; however as this is deemed to be too computationally expensive, we opted for an "evolutionary" approach.
+
+For further details about the evaluation see the notebook at `UniMatch/chatbot/router/train_evaluate_router.ipynb`.
+
 
 ---
 
@@ -109,19 +127,21 @@ The chatbot should retrieve and present information about the specific product o
    - If applicable, apply post-processing using an LLM to improve the accuracy of the router. Report accuracy on both the training and testing splits after post-processing.
 
 5. **Reporting Results**:
+
    - Report the accuracy for each intention, as well as the overall accuracy. Accuracy should be calculated as the percentage of correct responses out of the total inputs for each intention.
 
 ### Results
 
-Present the accuracy results in a table format:
+As we fine-tuned our layer, we evaluated it with the test data:
 
-| Intention            | Test Inputs | Correct | Incorrect | Accuracy (%) |
-| -------------------- | ----------- | ------- | --------- | ------------ |
-| Product Information  | 10          | 9       | 1         | 90%          |
-| Order Status         | 10          | 8       | 2         | 80%          |
-| Create Order         | 10          | 7       | 3         | 70%          |
-| **Average Accuracy** | 30          | 24      | 6         | 80%          |
-
-```
-
-```
+| Intention                                      | Total | Misclassified | Accuracy |
+| ---------------------------------------------- | ----- | ------------- | -------- |
+| Manage Personal Information                    | 5     | 0             | 100,00%  |
+| Search Scholarships and Internationals         | 6     | 0             | 100,00%  |
+| Search Universities                            | 5     | 0             | 100,00%  |
+| Find Matches                                   | 5     | 0             | 100,00%  |
+| Query Previous Matches                         | 6     | 0             | 100,00%  |
+| Extract Information from External Text Sources | 5     | 0             | 100,00%  |
+| Get Information about Company                  | 6     | 0             | 100,00%  |
+| Chitchat                                       | 3     | 1             | 66,67%   |
+| Total                                          | 41    | 1             | 97,56%   |
