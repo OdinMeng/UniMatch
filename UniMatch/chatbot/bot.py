@@ -12,7 +12,8 @@ from UniMatch.chatbot.router.loader import load_intention_classifier
 
 
 class MainChatbot:
-    """A bot that handles customer service interactions by processing user inputs and
+    """
+    A bot that handles customer service interactions by processing user inputs and
     routing them through configured reasoning and response chains.
     """
 
@@ -230,12 +231,16 @@ class MainChatbot:
         process_filter = self.filter.invoke(user_input)
         is_harmful = process_filter.is_harmful
         
-        # If harmful
-        if is_harmful:
-            return self.discourager.invoke(user_input).content
-        
-        # If NOT harmful
-        return 'Request accepted'
+        # ================== Process Message Router ==================================|
+        # If harmful                                                                  |
+        if is_harmful:                                                               #|
+            return self.discourager.invoke(user_input).content                       #|
+                                                                                     #|
+        # If NOT harmful                                                             #|
+        return 'Request accepted' # remove once intention classifier is implemented  #I
+    
+        # ================== Main Router =============================================
+    
         # Classify the user's intent based on their input
         intention = self.get_user_intent(user_input)
 

@@ -46,9 +46,11 @@ class DiscourageUserChain(Runnable):
 
         prompt_template = PromptTemplate(
             system_template='''
-            You have just caught an user doing malicious requests or attempting prompt injections.
+            You are a security personnel of UniMatch, who has just caught an user doing malicious requests or attempting prompt injections.
 
             Please write a short sentence (maximum 15 words) which discourages the user from further continuing the attempt.
+
+            Use a mean language to discourage the user, if the attempted action was extreme.
             ''',
             human_template="User's Message: {caught}"
         )

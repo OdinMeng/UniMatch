@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS "Users" (
   "CountryCode" TEXT,
   "EducationLevel" INTEGER,
   "MainArea" INTEGER,
-  FOREIGN KEY("MainArea") REFERENCES "AREAS"("IDArea")
+  FOREIGN KEY("MainArea") REFERENCES "AREAS"("IDArea"),
+  FOREIGN KEY("CountryCode") REFERENCES "COUNTRIES"("CountryCode")
 );
 
 CREATE INDEX "ix_Users_IDUser"ON "Users" ("IDUser");
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS "Universities" (
   "IDUniversity" INTEGER PRIMARY KEY,
   "CountryCode" TEXT,
   "UniversityName" TEXT,
-  "MainWebsite" TEXT
+  "MainWebsite" TEXT,
+  FOREIGN KEY("CountryCode") REFERENCES "COUNTRIES"("CountryCode")
 );
 
 CREATE INDEX "ix_Universities_IDUniversity"ON "Universities" (IDUniversity);
@@ -96,4 +98,9 @@ CREATE TABLE IF NOT EXISTS "Requisites" (
   "Requisite" TEXT,
   FOREIGN KEY("IDCourse") REFERENCES "Courses" ("IDCourse"),
   FOREIGN KEY("IDScholarship") REFERENCES "Scholarships" ("IDScholarship")
+);
+
+CREATE TABLE IF NOT EXISTS "Countries" (
+  "CountryCode" TEXT PRIMARY KEY,
+  "Country" TEXT 
 );
