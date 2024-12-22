@@ -6,6 +6,7 @@ from langchain_openai import ChatOpenAI
 
 # from UniMatch.chatbot.agents.agent1 import Agent1
 from UniMatch.chatbot.chains.controlchain import ControlChain, DiscourageUserChain
+from UniMatch.chatbot.chains.conversationchain import ConversationChain
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -28,6 +29,7 @@ class MainChatbot:
         # Import filter classifier
         self.filter = ControlChain(llm = self.llm)
         self.discourager = DiscourageUserChain(llm = self.llm)
+        self.chitchatter = ConversationChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -47,14 +49,16 @@ class MainChatbot:
         #)
 
         # Map of intentions to their corresponding handlers
-        """
         self.intent_handlers: Dict[Optional[str], Callable[[Dict[str, str]], str]] = {
-            "product_information": self.handle_product_information,
-            "create_order": self.handle_order_intent,
-            "order_status": self.handle_order_intent,
-            "support_information": self.handle_support_information,
+            "manage_personal_info": self.handle_personal_info, 
+            "search_scholarships_and_internationals": self.handle_search_scholarships_and_internationals,
+            "search_universities": self.handle_search_universities_and_courses , 
+            "matchmaking": self.handle_matchmaking, 
+            "query_matches": self.handle_query_matches, 
+            "leverage_rag": self.handle_rag, 
+            "company_info": self.handle_company_info,
+            None: self.handle_unknown_intent
         }
-        """
 
         # Load the intention classifier to determine user intents
         self.intention_classifier = load_intention_classifier()
@@ -173,6 +177,27 @@ class MainChatbot:
         return response.content    
     '''
 
+    def handle_personal_info(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+    
+    def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
+    def handle_search_universities_and_courses(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
+    def handle_matchmaking(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
+    def handle_query_matches(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
+    def handle_rag(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
+    def handle_company_info(self, user_input: Dict[str, str]) -> str:
+        return('Not Implemented')
+
     def handle_unknown_intent(self, user_input: Dict[str, str]) -> str:
         """Handle unknown intents by providing a chitchat response.
 
@@ -183,36 +208,23 @@ class MainChatbot:
         Returns:
             The content of the response after processing through the new chain.
         """
-        possible_intention = [
-            "Product Information",
-            "Create Order",
-            "Order Status",
-            "Support Information",
-            "Chitchat",
-        ]
-
-        chitchat_reasoning_chain, _ = self.get_chain("chitchat")
+        chitchat_reasoning_chain = self.chitchatter
 
         input_message = {}
 
         input_message["customer_input"] = user_input["customer_input"]
-        input_message["possible_intentions"] = possible_intention
         input_message["chat_history"] = self.memory.get_session_history(
             self.user_id, self.conversation_id
-        )
+        ).messages
 
-        reasoning_output1 = chitchat_reasoning_chain.invoke(input_message)
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
 
-        if reasoning_output1.chitchat:
-            print("Chitchat")
-            return self.handle_chitchat_intent(user_input)
-        else:
-            router_reasoning_chain2, _ = self.get_chain("router")
-            reasoning_output2 = router_reasoning_chain2.invoke(input_message)
-            new_intention = reasoning_output2.intent
-            print("New Intention:", new_intention)
-            new_handler = self.intent_handlers.get(new_intention)
-            return new_handler(user_input)
+        chitchat_output = chitchat_reasoning_chain.invoke(input_message)
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(chitchat_output.content)
+
+        return chitchat_output.content
 
     def save_memory(self) -> None:
         """Save the current memory state of the bot."""
@@ -237,9 +249,7 @@ class MainChatbot:
             return self.discourager.invoke(user_input).content                       #|
                                                                                      #|
         # If NOT harmful                                                             #|
-        return 'Request accepted' # remove once intention classifier is implemented  #I
-    
-        # ================== Main Router =============================================
+        # ================== Main Router =============================================|
     
         # Classify the user's intent based on their input
         intention = self.get_user_intent(user_input)
@@ -247,5 +257,5 @@ class MainChatbot:
         print("Intent:", intention)
 
         # Route the input based on the identified intention
-        handler = self.intent_handlers.get(intention, self.handle_unknown_intent)
+        handler = self.intent_handlers[intention]
         return handler(user_input)
