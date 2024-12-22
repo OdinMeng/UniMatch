@@ -1,461 +1,296 @@
 [
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "I want to change my username to TechGuru123.",
         "Id": 1
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Update my password to SecurePass!2023.",
         "Id": 2
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Please change my country to Canada.",
         "Id": 3
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "I need to update my age to 28.",
         "Id": 4
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Set my education level to master's.",
         "Id": 5
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Remove my preference for Stanford University.",
         "Id": 6
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Add Harvard University to my preferences.",
         "Id": 7
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Change my username to GadgetFanatic.",
         "Id": 8
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Update my password to NewPassword2023.",
         "Id": 9
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "I want to change my country to Australia.",
         "Id": 10
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "My age should be updated to 30.",
         "Id": 11
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Set my education level to bachelor's.",
         "Id": 12
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Add MIT to my list of preferred universities.",
         "Id": 13
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Modify my username to DigitalNerd.",
         "Id": 14
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Change my password to MyNewPass123.",
         "Id": 15
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Update my country to Germany.",
         "Id": 16
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "I want to change my age to 25.",
         "Id": 17
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Set my education level to high school.",
         "Id": 18
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Remove my preference for Yale University.",
         "Id": 19
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Add University of California to my preferences.",
         "Id": 20
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Change my username to TechExplorer.",
         "Id": 21
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Update my password to StrongPass!2023.",
         "Id": 22
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "I want to change my country to Japan.",
         "Id": 23
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "My age should be updated to 22.",
         "Id": 24
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Set my education level to associate's.",
         "Id": 25
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Add Oxford University to my preferences.",
         "Id": 26
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Modify my username to GadgetGeek.",
         "Id": 27
     },
     {
-        "Intention": "Manage Personal Information",
+        "Intention": "manage_personal_info",
         "Message": "Change my password to MySecurePass!",
         "Id": 28
     },
     {
-        "Intention": "query_unimatch",
-        "Message": "Can you provide details about Harvard University?",
-        "Id": 29
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What scholarships are available for international students?",
-        "Id": 30
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Tell me about the University of California's programs.",
-        "Id": 31
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What are the requirements for the Fulbright Scholarship?",
-        "Id": 32
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Where is Stanford University located?",
-        "Id": 33
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What areas of study does MIT offer?",
-        "Id": 34
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you give me an overview of Yale University?",
-        "Id": 35
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What scholarships are offered for graduate studies?",
-        "Id": 36
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "How do I apply for the Rhodes Scholarship?",
-        "Id": 37
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the admission process for Oxford University?",
-        "Id": 38
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What are the top universities in Europe?",
-        "Id": 39
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you list the scholarships for STEM students?",
-        "Id": 40
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the campus size of the University of Chicago?",
-        "Id": 41
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What areas does the Gates Scholarship cover?",
-        "Id": 42
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Tell me about the University of Toronto's admission criteria.",
-        "Id": 43
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What scholarships are available for underprivileged students?",
-        "Id": 44
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the ranking of the University of Melbourne?",
-        "Id": 45
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you provide information on the Chevening Scholarship?",
-        "Id": 46
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What programs does the University of Tokyo offer?",
-        "Id": 47
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What are the eligibility requirements for the DAAD Scholarship?",
-        "Id": 48
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Where can I find information about community colleges?",
-        "Id": 49
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the application deadline for the Marshall Scholarship?",
-        "Id": 50
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you tell me about the University of Sydney's courses?",
-        "Id": 51
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What areas of research does Harvard focus on?",
-        "Id": 52
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What scholarships are available for art students?",
-        "Id": 53
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the history of the University of Cambridge?",
-        "Id": 54
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you provide details on the Erasmus+ program?",
-        "Id": 55
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What are the benefits of studying at the University of Edinburgh?",
-        "Id": 56
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What scholarships are available for online courses?",
-        "Id": 57
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What is the process for transferring to a university?",
-        "Id": 58
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "Can you give me an overview of the University of Michigan?",
-        "Id": 59
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What areas does the National Science Foundation support?",
-        "Id": 60
-    },
-    {
-        "Intention": "query_unimatch",
-        "Message": "What are the top scholarships for high school students?",
-        "Id": 61
-    },
-    {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you match me with universities offering computer science programs?",
         "Id": 62
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I need matches for universities.",
         "Id": 63
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Please find universities that offer scholarships for international students.",
         "Id": 64
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "What universities have good business administration programs?",
         "Id": 65
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Show me matches for universities.",
         "Id": 66
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I\u2019m looking for universities with a focus on environmental science.",
         "Id": 67
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you help me find universities with a good reputation in arts?",
         "Id": 68
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Match me with universities that have a strong alumni network.",
         "Id": 69
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I want to see universities that offer dual degree programs.",
         "Id": 70
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Find universities that provide research opportunities in my field.",
         "Id": 71
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "What are the best matches for universities with affordable tuition?",
         "Id": 72
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Please list universities that have a vibrant campus life.",
         "Id": 73
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I need matches for universities with strong internship programs.",
         "Id": 74
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you find universities that offer part-time study options?",
         "Id": 75
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Show me universities that specialize in data science.",
         "Id": 76
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I\u2019m interested in universities with a focus on healthcare programs.",
         "Id": 77
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Match me with universities that have a good student-to-faculty ratio.",
         "Id": 78
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "What universities offer programs in artificial intelligence?",
         "Id": 79
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Find universities that provide financial aid for graduate students.",
         "Id": 80
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I want to see matches for universities with a strong focus on research.",
         "Id": 81
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you help me find universities with a good reputation in law?",
         "Id": 82
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Please match me with universities that have a strong engineering faculty.",
         "Id": 83
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "What are the best matches for universities with study abroad programs?",
         "Id": 84
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I need to find universities that offer flexible course schedules.",
         "Id": 85
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Show me universities that have a strong focus on entrepreneurship.",
         "Id": 86
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you find universities with a good selection of electives?",
         "Id": 87
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Match me with universities that have a strong focus on technology.",
         "Id": 88
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "I\u2019m looking for universities that offer mentorship programs.",
         "Id": 89
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "What universities have a good reputation for their humanities programs?",
         "Id": 90
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Please find universities that offer online degrees in business.",
         "Id": 91
     },
     {
-        "Intention": "Matchmaking",
+        "Intention": "matchmaking",
         "Message": "Can you help me find universities with a strong focus on STEM?",
         "Id": 92
     },
@@ -988,5 +823,330 @@
         "Intention": "None",
         "Message": "I recently started a new hobby, it's been so much fun!",
         "Id": 198
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What universities offer computer science programs?",
+        "Id": 199
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you list universities in California?",
+        "Id": 200
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "I'm looking for universities with strong engineering courses.",
+        "Id": 201
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the admission requirements for Harvard University?",
+        "Id": 202
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Which universities have the best business programs?",
+        "Id": 203
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Are there any universities that specialize in robotics?",
+        "Id": 204
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What courses does Stanford University offer?",
+        "Id": 205
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you provide information on universities in Europe?",
+        "Id": 206
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the top-ranked universities for medicine?",
+        "Id": 207
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "How do I apply to universities in Australia?",
+        "Id": 208
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What subjects are available at MIT?",
+        "Id": 209
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you tell me about universities with online degrees?",
+        "Id": 210
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What is the location of Yale University?",
+        "Id": 211
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Which universities offer scholarships for international students?",
+        "Id": 212
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the best universities for arts and humanities?",
+        "Id": 213
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you find universities that offer part-time courses?",
+        "Id": 214
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the tuition fees for universities in Canada?",
+        "Id": 215
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Are there any universities with a focus on environmental science?",
+        "Id": 216
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What programs does the University of Tokyo offer?",
+        "Id": 217
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you list universities that have strong research facilities?",
+        "Id": 218
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the requirements for studying abroad at a university?",
+        "Id": 219
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Which universities have the best campus facilities?",
+        "Id": 220
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What is the application deadline for Oxford University?",
+        "Id": 221
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you provide a list of universities in the UK?",
+        "Id": 222
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the most popular courses at UCLA?",
+        "Id": 223
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Are there universities that offer dual degree programs?",
+        "Id": 224
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What is the ranking of universities in Asia?",
+        "Id": 225
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you tell me about universities that focus on technology?",
+        "Id": 226
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the specific subjects offered at Cambridge University?",
+        "Id": 227
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Which universities have strong alumni networks?",
+        "Id": 228
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "What are the best universities for studying law?",
+        "Id": 229
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you find universities that offer internships as part of their programs?",
+        "Id": 230
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What scholarships are available for international students?",
+        "Id": 231
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you provide information on Erasmus+ opportunities?",
+        "Id": 232
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How do I apply for scholarships abroad?",
+        "Id": 233
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the eligibility requirements for international scholarships?",
+        "Id": 234
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "List some scholarships for studying in Europe.",
+        "Id": 235
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Are there any scholarships for tech students?",
+        "Id": 236
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What international scholarships can I apply for this year?",
+        "Id": 237
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Tell me about scholarships for graduate programs.",
+        "Id": 238
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the deadlines for international scholarship applications?",
+        "Id": 239
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you help me find scholarships for studying in the USA?",
+        "Id": 240
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What documents do I need for scholarship applications?",
+        "Id": 241
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Are there scholarships specifically for STEM fields?",
+        "Id": 242
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How can I find scholarships for online courses?",
+        "Id": 243
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the best resources for finding international scholarships?",
+        "Id": 244
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you explain the Erasmus+ program?",
+        "Id": 245
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What scholarships are available for undergraduates?",
+        "Id": 246
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How do I search for scholarships in Canada?",
+        "Id": 247
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the benefits of applying for international scholarships?",
+        "Id": 248
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you provide a list of scholarships for Asian students?",
+        "Id": 249
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What is the process for applying to Erasmus+?",
+        "Id": 250
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Are there any scholarships for students from developing countries?",
+        "Id": 251
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What types of scholarships are available for high school students?",
+        "Id": 252
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you help me find funding for my study abroad program?",
+        "Id": 253
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the most popular scholarships for international students?",
+        "Id": 254
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How do I find scholarships for specific universities?",
+        "Id": 255
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What scholarships are available for master's programs?",
+        "Id": 256
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you tell me about scholarships for art students?",
+        "Id": 257
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What international scholarships are available for 2024?",
+        "Id": 258
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How can I increase my chances of getting a scholarship?",
+        "Id": 259
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What are the common mistakes in scholarship applications?",
+        "Id": 260
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you provide tips for applying for international scholarships?",
+        "Id": 261
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "What scholarships are available for students studying abroad?",
+        "Id": 262
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "How do I find scholarships for specific fields of study?",
+        "Id": 263
     }
 ]
