@@ -13,3 +13,12 @@ def get_sqlite_database_path():
     """
     db_path = os.path.join(BASE_DIR, "database", "unimatch.db")
     return db_path
+
+def get_pdfs_folder():
+    pdfs_path = os.path.join(BASE_DIR, "pdf")
+    return pdfs_path
+
+def get_user_pdfs_folder():
+    pdfs_path = os.path.join(BASE_DIR, "user_files")
+    return pdfs_path
+
