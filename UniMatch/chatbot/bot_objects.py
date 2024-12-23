@@ -1,18 +1,19 @@
-class UniInfo:
+from typing import List, Dict, Optional
+from pydantic import BaseModel
+
+class UniInfo(BaseModel):
     """
     Represents information about a university or course, including its opportunities.
     """
-    def __init__(self, name, location, courses, subjects, scholarships, requisites, areas):
-        self.name = name
-        self.location = location 
-        self.courses = courses
-        self.subjects = subjects 
-        self.scholarships = scholarships
-        self.requisites = requisites 
-        self.areas = areas 
+    name: str
+    location: str
+    courses: Optional[List[str]]
+    subjects: Optional[Dict[str, list[str]]]
+    scholarships: Optional[Dict[str, str]]  # e.g., {course_name: scholarship_info}
+    requisites: Optional[Dict[str, str]]    # e.g., {course_name: requisite_info}
+    areas: Optional[List[str]]
 
-
-    def __str__(self):
+    def __str__(self) -> str:
         course_list = ", ".join(self.courses)
         subjects_list = ", ".join(self.subjects)
         scholarships_list = "\n".join([f"{course}: {scholarship}" for course, scholarship in self.scholarships.items()])
@@ -23,47 +24,59 @@ class UniInfo:
             f"Location: {self.location}\n"
             f"Courses Offered: {course_list}\n"
             f"Subjects Offered: {subjects_list}\n"
-            f"Scholarships: {scholarships_list}\n"
-            f"Requisites: {requisites_list}\n"
+            f"Scholarships:\n{scholarships_list}\n"
+            f"Requisites:\n{requisites_list}\n"
             f"Areas: {areas_list}\n"
         )
 
-class Matches:
+
+class Matches(BaseModel):
     """
     Represents a list of university/course matches.
     """
-    def __init__(self, matches):
-        self.matches = matches  # List of UniInfo objects
+    matches: List[UniInfo]
 
-    def __str__(self):
+    def __str__(self) -> str:
         if not self.matches:
             return "No matches found."
-        return "\n\n".join([str(match) for match in self.matches])
+        return "\n\n".join(str(match) for match in self.matches)
 
-class UserInfo:
+
+class UserInfo(BaseModel):
     """
     Represents information about the user and their preferences.
     """
-    def __init__(self, name, age, interests, preferred_location, preferred_courses, preferred_subjects, preferred_areas):
-        self.name = name  # User's name
-        self.age = age  # User's age
-        self.interests = interests  # User's interests
-        self.preferred_location = preferred_location  
-        self.preferred_courses = preferred_courses 
-        self.preferred_subjects = preferred_subjects 
-        self.preferred_areas = preferred_areas 
+    name: str
+    age: int
+    preferences: Optional[Dict[str, int]]
+    main_area: List[str]
 
-    def __str__(self):
+    def __str__(self) -> str:
         interest_list = ", ".join(self.interests)
         course_list = ", ".join(self.preferred_courses)
-        subjects_list = ", ".join(self.preferred_subjects)
-        areas_list = ", ".join(self.preferred_areas)
+        preferences_list = ", ".join(f"{interest}: {weight}" for interest, weight in self.preferences.items())
+        main_area = ", ".join(self.main_area)
         return (
             f"User Name: {self.name}\n"
             f"Age: {self.age}\n"
             f"Interests: {interest_list}\n"
-            f"Preferred Location: {self.preferred_location}\n"
-            f"Preferred Courses: {course_list}"
-            f"Preferred Subjects: {subjects_list}"
-            f"Preferred Areas: {areas_list}"
+            f"Preferences (and weight): {preferences_list}\n"
+            f"Preferred Courses: {course_list}\n"
+            f"Main Area: {main_area}\n"
         )
+
+class Preferences(BaseModel):
+    """
+    Represents preferences of a user
+    """
+    preferences: List[str]
+    weights: List[int]
+
+    def to_dict(self) -> Dict[str, int]:
+        if len(self.preferences) != len(self.weights): 
+            raise ValueError
+        else:
+            d = {}
+            for i in range(len(self.preferences)):
+                d[self.preferences[i]] = d[self.weights[i]]
+            return d

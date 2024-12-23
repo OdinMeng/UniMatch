@@ -8,7 +8,9 @@ from langchain_openai import ChatOpenAI
 from UniMatch.chatbot.chains.controlchain import ControlChain, DiscourageUserChain
 from UniMatch.chatbot.chains.conversationchain import ConversationChain
 from UniMatch.chatbot.chains.companyinformationchain import CompanyInformationChain
-
+from UniMatch.chatbot.chains.processpdfchain import ProcessPDFChain,ReasoningPDFChain
+from UniMatch.chatbot.chains.processwebsitechain import ProcessWebsiteChain, ReasoningWebsiteChain
+from UniMatch.chatbot.chains.classify_rag import ClassifyRAG
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -28,11 +30,16 @@ class MainChatbot:
         # Configure the language model with specific parameters for response generation
         self.llm = ChatOpenAI(temperature=0.0, model="gpt-4o-mini")
 
-        # Import filter classifier
+        # Import chains
         self.filter = ControlChain(llm = self.llm)
         self.discourager = DiscourageUserChain(llm = self.llm)
         self.chitchatter = ConversationChain(llm = self.llm)
         self.informer = CompanyInformationChain(llm = self.llm)
+        self.pdfprocesser = ProcessPDFChain()
+        self.pdfreasoner = ReasoningPDFChain(llm = self.llm)
+        self.webprocesser = ProcessWebsiteChain(llm = self.llm)
+        self.webreasoner = ReasoningWebsiteChain(llm = self.llm)
+        self.ragclassifier = ClassifyRAG(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -196,7 +203,22 @@ class MainChatbot:
         return('Not Implemented')
 
     def handle_rag(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        
+        input_message = {}
+        input_message["customer_input"] = user_input["customer_input"]
+
+        case_rag = self.ragclassifier.invoke(input_message).content
+
+        if case_rag == 'PDF':
+            # self.pdfprocesser.invoke() This will be done by using UI
+            output = self.pdfreasoner.invoke(input_message)
+        elif case_rag == 'link':
+            # self.webprocesser.invoke() same as above
+            output = self.webreasoner.invoke(input_message)
+        else:
+            return 'The file you mentioned seems to be non-existant. Please retry.'
+
+        return output.content
 
     def handle_company_info(self, user_input: Dict[str, str]) -> str:
         companyinfo_chain = self.informer

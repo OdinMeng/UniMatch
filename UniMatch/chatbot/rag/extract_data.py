@@ -80,22 +80,26 @@ def translate_docs(docs: List[Document]) -> List[Document]:
         """Translate the document that is delimited by triple backticks into English language. If it's already in english, do not do anything."""
     ) # System message
 
+    translated_docs = []
     for doc in docs:
-        human_message_template = HumanMessagePromptTemplate.from_template(
-            "document: ```{text}```"
-        )
+        translated_pages = []
+        for page in doc:
+            human_message_template = HumanMessagePromptTemplate.from_template(
+                "document: ```{text}```"
+            )
 
-        # Combine them into a chat prompt template
-        prompt_template = ChatPromptTemplate.from_messages([
-            system_message_template,
-            human_message_template,
-        ])
+            # Combine them into a chat prompt template
+            prompt_template = ChatPromptTemplate.from_messages([
+                system_message_template,
+                human_message_template,
+            ])
 
-        prompt = prompt_template.format_messages(text = doc.page_content)
-        answer = llm.invoke(prompt)
+            prompt = prompt_template.format_messages(text = page.page_content)
+            answer = llm.invoke(prompt)
 
-        new_doc = Document(page_content=answer.content, metadata=doc.metadata)
-        translated_docs.append(new_doc)
+            new_page = Document(page_content=answer.content, metadata=page.metadata)
+            translated_pages.append(new_page)
+        translated_docs.append(translated_pages)
 
     return translated_docs
 

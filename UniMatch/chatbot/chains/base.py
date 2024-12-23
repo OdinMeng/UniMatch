@@ -18,7 +18,6 @@ class PromptTemplate(BaseModel):
         description="Template for the human message in the conversation"
     )
 
-
 def generate_prompt_templates(
     prompt_template: PromptTemplate, memory: bool
 ) -> ChatPromptTemplate:
