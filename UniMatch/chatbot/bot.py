@@ -7,6 +7,8 @@ from langchain_openai import ChatOpenAI
 # from UniMatch.chatbot.agents.agent1 import Agent1
 from UniMatch.chatbot.chains.controlchain import ControlChain, DiscourageUserChain
 from UniMatch.chatbot.chains.conversationchain import ConversationChain
+from UniMatch.chatbot.chains.companyinformationchain import CompanyInformationChain
+
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -30,6 +32,7 @@ class MainChatbot:
         self.filter = ControlChain(llm = self.llm)
         self.discourager = DiscourageUserChain(llm = self.llm)
         self.chitchatter = ConversationChain(llm = self.llm)
+        self.informer = CompanyInformationChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -196,7 +199,24 @@ class MainChatbot:
         return('Not Implemented')
 
     def handle_company_info(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        companyinfo_chain = self.informer
+
+        input_message = {}
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
+        input_message["customer_input"] = user_input["customer_input"]
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        output = companyinfo_chain.invoke(input_message)
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(output.content)
+
+        return output.content
+
 
     def handle_unknown_intent(self, user_input: Dict[str, str]) -> str:
         """Handle unknown intents by providing a chitchat response.
