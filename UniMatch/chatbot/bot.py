@@ -12,6 +12,8 @@ from UniMatch.chatbot.chains.processpdfchain import ProcessPDFChain,ReasoningPDF
 from UniMatch.chatbot.chains.processwebsitechain import ProcessWebsiteChain, ReasoningWebsiteChain
 from UniMatch.chatbot.chains.classify_rag import ClassifyRAG
 from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
+from UniMatch.chatbot.chains.uniinfosearchchain import UniInfoSearchChain
+from UniMatch.chatbot.chains.uniinforesponsechain import UniInfoResponseChain
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -34,14 +36,21 @@ class MainChatbot:
         # Import chains
         self.filter = ControlChain(llm = self.llm)
         self.discourager = DiscourageUserChain(llm = self.llm)
+        
         self.chitchatter = ConversationChain(llm = self.llm)
+        
         self.informer = CompanyInformationChain(llm = self.llm)
+        
         self.pdfprocesser = ProcessPDFChain()
         self.pdfreasoner = ReasoningPDFChain(llm = self.llm)
         self.webprocesser = ProcessWebsiteChain(llm = self.llm)
         self.webreasoner = ReasoningWebsiteChain(llm = self.llm)
+
         self.ragclassifier = ClassifyRAG(llm = self.llm)
         self.userinfofetcher = UserInfoFetchChain(llm = self.llm)
+
+        self.uniinfosearcher = UniInfoSearchChain(llm = self.llm)
+        self.uniinforeponser = UniInfoResponseChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -193,10 +202,30 @@ class MainChatbot:
         return str(self.userinfofetcher.invoke(self.user_id))
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        # We decided to merge this with the universities and courses since they're implemented by the same chains
+        return self.handle_search_universities_and_courses(user_input)
 
     def handle_search_universities_and_courses(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        input_message = {}
+        input_message['customer_input'] = user_input['customer_input']
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        user_info = self.userinfofetcher.invoke(self.user_id)
+        input_message['user_info'] = str(user_info)
+
+        to_describe = self.uniinfosearcher.invoke({'customer_input': user_input['customer_input']})
+        input_message['to_describe'] = to_describe
+
+        response = self.uniinforeponser.invoke(input_message).content
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(response)
+
+        return response
 
     def handle_matchmaking(self, user_input: Dict[str, str]) -> str:
         return('Not Implemented')

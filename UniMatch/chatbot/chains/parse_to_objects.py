@@ -24,15 +24,16 @@ class ConvertRawToUniInfo(Runnable):
         self.memory = False
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting information about a university or a course from a raw source of data, given in the last row. It can be either tuples representing a query result, or it can be raw text.
-        You have to extract the following informations and attempt to structure it in JSON:
+        You have to extract the following informations and attempt to structure it in JSON, which can be parsed later:
             - name: Name of University
             - location: Location
             - courses: Courses, as a list
+            - course_descriptions: Descriptions of each course, as a list.
             - subjects: Subjects, associated to a course as a dictionary 
-            - scholarships_list: Scholarships associated to each course, as a dictionary
-            - requisites_list: Requisites associated to each course or scholarship, as a dictionary
-            - areas_list: Thematic Areas of Study, as a list
-        If you cannot extract something, just omit it.''',
+            - scholarships: Scholarships associated to each course, as a dictionary
+            - requisites: Requisites associated to each course or scholarship, as a dictionary
+            - areas: Thematic Areas of Study, as a list
+        If you cannot extract something, just place the missing field as empty. Return only and exclusively the JSON structure, without backticks or external text.''',
         human_template='''Raw source to extract from:{raw}''')
 
         self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
@@ -56,7 +57,7 @@ class ConvertRawToUserInfo(Runnable):
             - name: Name of the user
             - age: Age of the user
             - country: Country of the user
-            - education_level: the education level. It is represented by a number, 0 stands for high school degree, 1 for bachelor's degree, 2 for master's degree and 3 for PhD. Convert integer to string, with the previously defined convention, if needed.
+            - education_level: the education level. It is represented by a number, 0 stands for high school degree, 1 for bachelor's degree, 2 for master's degree and 3 for PhD. Make sure to convert the integer to string, with the previously defined convention.
             - preferences: Preferences of the user, represented as a dictionary with string associated to a number (its weight).
             - main_area: Main thematic academic area of the user, as a string
         If you cannot extract something, just omit it.''',
