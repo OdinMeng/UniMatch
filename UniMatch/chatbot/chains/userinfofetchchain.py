@@ -38,7 +38,7 @@ class UserInfoFetchChain(Runnable):
         conn = sqlite3.connect(get_sqlite_database_path())
         cursor = conn.cursor()
 
-        res = cursor.execute(self.sql_query, userid)
+        res = cursor.execute(self.sql_query, (userid,))
 
         all_rows = res.fetchall()
 

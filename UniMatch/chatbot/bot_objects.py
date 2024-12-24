@@ -27,8 +27,8 @@ class UniInfo(BaseModel):
             f"Courses Offered: {course_list}\n"
             f"Courses Descriptions: {course_desc_list}\n"
             f"Subjects Offered: {subjects_list}\n"
-            f"Scholarships:\n{scholarships_list}\n"
-            f"Requisites:\n{requisites_list}\n"
+            f"Scholarships:{scholarships_list}\n"
+            f"Requisites:{requisites_list}\n"
             f"Areas: {areas_list}\n"
         )
 
@@ -40,9 +40,16 @@ class Matches(BaseModel):
     matches: List[UniInfo]
 
     def __str__(self) -> str:
+        i = 0
+        s=""
         if not self.matches:
             return "No matches found."
-        return "\n\n".join(str(match) for match in self.matches)
+        else:
+            for match in self.matches:
+                s += f"==============||MATCH NUMBER {i}||==============\n"
+                s += str(match)
+            return s
+
 
 
 class UserInfo(BaseModel):

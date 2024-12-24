@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToUniInfo
 from UniMatch.data.loader import get_sqlite_database_path
 
-from langchain_community.vectorstores import SQLiteVec
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class UniInfoSearchChain(Runnable):

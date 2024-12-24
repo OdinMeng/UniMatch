@@ -99,11 +99,11 @@ def modify_user_info(userid, column, new_info):
     """
     Modify an information (column) about an user.
     Modifiable columns:
-        - Username
-        - Age
-        - Country Code
-        - Education Level
-        - Main Area
+        - Username: username
+        - Age: age
+        - Country Code: countrycode
+        - Education Level: educationlevel
+        - Main Area: mainarea
     For each modifiable column the function will check the following constraints:
         - Username must be unique
         - Country Code must be valid

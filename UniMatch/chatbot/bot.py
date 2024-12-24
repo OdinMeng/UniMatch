@@ -15,6 +15,8 @@ from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
 from UniMatch.chatbot.chains.uniinfosearchchain import UniInfoSearchChain
 from UniMatch.chatbot.chains.uniinforesponsechain import UniInfoResponseChain
 
+from UniMatch.chatbot.chains.makematcheschain import MakeMatchesChain
+
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
 
@@ -51,6 +53,8 @@ class MainChatbot:
 
         self.uniinfosearcher = UniInfoSearchChain(llm = self.llm)
         self.uniinforeponser = UniInfoResponseChain(llm = self.llm)
+
+        self.matchmaker = MakeMatchesChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -202,7 +206,7 @@ class MainChatbot:
         return str(self.userinfofetcher.invoke(self.user_id))
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
-        # We decided to merge this with the universities and courses since they're implemented by the same chains
+        # We decided to merge this with the universities and courses since that they're implemented by the same chains
         return self.handle_search_universities_and_courses(user_input)
 
     def handle_search_universities_and_courses(self, user_input: Dict[str, str]) -> str:
@@ -228,12 +232,24 @@ class MainChatbot:
         return response
 
     def handle_matchmaking(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        input_message = {}
+
+        input_message['id'] = self.user_id
+        input_message['customer_message'] = user_input['customer_input']
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        return self.matchmaker.invoke(input_message)
+        
+
 
     def handle_query_matches(self, user_input: Dict[str, str]) -> str:
         return('Not Implemented')
 
     def handle_rag(self, user_input: Dict[str, str]) -> str:
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
         input_message = {}
         input_message["customer_input"] = user_input["customer_input"]
 
@@ -241,14 +257,17 @@ class MainChatbot:
 
         if case_rag == 'PDF':
             # self.pdfprocesser.invoke() This will be done by using UI
-            output = self.pdfreasoner.invoke(input_message)
+            output = self.pdfreasoner.invoke(input_message).content
         elif case_rag == 'link':
             # self.webprocesser.invoke() same as above
-            output = self.webreasoner.invoke(input_message)
+            output = self.webreasoner.invoke(input_message).content
         else:
-            return 'The file you mentioned seems to be non-existant. Please retry.'
+            output = 'The file you mentioned seems to be non-existant. Please retry.'
 
-        return output.content
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(output)
+
+        return output
 
     def handle_company_info(self, user_input: Dict[str, str]) -> str:
         companyinfo_chain = self.informer

@@ -24,7 +24,7 @@ class UniInfoResponseChain(Runnable):
                                                 
                                     At the end, encourage the user to search the websites for himself and then provide it to the chatbot to analyize, if they wish to look into it further.
                                                 
-                                    Avoid markdown formatting.
+                                    Avoid markdown formatting. You can write up to four short paragraphs maximum.
         ''', human_template='User Prompt: {customer_message}')
         self.positive_answer = generate_prompt_templates(positive_answer_prompt, memory=True)
 
