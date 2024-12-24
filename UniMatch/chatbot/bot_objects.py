@@ -48,21 +48,20 @@ class UserInfo(BaseModel):
     """
     name: str
     age: int
+    country: str
+    education_level: str
     preferences: Optional[Dict[str, int]]
-    main_area: List[str]
+    main_area: Optional[str]
 
     def __str__(self) -> str:
-        interest_list = ", ".join(self.interests)
-        course_list = ", ".join(self.preferred_courses)
         preferences_list = ", ".join(f"{interest}: {weight}" for interest, weight in self.preferences.items())
-        main_area = ", ".join(self.main_area)
         return (
             f"User Name: {self.name}\n"
+            f"Country: {self.country}\n"
             f"Age: {self.age}\n"
-            f"Interests: {interest_list}\n"
+            f"Education level: {self.education_level}\n"
             f"Preferences (and weight): {preferences_list}\n"
-            f"Preferred Courses: {course_list}\n"
-            f"Main Area: {main_area}\n"
+            f"Main Area: {self.main_area}\n"
         )
 
 class Preferences(BaseModel):

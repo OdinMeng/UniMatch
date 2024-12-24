@@ -4,7 +4,6 @@ from langchain.schema.runnable.base import Runnable
 
 from pydantic import BaseModel, Field
 from UniMatch.chatbot.bot_objects import UniInfo
-from dotenv import load_dotenv
 
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 from UniMatch.chatbot.rag.extract_data import get_text_from_pdfs

@@ -55,8 +55,10 @@ class ConvertRawToUserInfo(Runnable):
         You have to extract the following informations and attempt to structure it in JSON:
             - name: Name of the user
             - age: Age of the user
+            - country: Country of the user
+            - education_level: the education level. It is represented by a number, 0 stands for high school degree, 1 for bachelor's degree, 2 for master's degree and 3 for PhD. Convert integer to string, with the previously defined convention, if needed.
             - preferences: Preferences of the user, represented as a dictionary with string associated to a number (its weight).
-            - main_area: Main thematic academic area of the user, as a number
+            - main_area: Main thematic academic area of the user, as a string
         If you cannot extract something, just omit it.''',
         human_template='''Raw source to extract from: {raw} ''')
 

@@ -11,6 +11,7 @@ from UniMatch.chatbot.chains.companyinformationchain import CompanyInformationCh
 from UniMatch.chatbot.chains.processpdfchain import ProcessPDFChain,ReasoningPDFChain
 from UniMatch.chatbot.chains.processwebsitechain import ProcessWebsiteChain, ReasoningWebsiteChain
 from UniMatch.chatbot.chains.classify_rag import ClassifyRAG
+from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -40,6 +41,7 @@ class MainChatbot:
         self.webprocesser = ProcessWebsiteChain(llm = self.llm)
         self.webreasoner = ReasoningWebsiteChain(llm = self.llm)
         self.ragclassifier = ClassifyRAG(llm = self.llm)
+        self.userinfofetcher = UserInfoFetchChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -188,7 +190,7 @@ class MainChatbot:
     '''
 
     def handle_personal_info(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        return str(self.userinfofetcher.invoke(self.user_id))
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
         return('Not Implemented')
@@ -203,7 +205,6 @@ class MainChatbot:
         return('Not Implemented')
 
     def handle_rag(self, user_input: Dict[str, str]) -> str:
-        
         input_message = {}
         input_message["customer_input"] = user_input["customer_input"]
 

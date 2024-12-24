@@ -20,7 +20,7 @@ def main(bot: MainChatbot):
         # Allow the user to exit the conversation
         if user_input.lower() in ["exit", "quit"]:
             print("Goodbye!")
-            bot.memory.save_session_history('-1', '-1')
+            bot.memory.save_session_history('1', '1')
             break
 
         try:
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     # Initialize the CustomerServiceBot with dummy user and conversation IDs
     bot = MainChatbot()
-    bot.user_login('-1', '-1')
+    bot.user_login('1', '1')
 
     # Display instructions for ending the conversation
     print("Bot initialized. Type 'exit' or 'quit' to end the conversation.")

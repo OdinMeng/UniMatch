@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS "Universities" (
   FOREIGN KEY("CountryCode") REFERENCES "COUNTRIES"("CountryCode")
 );
 
+CREATE VIRTUAL TABLE "Universities_Search" USING fts5(IDUniversity, txt);
+  
 CREATE INDEX "ix_Universities_IDUniversity"ON "Universities" (IDUniversity);
 
 CREATE TABLE IF NOT EXISTS "Courses" (
@@ -52,6 +54,8 @@ CREATE TABLE IF NOT EXISTS "Courses" (
   FOREIGN KEY("Area") REFERENCES "Areas" ("IDArea")
 );
 
+CREATE VIRTUAL TABLE "Courses_Search" USING fts5(IDCourse, IDUniversity, txt);
+
 CREATE INDEX "ix_Courses_IDCourse"ON "Courses" ("IDCourse");
 
 CREATE TABLE IF NOT EXISTS "Subjects" (
@@ -65,6 +69,9 @@ CREATE TABLE IF NOT EXISTS "Subjects" (
   FOREIGN KEY("IDCourse") REFERENCES "Courses" ("IDCourse")
 );
 
+CREATE VIRTUAL TABLE "Subjects_Search" USING fts5(IDSubject, IDCourse, txt);
+
+
 CREATE INDEX "ix_Subjects_IDSubject"ON "Subjects" ("IDSubject");
 
 CREATE TABLE IF NOT EXISTS "Internationals" (
@@ -73,6 +80,9 @@ CREATE TABLE IF NOT EXISTS "Internationals" (
   "Destination" TEXT,
   FOREIGN KEY("IDCourse") REFERENCES "Courses" ("IDCourse")
 );
+
+CREATE VIRTUAL TABLE "Internationals_Search" USING fts5(IDInternational, IDCourse, txt);
+
 
 CREATE INDEX "ix_Internationals_IDInternational"ON "Internationals" ("IDInternational");
 
@@ -88,6 +98,8 @@ CREATE TABLE IF NOT EXISTS "Scholarships" (
   FOREIGN KEY("IDCourse") REFERENCES "Courses" ("IDCourse"),
   FOREIGN KEY("IDUniversity") REFERENCES "Universities" ("IDUniversity")
 );
+
+CREATE VIRTUAL TABLE "Scholarships_Search" USING fts5(IDScholarship, txt);
 
 CREATE INDEX "ix_Scholarships_IDScholarship"ON "Scholarships" ("IDScholarship");
 
