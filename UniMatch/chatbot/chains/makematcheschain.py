@@ -8,6 +8,7 @@ from UniMatch.data.loader import get_sqlite_database_path
 from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToUniInfo
 from UniMatch.chatbot.bot_objects import Matches
+from UniMatch.data.manage_matches import clear_matches, add_matches
 
 class MatchRankings(BaseModel):
     IDUniversity: int
@@ -25,7 +26,8 @@ class MakeMatchesChain(Runnable):
         evaluate_prompt = PromptTemplate(
             system_template="""You are a highly intelligent chatbot tasked with associating an affinity score to an user for each university and course. 
             To do it, you must consider the chat history, the user's informations (in particular his preferences) and the prompt.
-
+            Do not include information that has not been disclosed in the user prompt, and do not hallucinate.
+            
             User Info:
             {user_info}
 
@@ -35,6 +37,7 @@ class MakeMatchesChain(Runnable):
             Return the result as a tuple containing the following numbers: (IDUniversity, IDCourse, rating). The rating must belong in the range [0, 100].
                 - 0 if there's no compatibility at all
                 - 100 if completely compatible
+            You can consider intermediate values.
             If some requests or preferences are left unanswered or unclear, you can lower slightly the score.
 
             Format the output as the following:
@@ -107,6 +110,10 @@ class MakeMatchesChain(Runnable):
         k = len(candidates)//3 + 1
         rankings = sorted(rankings, key=lambda x: x.rating)
         best_candidates = rankings[::-1][0:k]
+
+        # Reset matches and add best matches
+        clear_matches(id)
+        add_matches(id, best_candidates)
 
         # Parse into Matches instance
         RETVAL : Matches = Matches(matches=[])

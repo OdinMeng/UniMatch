@@ -16,6 +16,8 @@ from UniMatch.chatbot.chains.uniinfosearchchain import UniInfoSearchChain
 from UniMatch.chatbot.chains.uniinforesponsechain import UniInfoResponseChain
 
 from UniMatch.chatbot.chains.makematcheschain import MakeMatchesChain
+from UniMatch.chatbot.chains.extractmatcheschain import ExtractMatchesChain
+from UniMatch.chatbot.chains.matchesresponsechain import MatchesResponseChain
 
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
@@ -55,6 +57,8 @@ class MainChatbot:
         self.uniinforeponser = UniInfoResponseChain(llm = self.llm)
 
         self.matchmaker = MakeMatchesChain(llm = self.llm)
+        self.matchesextractor = ExtractMatchesChain(llm = self.llm)
+        self.matchesreponder = MatchesResponseChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -233,19 +237,58 @@ class MainChatbot:
 
     def handle_matchmaking(self, user_input: Dict[str, str]) -> str:
         input_message = {}
+        final_message = {}
 
         input_message['id'] = self.user_id
+
+        #TODO: HANDLE GUESTS (AKA USER_ID=-1)
         input_message['customer_message'] = user_input['customer_input']
         input_message["chat_history"] = self.memory.get_session_history(
             self.user_id, self.conversation_id
         ).messages
 
-        return self.matchmaker.invoke(input_message)
-        
+        matches = self.matchmaker.invoke(input_message)
+
+        final_message['id'] = self.user_id
+        final_message['user_message'] = user_input['customer_input']
+        final_message['matches'] = str(matches)
+        final_message['chat_history'] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        out = self.matchesreponder.invoke(final_message).content
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(out)
+
+        return out
 
 
     def handle_query_matches(self, user_input: Dict[str, str]) -> str:
-        return('Not Implemented')
+        input_message = {}
+        final_message = {}
+
+        input_message['id'] = self.user_id
+        #TODO: HANDLE GUESTS (AKA USER_ID=-1)
+
+        matches = self.matchesextractor.invoke(input_message)
+
+        final_message['id'] = self.user_id
+        final_message['user_message'] = user_input['customer_input']
+        final_message['matches'] = str(matches)
+        final_message['chat_history'] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
+        out = self.matchesreponder.invoke(final_message).content
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(out)
+
+        return out
 
     def handle_rag(self, user_input: Dict[str, str]) -> str:
         memory = self.memory.get_session_history(self.user_id, self.conversation_id)
