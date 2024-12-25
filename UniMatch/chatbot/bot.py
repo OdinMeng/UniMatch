@@ -221,7 +221,7 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
         
-        return self.userinfomanager.invoke(input_message)
+        return self.userinfomanager.invoke(input_message).content
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
         # We decided to merge this with the universities and courses since that they're implemented by the same chains
