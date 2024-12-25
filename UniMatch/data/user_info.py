@@ -1,7 +1,8 @@
 # Manage User's information: extract, modify, remove or add.
 
-import loader
+from UniMatch.data.loader import get_sqlite_database_path
 import sqlite3
+from UniMatch.chatbot.bot_objects import Preferences
 
 def extract_user_preferences(userid):
     """
@@ -11,7 +12,7 @@ def extract_user_preferences(userid):
     Note: this is to be processed by the chatbot to be transformed into an UniInfo instance
     """
     # Connect to DB
-    conn = sqlite3.connect(loader.get_sqlite_database_path())
+    conn = sqlite3.connect(get_sqlite_database_path())
     curse = conn.cursor()
 
     # Query UserID
@@ -31,12 +32,19 @@ def extract_user_preferences(userid):
     for item in obj:
         RETVAL['preferences'].append(item[2])
         RETVAL['weights'].append(item[3])
+
+    RETVAL = Preferences(preferences=RETVAL['preferences'], weights= RETVAL['weights'])
+
     return RETVAL
 
 def modify_user_preferences(userid, new_preferences):
     """
     Given a new dictionary containing the user preferences, in form of a dictionary with two lists (named preferences and weights), updates the UserPreferences accordingly.
     This function will preliminaliry check whether the given input is valid or less.
+    Input values:
+        userid: ID of the user
+        new_preferences: a specific data structure containing the user's preferences, containing an object of type Preferences or a dictionary
+
     Return values:
         0: successful
         1: failed (invalid input structure)
@@ -45,14 +53,22 @@ def modify_user_preferences(userid, new_preferences):
     new_preferences can be manually made or made by the chatbot.
     """
     # Preliminary checks
+
+    # Convert to Preferences datatype if needed
+    if not isinstance(new_preferences, Preferences):
+        try:
+            new_preferences = Preferences(preferences=new_preferences['preferences'], weights=new_preferences['weights'])
+        except:
+            return 1
+
     # Structure
     try:
-        new_preferences['preferences']
-        weights = new_preferences['weights']
+        new_preferences.preferences
+        weights = new_preferences.weights
     except Exception:
         return 1
     
-    if len(new_preferences['preferences']) != len(new_preferences['weights']): # Lists must be equally-sized
+    if len(new_preferences.preferences) != len(new_preferences.weights): # Lists must be equally-sized
         return 1
     
     # Weight
@@ -65,7 +81,7 @@ def modify_user_preferences(userid, new_preferences):
         return 2
 
     # Connect to database
-    conn = sqlite3.connect(loader.get_sqlite_database_path())
+    conn = sqlite3.connect(get_sqlite_database_path())
     curse = conn.cursor()
 
     # Execute SQL queries to clear user preferences
@@ -78,9 +94,9 @@ def modify_user_preferences(userid, new_preferences):
         return 3
 
     # Execute SQL queries to insert new preferences
-    for i in range(len(new_preferences['preferences'])):
+    for i in range(len(new_preferences.preferences)):
         try:
-            payload = (userid, new_preferences['preferences'][i], new_preferences['weights'][i])
+            payload = (userid, new_preferences.preferences[i], new_preferences.weights[i]) # Define payload for new row
             curse.execute('INSERT INTO UserPreferences(UserID, Preferences, Weight) VALUES (?,?,?)', payload)
         except Exception as e:
             conn.rollback()
@@ -98,20 +114,20 @@ def modify_user_preferences(userid, new_preferences):
 def modify_user_info(userid, column, new_info):
     """
     Modify an information (column) about an user.
+    Input:
+        - userid: ID of the user
+        - column: the information type to modify, for a list of accepted columns see below
+        - new_info: the new piece of information to replace
+
     Modifiable columns:
-        - Username: username
-        - Age: age
-        - Country Code: countrycode
-        - Education Level: educationlevel
-        - Main Area: mainarea
-    For each modifiable column the function will check the following constraints:
-        - Username must be unique
-        - Country Code must be valid
-        - Education Level must be valid
-        - Main Area must exist
+        - username
+        - age
+        - countrycode
+        - educationlevel
+        - mainarea
     Returns 0 if operation successful, -1 otherwise.
     """
-    conn = sqlite3.connect(loader.get_sqlite_database_path())
+    conn = sqlite3.connect(get_sqlite_database_path())
     curse = conn.cursor()
 
     column_input = column.lower()
@@ -231,7 +247,7 @@ def modify_user_password(userid, old_password, new_password):
     Returns 0 if successful. If not, returns -1 if old_password mismatches or returns -2 if there is an internal error.
     """
 
-    conn = sqlite3.connect(loader.get_sqlite_database_path())
+    conn = sqlite3.connect(get_sqlite_database_path())
     curse = conn.cursor()
 
     r = curse.execute('SELECT password FROM USERS WHERE IDUser=?', (userid,))

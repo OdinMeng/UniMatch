@@ -19,9 +19,13 @@ from UniMatch.chatbot.chains.makematcheschain import MakeMatchesChain
 from UniMatch.chatbot.chains.extractmatcheschain import ExtractMatchesChain
 from UniMatch.chatbot.chains.matchesresponsechain import MatchesResponseChain
 
+from UniMatch.chatbot.agents.userinfomanager import UserInfoManager
+
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
 
+#TODO: DELETE
+from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToPreferences
 
 class MainChatbot:
     """
@@ -59,6 +63,8 @@ class MainChatbot:
         self.matchmaker = MakeMatchesChain(llm = self.llm)
         self.matchesextractor = ExtractMatchesChain(llm = self.llm)
         self.matchesreponder = MatchesResponseChain(llm = self.llm)
+
+        self.userinfomanager = UserInfoManager(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -207,7 +213,15 @@ class MainChatbot:
     '''
 
     def handle_personal_info(self, user_input: Dict[str, str]) -> str:
-        return str(self.userinfofetcher.invoke(self.user_id))
+        input_message = {}
+
+        input_message['id'] = self.user_id
+        input_message['customer_message'] = user_input['customer_input']
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+        
+        return self.userinfomanager.invoke(input_message)
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
         # We decided to merge this with the universities and courses since that they're implemented by the same chains

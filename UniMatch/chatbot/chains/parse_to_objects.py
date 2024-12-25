@@ -80,12 +80,20 @@ class ConvertRawToPreferences(Runnable):
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting the preferences of an user.
         You have to extract a preference and associate it to a weight. Structure it as a dictionary containing two lists, namely:
-            - preferences: strings describing a preference
-            - weights: a number associated to the preference. make sure weights sum up to 100''',
-        human_template='''Raw source to extract from:{raw}''')
+            - preferences: strings describing a preference. It should be a short phrase in first person.
+            - weights: a number associated to the preference. make sure weights sum up to 100
+                                         
+        Please format your output with the following instructions:
+        {format_instructions}''',
+        human_template='''Text source to extract from:{raw}''')
 
         prompt_template_2 = PromptTemplate(system_template='''You are tasked with reading a list of preferences and weights and you have to verify that the weights sum up to 100.
-        If they do not sum to 100, modify them in a way the sum to 100.''',
+        If they do not sum to 100, modify them in a way the sum to 100.
+                                           
+        Please format your output with the following instructions:
+        {format_instructions}
+        - preferences: strings describing a preference
+        - weights: a number associated to the preference. make sure weights sum up to 100''',
         human_template='''To verify:{weights}''')
 
         self.prompt_makepreferences = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
@@ -97,5 +105,5 @@ class ConvertRawToPreferences(Runnable):
         self.chain2 = self.prompt_checkweights | self.llm | self.output_parser
 
     def invoke(self, raw):
-        partial = self.chain1.invoke({'raw': raw})
-        return self.chain2.invoke({'weights': partial.content})
+        partial = self.chain1.invoke({'raw': raw, 'format_instructions':self.format_instructions})
+        return self.chain2.invoke({'weights': partial, 'format_instructions': self.format_instructions})

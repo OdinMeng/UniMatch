@@ -19,7 +19,8 @@ class DevChatbot(MainChatbot):
             intentions: A list of available intentions for the bot.
         """
         # Initialize the base bot class
-        super().__init__(user_id, conversation_id)
+        super().__init__()
+        self.user_login(user_id, conversation_id)
         self.intentions = intentions  # Store the list of available intentions
 
     def get_choice_from_list(self):
