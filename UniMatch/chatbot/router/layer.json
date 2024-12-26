@@ -5,109 +5,110 @@
         {
             "name": "manage_personal_info",
             "utterances": [
-                "Set my country to the United Kingdom.",
-                "I need to set my country to Germany.",
-                "Change my education level to doctoral.",
-                "Change my education level to master's.",
-                "Add a preference for scholarships."
+                "Please modify my education level to high school.",
+                "Please add a preference for urban universities.",
+                "What is my registered age?",
+                "Please update my password to Passw0rd!",
+                "I want to change my username to TechGuru123.",
+                "Update my password to NewPassword123!"
             ],
             "description": "The user wants to manage his personal information, such as username, age, password, et cetera...",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.3434343434343435,
+            "score_threshold": 0.36363636363636365,
             "metadata": {}
         },
         {
             "name": "company_info",
             "utterances": [
-                "What is the target audience for UniMatch?",
-                "What kind of partnerships does UniMatch have?",
-                "How does UniMatch utilize data analytics?",
-                "How does UniMatch ensure user privacy?",
-                "What is the purpose of the UniMatch platform?",
-                "What are the key values that guide UniMatch?"
+                "How does UniMatch help students and universities?",
+                "What is the purpose of UniMatch?",
+                "What kind of services does UniMatch provide?",
+                "How does UniMatch engage with educational institutions?",
+                "What makes UniMatch unique in its field?",
+                "What are the key milestones in UniMatch's journey?"
             ],
             "description": "The user wants to know information about the company called 'UniMatch'.",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.05050505050505051,
+            "score_threshold": 0.33333333333333337,
             "metadata": {}
         },
         {
             "name": "leverage_rag",
             "utterances": [
-                "Can you help me understand this PDF on student exchange programs?",
-                "Please review this PDF and explain the key points.",
-                "I found a website with university rankings. Can you check it out?",
-                "Can you help me understand this PDF on student support services?",
-                "I want to upload a document about online courses. Can you assist?"
+                "I gave the link. Can you identify the target demographic?",
+                "I uploaded a document. Can you tell me about the author?",
+                "I gave the link. Can you summarize the introduction section?",
+                "You have access to the website link's contents. What is the main argument?",
+                "I gave the link. What are the main findings?"
             ],
             "description": "The user intends wants the chatbot to extract information from an external source (PDF or website).",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.4040404040404041,
+            "score_threshold": 0.25252525252525254,
             "metadata": {}
         },
         {
             "name": "matchmaking",
             "utterances": [
-                "Please match my university preferences with available options.",
-                "What universities fit my academic profile?",
-                "Help me find matches for my academic interests.",
-                "Find universities that align with my career goals.",
-                "Show me universities that fit my desired courses."
+                "Can you help me find matches for universities in the Caribbean?",
+                "Please find matches for universities that offer scholarships for arts.",
+                "Can you match me with universities that have a strong alumni network?",
+                "I need matches for universities with a focus on research.",
+                "Can you find university matches for computer science?"
             ],
             "description": "The user wants to make matches for his university, specifying some preferences.",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.37373737373737376,
+            "score_threshold": 0.48484848484848486,
             "metadata": {}
         },
         {
             "name": "query_matches",
             "utterances": [
-                "I'd like to see my match results again.",
-                "Can I see the matches I saved?",
-                "I want to revisit my match choices.",
-                "Please display my previous matches.",
-                "I want to check my match history.",
-                "Display the matches I have created."
+                "Show me my previous matches.",
+                "Can you pull up my match details?",
+                "Can I view my match history?",
+                "List my earlier matches.",
+                "I want to see my match history."
             ],
             "description": "The user wishes to access and see the previously-made matches.",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.3434343434343435,
+            "score_threshold": 0.42424242424242425,
             "metadata": {}
         },
         {
             "name": "search_scholarships_and_internationals",
             "utterances": [
-                "Can you list some scholarships for tech students?",
-                "What are the eligibility criteria for scholarships?",
-                "What international scholarships can I apply for?",
-                "Can you give me tips on applying for scholarships?",
-                "What scholarships are available for online degree programs?",
-                "How do I find scholarships for studying in Europe?"
+                "Are there scholarships for studying technology abroad?",
+                "Can you list scholarships available for STEM students?",
+                "What scholarships are available for international students?",
+                "Can you find universities with scholarships in Australia?",
+                "What international scholarships are available for undergraduate students?",
+                "Can you provide details on the Erasmus+ scholarship?"
             ],
             "description": "The user wishes to search for scholarships or international opportunities.",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.43434343434343436,
+            "score_threshold": 0.020202020202020204,
             "metadata": {}
         },
         {
             "name": "search_universities",
             "utterances": [
-                "Can you tell me about universities in Australia?",
-                "What universities offer computer science programs?",
-                "Can you list universities with strong internship programs?",
-                "What is the application process for MIT?",
-                "Can you find universities that specialize in arts?"
+                "Search for universities that teach environmental studies.",
+                "What universities have courses in event management?",
+                "Are there universities with programs in social work?",
+                "What are the top universities for studying sociology?",
+                "Search for universities that teach digital marketing.",
+                "What universities have courses in cybersecurity?"
             ],
             "description": "The user wishes to search for universities or courses.",
             "function_schemas": null,
             "llm": null,
-            "score_threshold": 0.393939393939394,
+            "score_threshold": 0.15151515151515152,
             "metadata": {}
         }
     ]

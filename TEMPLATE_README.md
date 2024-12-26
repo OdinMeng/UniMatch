@@ -78,7 +78,7 @@ For each intention we synthetically generated 50 messages, through LLMs (see the
 - **Encoder Type**
 We had mainly two choices for our router, regarding the encoder. Either we could have used an encoder from HuggingFace, or from OpenAI. To determine which one was the best for our intentions, we decided to train two baseline semantic routers and evaluated their accuracy scores accordingly; the one which showed the least signs of overfitting was picked for hyperparamter tuning.
 
-Output: OpenAI encoder had an 0.87 of accuracy on train and 0.93 on validation, while HuggingFace encoder had 0.77 on train and 0.85 on validation.
+Output: OpenAI encoder had an 0.91 of accuracy on train and 0.95 on validation, while HuggingFace encoder had 0.84 on train and 0.93 on validation.
 
 Therefore, we picked the OpenAI encoder as it showed the best results. Let us note that the fact that the validation score is higher than the accuracy score; this might suggest a mild risk of underfitting.
 
@@ -88,20 +88,19 @@ To decide on the aggregation method, we decided to test each one of them and cho
 **Results** (tabular format):
 | Aggregate | Train | Validate |
 | --------- | ----- | -------- |
-| mean      | 0,89  | 0,98     |
-| max       | 0,90  | 0,98     |
-| sum       | 0,88  | 0,93     |
+| mean      | 0.90  | 0.98     |
+| max       | 0.92  | 0.98     |
+| sum       | 0.91  | 0.95     |
 
 We choose `aggregation=max` as it had the best train and evaluation score.
 
-Then to decide the `top_k` parameter, we decided to do the same as above with the following candidates of `top_k`: k=2 (low), k=5 (average), k=10 (high).
+Then to decide the `top_k` parameter, we decided to do the same as above with the following candidates of `top_k`: k=1 (low), k=5 (average), k=50 (high).
 
-**Results**: No variations in scores, meaning that in our case `top_k` is not influential. Therefore chose k=5, as it is the midpoint.
+**Results**: No variations in scores, meaning that in our case `top_k` is not influential. We chose `top_k=2` as it is the one that takes the least computational power.
 
 **Note**: A better alternative to this approach would have to use a GridSearchCV-similar approach; however as this is deemed to be too computationally expensive, we opted for an "evolutionary" approach.
 
 For further details about the evaluation see the notebook at `UniMatch/chatbot/router/train_evaluate_router.ipynb`.
-
 
 ---
 
@@ -132,16 +131,16 @@ For further details about the evaluation see the notebook at `UniMatch/chatbot/r
 
 ### Results
 
-As we fine-tuned our layer, we evaluated it with the test data:
+As we fine-tuned our router classifier, we evaluated it with the test data:
 
-| Intention                                      | Total | Misclassified | Accuracy |
-| ---------------------------------------------- | ----- | ------------- | -------- |
-| Manage Personal Information                    | 5     | 0             | 100,00%  |
-| Search Scholarships and Internationals         | 6     | 0             | 100,00%  |
-| Search Universities                            | 5     | 0             | 100,00%  |
-| Find Matches                                   | 5     | 0             | 100,00%  |
-| Query Previous Matches                         | 6     | 0             | 100,00%  |
-| Extract Information from External Text Sources | 5     | 0             | 100,00%  |
-| Get Information about Company                  | 6     | 0             | 100,00%  |
-| Chitchat                                       | 3     | 1             | 66,67%   |
-| Total                                          | 41    | 1             | 97,56%   |
+| Intention                              | Amount | Misclassified | Accuracy |
+| -------------------------------------- | ------ | ------------- | -------- |
+| Manage Personal Information            | 6      | 0             | 100%     |
+| Search Scholarships and Internationals | 6      | 0             | 100%     |
+| Search Universities and Courses        | 6      | 0             | 100%     |
+| Matchmaking                            | 5      | 0             | 100%     |
+| Query Matches                          | 5      | 0             | 100%     |
+| Use External Information               | 5      | 0             | 100%     |
+| Company Information                    | 6      | 0             | 100%     |
+| None                                   | 3      | 1             | 67%      |
+| Total                                  | 42     | 1             | 98%      |

@@ -46,7 +46,7 @@ if __name__ == "__main__":
     # Login loop
     while 1:
         print("LOGIN TO UNIMATCH")
-        print("="*15)
+        print("="*25)
         username = input("Insert Username (insert -1 for guest mode)\n> ")
         password = input("Insert Password\n> ")
 
@@ -56,8 +56,11 @@ if __name__ == "__main__":
 
         result = validate_login(username, password)
         print(handle_login(result))
+        print()
         if result > 0:
             break
+
+    print("="*25)
         
 
     bot.user_login(str(result), '1')

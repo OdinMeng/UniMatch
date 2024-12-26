@@ -62,7 +62,7 @@ class MemoryManager:
         """
         Return JSON filename from username ID and conversation ID
         """
-        return f"{user_id}_{conversation_id}_history.txt"
+        return f"{user_id}_{conversation_id}_history.json"
 
     def load_session_history(
         self, user_id: str, conversation_id: str            

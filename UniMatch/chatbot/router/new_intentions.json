@@ -1,27 +1,197 @@
 [
     {
-        "Intention": "product_information",
-        "Message": "What products do you have?",
+        "Intention": "manage_personal_information",
+        "Message": "I want to change my username to UrgedSpice456",
         "Id": 1
     },
     {
-        "Intention": "create_order",
-        "Message": "Hello",
+        "Intention": "manage_personal_information",
+        "Message": "Can you change my password to !df@3d?",
         "Id": 2
     },
     {
-        "Intention": "product_information",
-        "Message": "hello",
+        "Intention": "manage_personal_information",
+        "Message": "Would it be possible to modify my age to 23?",
         "Id": 3
     },
     {
-        "Intention": "product_information",
-        "Message": "tell me more about telivisions",
+        "Intention": "manage_personal_information",
+        "Message": "Change Country to Italy",
         "Id": 4
     },
     {
         "Intention": "manage_personal_information",
-        "Message": "I want",
+        "Message": "Modify my user preferences; now I prefer to study in big cities and to study in a friendly environment.",
         "Id": 5
+    },
+    {
+        "Intention": "manage_personal_information",
+        "Message": "Can you tell me about myself?",
+        "Id": 6
+    },
+    {
+        "Intention": "manage_personal_information",
+        "Message": "What are my preferences?",
+        "Id": 7
+    },
+    {
+        "Intention": "manage_personal_information",
+        "Message": "Who am I?",
+        "Id": 8
+    },
+    {
+        "Intention": "manage_personal_information",
+        "Message": "What is my age?",
+        "Id": 9
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Can you recommend me some good universities in Italy?",
+        "Id": 10
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Do you have any universities with courses in Artificial Intelligence?",
+        "Id": 11
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Find me some universities specializing in Economics",
+        "Id": 12
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Search for courses with topics in Philosophy",
+        "Id": 13
+    },
+    {
+        "Intention": "search_universities",
+        "Message": "Are there courses with subjects in Ethics?",
+        "Id": 14
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Do you have any scholarships for <...>?",
+        "Id": 15
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Do you know of any universities with scholarships in <...>?",
+        "Id": 16
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you find me universities with international opportunities in <...>?",
+        "Id": 17
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Are there any international opportunities in <...>?",
+        "Id": 18
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Can you find scholarships for <...>?",
+        "Id": 19
+    },
+    {
+        "Intention": "search_scholarships_and_internationals",
+        "Message": "Find some universities with scholarships at <...>",
+        "Id": 20
+    },
+    {
+        "Intention": "matchmaking",
+        "Message": "I want to make matches",
+        "Id": 21
+    },
+    {
+        "Intention": "matchmaking",
+        "Message": "I want you to find some matches for universities with courses in Mathematics",
+        "Id": 22
+    },
+    {
+        "Intention": "matchmaking",
+        "Message": "Could you make some university matches for me? If possible, include universities in Italy",
+        "Id": 23
+    },
+    {
+        "Intention": "matchmaking",
+        "Message": "Make matches",
+        "Id": 24
+    },
+    {
+        "Intention": "matchmaking",
+        "Message": "Can you do some matches of universities?",
+        "Id": 25
+    },
+    {
+        "Intention": "query_matches",
+        "Message": "I want to search for my matches.",
+        "Id": 26
+    },
+    {
+        "Intention": "query_matches",
+        "Message": "Can you tell me about my university matches?",
+        "Id": 27
+    },
+    {
+        "Intention": "query_matches",
+        "Message": "Access matches.",
+        "Id": 28
+    },
+    {
+        "Intention": "query_matches",
+        "Message": "Find the previously-made matches",
+        "Id": 29
+    },
+    {
+        "Intention": "leverage_rag",
+        "Message": "I have uploaded a PDF file. Can you tell me about the courses?",
+        "Id": 30
+    },
+    {
+        "Intention": "leverage_rag",
+        "Message": "I gave the link. What is the tution fee of the course in Mathematics?",
+        "Id": 31
+    },
+    {
+        "Intention": "leverage_rag",
+        "Message": "You have the PDF file now. How is the course programme structured?",
+        "Id": 32
+    },
+    {
+        "Intention": "leverage_rag",
+        "Message": "You have access to the website link's contents. What is the selling point of the campus?",
+        "Id": 33
+    },
+    {
+        "Intention": "company_info",
+        "Message": "What is UniMatch?",
+        "Id": 34
+    },
+    {
+        "Intention": "company_info",
+        "Message": "Who are the founders of UniMatch?",
+        "Id": 35
+    },
+    {
+        "Intention": "company_info",
+        "Message": "What is this company about?",
+        "Id": 36
+    },
+    {
+        "Intention": "company_info",
+        "Message": "Tell me about this product.",
+        "Id": 37
+    },
+    {
+        "Intention": "company_info",
+        "Message": "Describe UniMatch for me.",
+        "Id": 38
+    },
+    {
+        "Intention": "company_info",
+        "Message": "Explain me about the origin of UniMatch.",
+        "Id": 39
     }
 ]
