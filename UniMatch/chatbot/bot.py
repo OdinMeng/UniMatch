@@ -416,6 +416,11 @@ class MainChatbot:
 
         return chitchat_output.content
 
+    def handle_harmful(self, user_input: Dict[str, str])->str:
+        # TO DO
+        pass
+
+
     def save_memory(self) -> None:
         """Save the current memory state of the bot."""
         self.memory.save_session_history(self.user_id, self.conversation_id)
@@ -433,11 +438,10 @@ class MainChatbot:
         process_filter = self.filter.invoke(user_input)
         is_harmful = process_filter.is_harmful
         
-        # ================== Process Message Router ==================================|
+        # ================== Process Message Router ==================================| TO
         # If harmful                                                                  |
         if is_harmful:                                                               #|
-            return self.discourager.invoke(user_input).content                       #|
-                                                                                     #|
+            return self.discourager.invoke(user_input).content   # TO DO: MOVE TO SELF.HANDLE_HARMFUL()                                                                                     #|
         # If NOT harmful                                                             #|
         # ================== Main Router =============================================|
     
