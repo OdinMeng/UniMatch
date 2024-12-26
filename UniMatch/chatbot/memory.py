@@ -1,6 +1,6 @@
 # Import necessary modules and classes
 import json
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.messages import BaseMessage
@@ -56,6 +56,31 @@ class MemoryManager:
             ),
         ]
 
+    def get_filename(
+            self, user_id: str, conversation_id: str
+    ) -> str:
+        """
+        Return JSON filename from username ID and conversation ID
+        """
+        return f"{user_id}_{conversation_id}_history.txt"
+
+    def load_session_history(
+        self, user_id: str, conversation_id: str            
+    ) -> Optional[BaseChatMessageHistory]:
+        """
+        Loads session history from a JSON structure.
+        Args:
+            user_id: user id
+            conversation_id: conversation id
+
+        Returns:
+            BaseChatMessageHistory if the session history exists
+            None if it doesn't exist
+        """
+        filename = self.get_filename(user_id, conversation_id)
+
+        pass
+
     def get_session_history(
         self, user_id: str, conversation_id: str
     ) -> BaseChatMessageHistory:
@@ -83,23 +108,35 @@ class MemoryManager:
         return self.history_factory_config
 
     def save_session_history(self, user_id: str, conversation_id: str) -> None:
-        """Save the session history as a txt file.
+        """Save the session history as a structured JSON file.
 
         Args:
             user_id: Identifier for the user.
             conversation_id: Identifier for the conversation.
+
+        JSON Structure: List of dictionaries
+        [
+            {'AIMessage': ...},
+            {'HumanMessage': ...}
+        ]
         """
+        filename = self.get_filename(user_id, conversation_id)
 
         session_history = self.get_session_history(
             user_id=user_id, conversation_id=conversation_id
         )
 
-        # Iterate over messages in the session history
-        # and save them to a text file
-        with open(f"{user_id}_{conversation_id}_history.txt", "w") as file:
-            for message in session_history.messages:
-                # Check if is HumanMessage or AIMessage
-                if isinstance(message, HumanMessage):
-                    file.write(f"User: {message.content}\n")
-                elif isinstance(message, AIMessage):
-                    file.write(f"Bot: {message.content}\n")
+        # Iterate over messages to write a JSON file
+        messages = []
+        for message in session_history.messages:
+            if isinstance(message, HumanMessage):
+                messages.append({'HumanMessage': message.content})
+
+            elif isinstance(message, AIMessage):
+                messages.append({'AIMessage': message.content})
+
+        # Write to JSON file
+        with open(filename, "w") as f:
+            json.dump(messages, f)
+            f.close()
+        

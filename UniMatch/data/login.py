@@ -1,6 +1,6 @@
 # This file defines the functions to interact with the database, for login functionalities
 
-import loader
+from UniMatch.data import loader
 import sqlite3
 
 def validate_login(username, password):

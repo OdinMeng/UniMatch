@@ -45,7 +45,6 @@ class UserInfoFetchChain(Runnable):
         cursor.close()
         conn.close()
 
-        print(all_rows)
         RETVAL = ConvertRawToUserInfo(self.llm).invoke(all_rows)
 
         return RETVAL

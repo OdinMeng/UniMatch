@@ -9,18 +9,41 @@ class UniInfo(BaseModel):
     location: Optional[str]
     courses: Optional[List[str]]
     course_descriptions: Optional[List[str]]
-    subjects: Optional[Dict[Optional[str], Optional[list[str]]]]
-    scholarships: Optional[Any]  # e.g., {course_name: scholarship_info}
-    requisites: Optional[Any]    # e.g., {course_name: requisite_info}
-    areas: Optional[List[Optional[str]]]
+    subjects: Optional[Dict[str, List[str]]]
+    scholarships: Optional[Dict[str, str]]  # e.g., {course_name: scholarship_info}
+    requisites: Optional[Dict[str, str]]    # e.g., {course_name: requisite_info}
+    areas: Optional[List[str]]
 
     def __str__(self) -> str:
-        course_list = ", ".join(self.courses)
-        course_desc_list =", ".join(self.course_descriptions)
-        subjects_list = ", ".join(self.subjects)
-        scholarships_list = "\n".join([f"{course}: {scholarship}" for course, scholarship in self.scholarships.items()])
-        requisites_list = "\n".join([f"{course}: {requisite}" for course, requisite in self.requisites.items()])
-        areas_list = ", ".join(self.areas)
+        if self.courses!=None:
+            course_list = ", ".join(self.courses)
+        else:
+            course_list = "\nCourses not Available"
+        
+        if self.course_descriptions!=None:
+            course_desc_list =", ".join(self.course_descriptions)
+        else:
+            course_desc_list = "\nCourses Description Not Available"
+
+        if self.subjects!=None:   
+            subjects_list = ", ".join([f"{course}: {subject}" for course, subject in self.subjects.items()])
+        else:
+            subjects_list = "\nCourses Subjects Information not Available"
+
+        if self.scholarships!=None:
+            scholarships_list = "\n".join([f"{course}: {scholarship}" for course, scholarship in self.scholarships.items()])
+        else:
+            scholarships_list = "\nScholarships Information Not Available"
+
+        if self.requisites != None:
+            requisites_list = "\n".join([f"{course}: {requisite}" for course, requisite in self.requisites.items()])
+        else:
+            requisites_list = "\nRequisites Information Not Available"
+
+        if self.areas != None:
+            areas_list = ", ".join(self.areas)
+        else:
+            areas_list = '\nAreas Information Not Available'
         return (
             f"University Name: {self.name}\n"
             f"Location: {self.location}\n"

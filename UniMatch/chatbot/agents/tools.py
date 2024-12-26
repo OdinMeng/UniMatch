@@ -31,7 +31,7 @@ class InformUserTool(BaseTool):
     name : str = "ExtractUserInformationTool"
     description : str = "Use this tool when a user requests what the chatbot knows about himself"
     args_schema: Type[BaseModel] = CustomerInput
-    return_direct: bool = True
+    return_direct: bool = False
 
     def _run(self, id: int, customer_message: str) -> str:
         """
@@ -41,12 +41,10 @@ class InformUserTool(BaseTool):
         """
         llm = ChatOpenAI(model="gpt-4o-mini")
         userinfofetcher = UserInfoFetchChain(llm)
-        answerer = UserInfoResponseChain(llm)
 
         userinfo = userinfofetcher.invoke(userid=id)
-        answer = answerer.invoke({'customer_message': customer_message, 'user_info': userinfo})
 
-        return answer.content
+        return userinfo
 
 class ModifyBasicUserInfoTool(BaseTool):
     name: str = "ModifyUserInformationTool"

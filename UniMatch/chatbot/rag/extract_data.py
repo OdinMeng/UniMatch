@@ -49,13 +49,13 @@ def get_text_from_link(link: str) -> List[Document]:
 
     loader = RecursiveUrlLoader(
         url=link,
-        max_depth=1,
+        max_depth=1, # With a higher budget this can be increased
         base_url=link,
     )
     try:
         docs: List[Document] = loader.load()
     except Exception as e:
-        raise e # This should not happen, as the chatbot should check if the link is valid or not beforehand.
+        raise e # This should not happen
     else:
         # Transform raw html into beautifulsoup
         bs_transformer = BeautifulSoupTransformer()

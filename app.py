@@ -5,7 +5,7 @@ This file should be the entrypoint of your Streamlit App.
 from dotenv import load_dotenv  # Import dotenv to load environment variables
 
 from UniMatch import MainChatbot  # Import the chatbot class
-
+from UniMatch.data.login import validate_login, handle_login
 
 def main(bot: MainChatbot):
     """Main interaction loop for the chatbot.
@@ -20,7 +20,7 @@ def main(bot: MainChatbot):
         # Allow the user to exit the conversation
         if user_input.lower() in ["exit", "quit"]:
             print("Goodbye!")
-            bot.memory.save_session_history('1', '1')
+            bot.memory.save_session_history(bot.user_id, bot.conversation_id)
             break
 
         try:
@@ -42,7 +42,25 @@ if __name__ == "__main__":
 
     # Initialize the CustomerServiceBot with dummy user and conversation IDs
     bot = MainChatbot()
-    bot.user_login('1', '1')
+
+    # Login loop
+    while 1:
+        print("LOGIN TO UNIMATCH")
+        print("="*15)
+        username = input("Insert Username (insert -1 for guest mode)\n> ")
+        password = input("Insert Password\n> ")
+
+        if username == "-1":
+            result = -1
+            break
+
+        result = validate_login(username, password)
+        print(handle_login(result))
+        if result > 0:
+            break
+        
+
+    bot.user_login(str(result), '1')
 
     # Display instructions for ending the conversation
     print("Bot initialized. Type 'exit' or 'quit' to end the conversation.")

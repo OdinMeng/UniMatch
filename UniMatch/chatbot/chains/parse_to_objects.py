@@ -15,8 +15,6 @@ from langchain.output_parsers import PydanticOutputParser
 
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
-load_dotenv()
-
 class ConvertRawToUniInfo(Runnable):
     def __init__(self, llm, memory=False):
         super().__init__()
@@ -33,7 +31,9 @@ class ConvertRawToUniInfo(Runnable):
             - scholarships: Scholarships associated to each course, as a dictionary
             - requisites: Requisites associated to each course or scholarship, as a dictionary
             - areas: Thematic Areas of Study, as a list
-        If you cannot extract something, just place the missing field as empty. Return only and exclusively the JSON structure, without backticks or external text.''',
+        If you cannot extract something, just place the missing field as empty. Return only and exclusively the JSON structure, without backticks or external text.
+                                         
+        {format_instructions}''',
         human_template='''Raw source to extract from:{raw}''')
 
         self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
@@ -43,7 +43,7 @@ class ConvertRawToUniInfo(Runnable):
         self.chain = self.prompt | self.llm | self.output_parser
 
     def invoke(self, raw):
-        return self.chain.invoke({'raw': raw})
+        return self.chain.invoke({'raw': raw, 'format_instructions': self.format_instructions})
 
 
 class ConvertRawToUserInfo(Runnable):
@@ -60,7 +60,9 @@ class ConvertRawToUserInfo(Runnable):
             - education_level: the education level. It is represented by a number, 0 stands for high school degree, 1 for bachelor's degree, 2 for master's degree and 3 for PhD. Make sure to convert the integer to string, with the previously defined convention.
             - preferences: Preferences of the user, represented as a dictionary with string associated to a number (its weight).
             - main_area: Main thematic academic area of the user, as a string
-        If you cannot extract something, just omit it.''',
+        If you cannot extract something, just omit it.
+                                         
+        {format_instructions}''',
         human_template='''Raw source to extract from: {raw} ''')
 
         self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
@@ -70,7 +72,7 @@ class ConvertRawToUserInfo(Runnable):
         self.chain = self.prompt | self.llm | self.output_parser
 
     def invoke(self, raw):
-        return self.chain.invoke({'raw': raw})
+        return self.chain.invoke({'raw': raw, 'format_instructions': self.format_instructions})
 
 class ConvertRawToPreferences(Runnable):
     def __init__(self, llm, memory=False):

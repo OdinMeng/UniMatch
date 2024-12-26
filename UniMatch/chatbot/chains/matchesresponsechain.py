@@ -13,12 +13,14 @@ class MatchesResponseChain(Runnable):
         Make short sentences, without sacrificing important details.
                                 
         You have access to chat history, user information, user prompt to personalize your answer.
-                                
+        
+        Do NOT include any information not mentioned in the matches.        
+                                               
         User Information:
         {user_info}
         
-        User Prompt:
-        {user_message}
+        Matches:
+        {matches}
                                 
         =========================== READ BELOW FOR FORMATTING! ===================================
                                 
@@ -31,8 +33,9 @@ class MatchesResponseChain(Runnable):
             ... continue until you finished all of the matches
         < End enumerated list >
         < Conclusion phrase: if the user has any further questions, they can either ask the chatbot or look for further documents to upload into the chatbot >
+        
         ''',
-        human_template='Matches: \n {matches}')
+        human_template='User Prompt: \n {matches}')
         self.prompt = generate_prompt_templates(prompt, memory=True)
 
         self.chain = self.prompt | self.llm

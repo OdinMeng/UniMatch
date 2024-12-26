@@ -21,6 +21,8 @@ from UniMatch.chatbot.chains.matchesresponsechain import MatchesResponseChain
 
 from UniMatch.chatbot.agents.userinfomanager import UserInfoManager
 
+from UniMatch.chatbot.chains.denyuserintentionchain import DenyUserIntentionChain
+
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
 
@@ -65,6 +67,8 @@ class MainChatbot:
         self.matchesreponder = MatchesResponseChain(llm = self.llm)
 
         self.userinfomanager = UserInfoManager(llm = self.llm)
+
+        self.denier = DenyUserIntentionChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -211,17 +215,47 @@ class MainChatbot:
 
         return response.content    
     '''
+    def handle_denial(self, user_input: Dict[str, str]) -> str:
+        input_message = {}
+        input_message['user_prompt'] = user_input['customer_input']
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        content = self.denier.invoke(input_message).content
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(content)
+
+        return content
+
 
     def handle_personal_info(self, user_input: Dict[str, str]) -> str:
         input_message = {}
+
+        if self.user_id == "-1":
+            return self.handle_denial(user_input)
 
         input_message['id'] = self.user_id
         input_message['customer_message'] = user_input['customer_input']
         input_message["chat_history"] = self.memory.get_session_history(
             self.user_id, self.conversation_id
         ).messages
-        
-        return self.userinfomanager.invoke(input_message).content
+
+        out = self.userinfomanager.invoke(input_message)
+        try:
+            content = out.content
+        except:
+            content = out['output']
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(content)
+
+        return content
     
     def handle_search_scholarships_and_internationals(self, user_input: Dict[str, str]) -> str:
         # We decided to merge this with the universities and courses since that they're implemented by the same chains
@@ -236,8 +270,12 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        user_info = self.userinfofetcher.invoke(self.user_id)
-        input_message['user_info'] = str(user_info)
+        if self.user_id == "-1":
+            input_message['user_info'] = "NO USER INFO AVAIBLE: USER IS IN GUEST MODE"
+
+        else:
+            user_info = self.userinfofetcher.invoke(self.user_id)
+            input_message['user_info'] = str(user_info)
 
         to_describe = self.uniinfosearcher.invoke({'customer_input': user_input['customer_input']})
         input_message['to_describe'] = to_describe
@@ -255,7 +293,9 @@ class MainChatbot:
 
         input_message['id'] = self.user_id
 
-        #TODO: HANDLE GUESTS (AKA USER_ID=-1)
+        if self.user_id == "-1":
+            return self.handle_denial(user_input)
+
         input_message['customer_message'] = user_input['customer_input']
         input_message["chat_history"] = self.memory.get_session_history(
             self.user_id, self.conversation_id
@@ -284,7 +324,9 @@ class MainChatbot:
         final_message = {}
 
         input_message['id'] = self.user_id
-        #TODO: HANDLE GUESTS (AKA USER_ID=-1)
+
+        if self.user_id == "-1":
+            return self.handle_denial(user_input)
 
         matches = self.matchesextractor.invoke(input_message)
 
