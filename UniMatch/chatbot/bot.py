@@ -355,13 +355,14 @@ class MainChatbot:
         case_rag = self.ragclassifier.invoke(input_message).content
 
         if case_rag == 'PDF':
-            # self.pdfprocesser.invoke() This will be done by using UI
+            # self.pdfprocesser.invoke() This will be done by using UI elements, to avoid excessive token usage
             output = self.pdfreasoner.invoke(input_message).content
         elif case_rag == 'link':
             # self.webprocesser.invoke() same as above
             output = self.webreasoner.invoke(input_message).content
         else:
-            output = 'The file you mentioned seems to be non-existant. Please retry.'
+            # This could be due to the main router's misclassification, so it will be handled as a None intention
+            output = self.handle_unknown_intent(input_message)
 
         memory.add_user_message(user_input["customer_input"])
         memory.add_ai_message(output)
@@ -417,8 +418,20 @@ class MainChatbot:
         return chitchat_output.content
 
     def handle_harmful(self, user_input: Dict[str, str])->str:
-        # TO DO
-        pass
+        input_message = {}
+
+        input_message["customer_input"] = user_input["customer_input"]
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+
+        bot_output = self.discourager.invoke(input_message).content
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+        memory.add_user_message(user_input["customer_input"])
+        memory.add_ai_message(bot_output)
+
+        return bot_output
 
 
     def save_memory(self) -> None:
@@ -441,7 +454,7 @@ class MainChatbot:
         # ================== Process Message Router ==================================| TO
         # If harmful                                                                  |
         if is_harmful:                                                               #|
-            return self.discourager.invoke(user_input).content   # TO DO: MOVE TO SELF.HANDLE_HARMFUL()                                                                                     #|
+            return self.handle_harmful(user_input)   # TO DO: MOVE TO SELF.HANDLE_HARMFUL()                                                                                     #|
         # If NOT harmful                                                             #|
         # ================== Main Router =============================================|
     

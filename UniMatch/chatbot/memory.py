@@ -1,6 +1,7 @@
 # Import necessary modules and classes
 import json
 from typing import Dict, List, Tuple, Optional
+import os
 
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.messages import BaseMessage
@@ -9,6 +10,8 @@ from langchain_core.messages.human import HumanMessage
 from langchain_core.runnables import ConfigurableFieldSpec
 from pydantic import BaseModel, Field
 
+# Base directory for chatlog files.
+BASE_DIR = os.path.dirname(__file__)
 
 class InMemoryHistory(BaseChatMessageHistory, BaseModel):
     """In-memory implementation of chat message history.
@@ -62,11 +65,11 @@ class MemoryManager:
         """
         Return JSON filename from username ID and conversation ID
         """
-        return f"{user_id}_{conversation_id}_history.json"
+        return os.path.join(BASE_DIR, 'chatlogs', f"{user_id}_{conversation_id}_history.json")
 
     def load_session_history(
         self, user_id: str, conversation_id: str            
-    ) -> Optional[BaseChatMessageHistory]:
+    ) -> Optional[InMemoryHistory]:
         """
         Loads session history from a JSON structure.
         Args:
@@ -74,12 +77,23 @@ class MemoryManager:
             conversation_id: conversation id
 
         Returns:
-            BaseChatMessageHistory if the session history exists
-            None if it doesn't exist
+            Nothing, it just modifies its insternal variables
         """
         filename = self.get_filename(user_id, conversation_id)
-
-        pass
+        try:
+            with open(filename, 'r') as f:
+                RAW_DATA = json.load(f)
+        except Exception as e:
+            return # Stops
+        
+        to_store = self.store[(user_id, conversation_id)]
+        for message in RAW_DATA:
+            if 'HumanMessage' in message.keys():
+                to_store.add_user_message(message['HumanMessage'])
+            elif 'AIMessage' in message.keys():
+                to_store.add_ai_message(message['AIMessage'])
+            else:
+                continue # Skips over invalid row
 
     def get_session_history(
         self, user_id: str, conversation_id: str
@@ -96,6 +110,7 @@ class MemoryManager:
         if (user_id, conversation_id) not in self.store:
             # Initialize new in-memory history if not already stored
             self.store[(user_id, conversation_id)] = InMemoryHistory()
+            self.load_session_history(user_id, conversation_id)
 
         return self.store[(user_id, conversation_id)]
 

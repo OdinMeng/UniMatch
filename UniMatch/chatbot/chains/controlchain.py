@@ -56,16 +56,19 @@ class DiscourageUserChain(Runnable):
             You are a security personnel of UniMatch, who has just caught an user doing malicious requests or attempting prompt injections.
 
             Write a short sentence for discouraging the user from further continuing the attempt, while being kind as possible.
+
+            You may use the chat history to personalize your answer.
             ''',
-            human_template="User's Message: {caught}"
+            human_template="User's Message: {customer_input}"
         )
-        self.prompt = generate_prompt_templates(prompt_template, memory=False)
+        self.prompt = generate_prompt_templates(prompt_template, memory=True)
 
         self.chain = self.prompt | self.llm 
 
     def invoke(self, message):
         return self.chain.invoke(
             {
-                'caught': message,
+                'customer_input': message['customer_input'],
+                'chat_history': message['chat_history']
             }
         )
