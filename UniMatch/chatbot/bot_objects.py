@@ -79,15 +79,18 @@ class UserInfo(BaseModel):
     """
     Represents information about the user and their preferences.
     """
-    name: str
-    age: int
-    country: str
-    education_level: str
+    name: Optional[str]
+    age: Optional[int]
+    country: Optional[str]
+    education_level: Optional[str]
     preferences: Optional[Dict[str, int]]
     main_area: Optional[str]
 
     def __str__(self) -> str:
-        preferences_list = ", ".join(f"{interest}: {weight}" for interest, weight in self.preferences.items())
+        if self.preferences is not None:
+            preferences_list = ", ".join(f"{interest}: {weight}" for interest, weight in self.preferences.items())
+        else:
+            preferences_list = 'No preferences Available'
         return (
             f"User Name: {self.name}\n"
             f"Country: {self.country}\n"

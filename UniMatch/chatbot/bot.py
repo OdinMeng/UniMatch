@@ -53,7 +53,7 @@ class MainChatbot:
         
         self.pdfprocesser = ProcessPDFChain()
         self.pdfreasoner = ReasoningPDFChain(llm = self.llm)
-        self.webprocesser = ProcessWebsiteChain(llm = self.llm)
+        self.webprocesser = ProcessWebsiteChain()
         self.webreasoner = ReasoningWebsiteChain(llm = self.llm)
 
         self.ragclassifier = ClassifyRAG(llm = self.llm)
@@ -230,7 +230,14 @@ class MainChatbot:
         memory.add_ai_message(content)
 
         return content
+    
+    def handle_process_externals(self, link: Optional[str]) -> None:
+        self.pdfprocesser.invoke()
 
+        if link is not None:
+            self.webprocesser.invoke(link)
+        
+        return "External Documents Processed"
 
     def handle_personal_info(self, user_input: Dict[str, str]) -> str:
         input_message = {}

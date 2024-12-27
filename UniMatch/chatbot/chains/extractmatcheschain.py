@@ -29,7 +29,8 @@ class ExtractMatchesChain(Runnable):
 
         id = message['id']
 
-        matches = curse.execute(self.query_get_matches, (id,))
+        matches = curse.execute(self.query_get_matches, (id,)).fetchall()
+        print(matches)
 
         RETVAL : Matches = Matches(matches=[])
         for match in matches:

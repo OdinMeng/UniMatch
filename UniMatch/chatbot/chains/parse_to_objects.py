@@ -53,7 +53,7 @@ class ConvertRawToUserInfo(Runnable):
         self.memory = False
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting information about a user of an application.
-        You have to extract the following informations and attempt to structure it in JSON:
+        You have to extract the following informations:
             - name: Name of the user
             - age: Age of the user
             - country: Country of the user
@@ -61,7 +61,8 @@ class ConvertRawToUserInfo(Runnable):
             - preferences: Preferences of the user, represented as a dictionary with string associated to a number (its weight).
             - main_area: Main thematic academic area of the user, as a string
         If you cannot extract something, just omit it.
-                                         
+
+        Please follow this formatting instructions:
         {format_instructions}''',
         human_template='''Raw source to extract from: {raw} ''')
 

@@ -7,7 +7,7 @@ from langchain.tools import BaseTool
 class UserInfoManager:
     def __init__(self, llm):
         self.llm = llm
-        self.toolkit = [InformUserTool(), ModifyBasicUserInfoTool(), ModifyBasicUserInfoTool()]
+        self.toolkit = [InformUserTool(), ModifyBasicUserInfoTool(), ModifyUserPreferencesTool()]
 
         prompt_template = PromptTemplate(
         system_template = """

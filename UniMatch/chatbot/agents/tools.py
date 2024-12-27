@@ -15,7 +15,6 @@ from langchain_openai import ChatOpenAI
 # Import external functions
 from UniMatch.data.user_info import modify_user_info, modify_user_preferences
 from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
-from UniMatch.chatbot.chains.userinforesponsechain import UserInfoResponseChain
 from UniMatch.chatbot.chains.extractmodificationrequestchain import ExtractModificationRequestChain, ModificationRequest
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToPreferences
 from UniMatch.chatbot.bot_objects import Preferences

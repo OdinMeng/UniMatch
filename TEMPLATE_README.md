@@ -72,15 +72,13 @@ The chatbot should retrieve and present information about the specific product o
   Describe how you generated messages for each user intention. Did you create the messages manually, use synthetic data, or leverage a dataset? Specify the method used and tools/scripts for generating the data.  
   Where are the generated messages stored (e.g., in a file, database, or another format)?
 
-For each intention we synthetically generated 50 messages, through LLMs (see the script `UniMatch/chatbot/router/generate_intentions.ipynb`), with an additional of 25 irrelevant messages.
+For each intention we synthetically generated 50 messages, through LLMs (see the script `UniMatch/chatbot/router/generate_intentions.ipynb`), with an additional of 25 irrelevant messages. Moreover, for the "Manage Personal Information" intention we created other fifty synthetic intentions, as by testing we saw that it was the most misclassified.
 
 ### 5.2 Semantic Router Training
 - **Encoder Type**
 We had mainly two choices for our router, regarding the encoder. Either we could have used an encoder from HuggingFace, or from OpenAI. To determine which one was the best for our intentions, we decided to train two baseline semantic routers and evaluated their accuracy scores accordingly; the one which showed the least signs of overfitting was picked for hyperparamter tuning.
 
-Output: OpenAI encoder had an 0.91 of accuracy on train and 0.95 on validation, while HuggingFace encoder had 0.84 on train and 0.93 on validation.
-
-Therefore, we picked the OpenAI encoder as it showed the best results. Let us note that the fact that the validation score is higher than the accuracy score; this might suggest a mild risk of underfitting.
+Output: OpenAI's encoder gave us an accuracy of 0.9855, while HuggingFace's encoder had a 0.9493 accuracy. OpenAI's encoder was chosen as it had the best performance, even if it takes longer to train.
 
 - **Other Hyperparameters: Aggregation method and Top K**
 To decide on the aggregation method, we decided to test each one of them and chose the one with the best result, as done similarly with encoders.
@@ -88,15 +86,15 @@ To decide on the aggregation method, we decided to test each one of them and cho
 **Results** (tabular format):
 | Aggregate | Train | Validate |
 | --------- | ----- | -------- |
-| mean      | 0.90  | 0.98     |
-| max       | 0.92  | 0.98     |
-| sum       | 0.91  | 0.95     |
+| mean      | 0.93  | 0.98     |
+| max       | 0.93  | 0.98     |
+| sum       | 0.94  | 0.98     |
 
-We choose `aggregation=max` as it had the best train and evaluation score.
+We choose `aggregation=sum` as it had the best train and evaluation score.
 
 Then to decide the `top_k` parameter, we decided to do the same as above with the following candidates of `top_k`: k=1 (low), k=5 (average), k=50 (high).
 
-**Results**: No variations in scores, meaning that in our case `top_k` is not influential. We chose `top_k=2` as it is the one that takes the least computational power.
+**Results**: No variations in scores, meaning that in our case `top_k` is not influential. We chose `top_k=5` as it represented a sort of mid point between the possible decisions.
 
 **Note**: A better alternative to this approach would have to use a GridSearchCV-similar approach; however as this is deemed to be too computationally expensive, we opted for an "evolutionary" approach.
 
@@ -133,14 +131,14 @@ For further details about the evaluation see the notebook at `UniMatch/chatbot/r
 
 As we fine-tuned our router classifier, we evaluated it with the test data:
 
-| Intention                              | Amount | Misclassified | Accuracy |
-| -------------------------------------- | ------ | ------------- | -------- |
-| Manage Personal Information            | 6      | 0             | 100%     |
-| Search Scholarships and Internationals | 6      | 0             | 100%     |
-| Search Universities and Courses        | 6      | 0             | 100%     |
-| Matchmaking                            | 5      | 0             | 100%     |
-| Query Matches                          | 5      | 0             | 100%     |
-| Use External Information               | 5      | 0             | 100%     |
-| Company Information                    | 6      | 0             | 100%     |
-| None                                   | 3      | 1             | 67%      |
-| Total                                  | 42     | 1             | 98%      |
+| Intentions                             | Total | Misclassified | Accuracy |
+| -------------------------------------- | ----- | ------------- | -------- |
+| Manage Personal Information            | 10    | 0             | 100%     |
+| Search Scholarships and Internationals | 6     | 0             | 100%     |
+| Search Universities                    | 6     | 1             | 83%      |
+| Matchmaking                            | 5     | 0             | 100%     |
+| Query Matches                          | 5     | 0             | 100%     |
+| Leverage RAG (User-Uploaded Files)     | 5     | 0             | 100%     |
+| Company Information                    | 6     | 0             | 100%     |
+| None                                   | 3     | 2             | 33%      |
+| All                                    | 46    | 3             | 85%      |

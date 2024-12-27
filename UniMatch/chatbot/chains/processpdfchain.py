@@ -38,11 +38,11 @@ class ReasoningPDFChain(Runnable):
             
             {context}
 
-            If you cannot get an answer from the context, just say that you don't know, don't try to make up an answer. Attempt to redirect the user towards making more precise questions, or to rephrase their request instead.
+            If you cannot get an answer from the context, just say that you don't know as you couldn't find the context, don't try to make up an answer. Attempt to redirect the user towards making more precise questions, or to rephrase their request instead.
+            
             Use three sentences maximum and keep the answer as concise as possible. 
-            You have access to the previous conversation history to personalize the conversation
 
-            If there are no questions at all, say that you have successfully analyzed the document and if the user has any more questions he can do them.
+            You have access to the previous conversation history to personalize the conversation
             ''',
             human_template='''Question: {question}'''
         )

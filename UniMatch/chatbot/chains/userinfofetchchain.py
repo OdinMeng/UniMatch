@@ -26,12 +26,15 @@ class UserInfoFetchChain(Runnable):
                                     ELSE A.AREANAME
                                 END
                             FROM
-                                USERS U, COUNTRIES C, USERPREFERENCES UP, AREAS A
+                                USERS U 
+                                    LEFT JOIN COUNTRIES C
+                                        ON U.COUNTRYCODE = C.COUNTRY
+                                    LEFT JOIN USERPREFERENCES UP
+                                        ON U.IDUSER = UP.USERID
+                                    LEFT JOIN AREAS A
+                                        ON U.MAINAREA = A.IDAREA
                             WHERE
-                                U.IDUSER = ? AND
-                                (U.COUNTRYCODE = C.COUNTRYCODE OR U.COUNTRYCODE IS NULL) AND
-                                U.IDUSER = UP.USERID AND
-                                (U.MAINAREA = A.IDAREA OR U.MAINAREA IS NULL);
+                                U.IDUSER = ?
 '''
 
     def invoke(self, userid):
@@ -44,6 +47,8 @@ class UserInfoFetchChain(Runnable):
 
         cursor.close()
         conn.close()
+
+        print(all_rows)
 
         RETVAL = ConvertRawToUserInfo(self.llm).invoke(all_rows)
 

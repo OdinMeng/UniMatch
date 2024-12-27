@@ -43,7 +43,8 @@ class MakeMatchesChain(Runnable):
             Format the output as the following:
                 - Ranking: the number you assigned
 
-            Format instructions: {format_instructions}
+            Please follow the following instructions: 
+            {format_instructions}
             """,
             human_template="""User Prompt: {customer_message}"""
         )   
@@ -113,6 +114,7 @@ class MakeMatchesChain(Runnable):
 
         # Reset matches and add best matches
         clear_matches(id)
+        print(best_candidates)
         add_matches(id, best_candidates)
 
         # Parse into Matches instance

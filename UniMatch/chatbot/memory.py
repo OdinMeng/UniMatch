@@ -154,4 +154,6 @@ class MemoryManager:
         with open(filename, "w") as f:
             json.dump(messages, f)
             f.close()
+
+        print("Session Saved")
         

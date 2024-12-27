@@ -1,6 +1,6 @@
 # This file defines the functions to interact with the database, for registration functionalities
 
-import loader
+from UniMatch.data import loader
 import sqlite3
 
 def register(username, password, educationlevel=None, age=None, countrycode=None, mainarea=None):
@@ -17,7 +17,7 @@ def register(username, password, educationlevel=None, age=None, countrycode=None
     # Preliminary checks
     if password == "":
         return -2
-    if educationlevel not in [0,1,2,3]:
+    if educationlevel not in ["High School", "Bachelor's Degree", "Master's Degree", "PhD"]:
         return -3
 
     # Registration attempt

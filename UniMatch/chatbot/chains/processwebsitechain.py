@@ -16,39 +16,23 @@ from UniMatch.chatbot.rag.query_pinecone import get_context_from_pineconedb
 load_dotenv()
 
 class ProcessWebsiteChain(Runnable):
-    def __init__(self, llm, memory=False):
+    def __init__(self):
         super().__init__()
-        self.llm = llm
-        self.memory = memory
 
-        self.find_link_prompt = PromptTemplate(
-            system_template='''You are a chatbot tasked with finding hyperlinks within a message. 
-            If there are no hyperlinks at all, return 0. If there are more, pick the first one you find.
-            ''',
-            human_template='''Message: {message}'''
-        )
-
-        self.link_finder = generate_prompt_templates(self.find_link_prompt, memory=self.memory)
         self.crawler = get_text_from_link
         self.translator = translate_docs
-        self.converter = ConvertRawToUniInfo(self.llm, memory=False)
 
-        self.chain = self.link_finder | self.llm
-
-    def invoke(self, message):
-        link = self.chain.invoke({'message': message['customer_input']})
-
-        if link.content == '0':
-            return 'No link found'
-        
+    def invoke(self, link):
         try:
-            docs = self.crawler(link.content)
+            docs = self.crawler(link)
         except Exception as e:
             print("!!! ERROR OCCURRED !!!", e)
             return -1 # Error flag
+        
         else:
             clear_db('htmlindex')
             store_documents('htmlindex', docs)
+            return 0
 
 class ReasoningWebsiteChain(Runnable):
     def __init__(self, llm, memory=False):

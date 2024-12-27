@@ -2098,5 +2098,205 @@
         "Intention": "None",
         "Message": "What's your favorite way to unwind after a long day?",
         "Id": 420
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I want to change my username to JohnDoe123.",
+        "Id": 421
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you update my password to securePass!2023?",
+        "Id": 422
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Please modify my age to 25.",
+        "Id": 423
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Change my country to Canada.",
+        "Id": 424
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I'd like to update my education level to master's.",
+        "Id": 425
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you add a preference for studying in urban areas?",
+        "Id": 426
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I want to remove my preference for small universities.",
+        "Id": 427
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Please change my user preferences to focus on engineering courses.",
+        "Id": 428
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you set my preferred study environment to quiet?",
+        "Id": 429
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I'd like to modify my username to Student2023.",
+        "Id": 430
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What is my current username?",
+        "Id": 431
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you tell me my age?",
+        "Id": 432
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What are my user preferences?",
+        "Id": 433
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Who am I in the system?",
+        "Id": 434
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you provide details about my education level?",
+        "Id": 435
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What country is listed in my profile?",
+        "Id": 436
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you remind me of my password?",
+        "Id": 437
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What preferences do I have for universities?",
+        "Id": 438
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "How can I view my personal information?",
+        "Id": 439
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What is my current education level?",
+        "Id": 440
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I want to change my username to FutureScholar.",
+        "Id": 441
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you update my password to MyNewPass123?",
+        "Id": 442
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Please modify my age to 30.",
+        "Id": 443
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Change my country to Australia.",
+        "Id": 444
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I'd like to update my education level to bachelor's.",
+        "Id": 445
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you add a preference for online courses?",
+        "Id": 446
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I want to remove my preference for part-time studies.",
+        "Id": 447
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Please change my user preferences to focus on business courses.",
+        "Id": 448
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you set my preferred study environment to collaborative?",
+        "Id": 449
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "I'd like to modify my username to GlobalLearner.",
+        "Id": 450
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What is my current username?",
+        "Id": 451
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you tell me my age?",
+        "Id": 452
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What are my user preferences?",
+        "Id": 453
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Who am I in the system?",
+        "Id": 454
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you provide details about my education level?",
+        "Id": 455
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What country is listed in my profile?",
+        "Id": 456
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "Can you remind me of my password?",
+        "Id": 457
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What preferences do I have for universities?",
+        "Id": 458
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "How can I view my personal information?",
+        "Id": 459
+    },
+    {
+        "Intention": "manage_personal_info",
+        "Message": "What is my current education level?",
+        "Id": 460
     }
 ]
