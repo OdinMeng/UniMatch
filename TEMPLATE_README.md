@@ -1,21 +1,26 @@
-# CompanyName
+# UniMatch
 
 This README.md template is designed to provide a clear and structured guide for documenting your chatbot project. It outlines the essential sections that should be included in your repository to ensure that anyone reviewing or contributing to the project can easily understand its functionality, setup process, and testing methodology. By following this template, you'll ensure that your project is well-documented, making it easier for team members and future contributors to maintain and extend the chatbot.
 
 ## 1. Project Overview
 
-- **Company Name**: [Company Name]
-- **Group X**: [List of contributors]
+- **Company Name**: UniMatch
+- **Group 10**:
+   - Dino Meng - 20241265
+   - Lourenço Passeiro - 20221838
+   - Miguel Marques - 20221839
+   - Peter Lekszycki - 20221840
+   - Tomás Gonçalves - 20221894
 - **Description**:  
   Provide a concise overview of the company and the chatbot's purpose. Outline its core functionality and the intended use cases it addresses, including how it interacts with users, the types of queries it handles, and its overall objective.
 
 ---
 
-## 2. How to Test the Chatbot
+## 2. How to Test the Chatbot - TODO
 
 ### 2.1 Prerequisites
 
-- **Python Version**: [Specify required version of Python]
+- **Python Version**: Python 3.12.7
 - **Dependencies**:  
   List all the required libraries and frameworks.
 - **Environment Setup**:  
@@ -25,19 +30,21 @@ This README.md template is designed to provide a clear and structured guide for 
 
 Provide a clear, step-by-step guide on how to launch and interact with the chatbot. Include any necessary commands, parameters, or configurations. Groups should provide information of an existing user so i can test the chatbot using information of that user, i will also test the registration process.
 
-## 3. Database Schema
+## 3. Database Schema - TODO
 
 ### 3.1 Database Overview and Schema Diagram
 
 Provide an overview of the database used by the chatbot system. Include a diagram of the database schema to visually represent the structure of tables, their relationships, and data flow. (with image)
 
-### 3.2 Table Descriptions
+![UNIMATCH DATABASE SCHEMA](images/database_schema.svg)
+
+### 3.2 Table Descriptions - TODO
 
 Describe each table in the database schema, including its columns and their purpose.
 
 ---
 
-## 4. User Intentions
+## 4. User Intentions - TODO
 
 ### 4.1 Implemented Intentions
 
@@ -47,7 +54,7 @@ List and briefly describe the user intentions that the chatbot is designed to ha
 - **Order Status**: User queries the status of an existing order based on an order ID.
 - **Create Order**: User intends to create a new order, and the chatbot processes the order request.
 
-### 4.2 How to Test Each Intention
+### 4.2 How to Test Each Intention - TODO (Dino)
 
 For each intention, provide 3 examples of test messages that users can use to verify the chatbot's functionality. Include both typical and edge-case inputs to ensure the chatbot handles various scenarios.
 
@@ -64,7 +71,7 @@ The chatbot should retrieve and present information about the specific product o
 
 ---
 
-## 5. Intention Router
+## 5. Intention Router - DONE
 
 ### 5.1 Intention Router Implementation
 
@@ -102,7 +109,7 @@ For further details about the evaluation see the notebook at `UniMatch/chatbot/r
 
 ---
 
-## 6. Intention Router Accuracy Testing Results
+## 6. Intention Router Accuracy Testing Results - DONE
 
 ### Methodology
 
