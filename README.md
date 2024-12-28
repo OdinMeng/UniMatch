@@ -213,14 +213,15 @@ UniMatch's chatbot is designed to handle the following user intentions:
 3. Give me universities with courses in magic -> The bot tells the user that no such university could be found and encourages the user to consider into looking other programmes
 
 - **Make Matches**
-Note: this is a lengthy operation and could take minutes for the chatbot to complete.
+
+*Note: this is a lengthy operation and could take minutes for the chatbot to complete.*
 
 1. I want some matches for universities. Look for universities in Hungary -> The chatbot will return five possible matches, representing different courses in the Technical University of Budapest.
 2. Make me matches, with universities in Draconia -> Error occurs due to the absurdity of the input and the chatbot will communicate such result
 3. Make matches for universities, make it various universities -> The chatbot will successfully make matches with five universities, each being a different course of a different university.
 
 - **Query Maches**
-1. Query my previously-made matches. -> The chabot will successfully query your previously-made matches, the descriptions being almost identical 
+1. Query my previously-made matches. -> The chatbot will successfully query your previously-made matches, the descriptions being almost identical 
 2. Look at my previous matches and focus on explaining why they are a good fit for me -> Same as above, but the chatbot will explain the compatibility between your preferences and the university more clearly, all while recalling your user preferences.
 3. Search my matches and find potential incompatibilities -> Same as above, but the chatbot tries to explain some potential incompatibilities with the user preferences
 
