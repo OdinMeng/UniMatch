@@ -133,9 +133,9 @@ Here is a detailed description of the database schema given above.
 - _CourseDescription_ (`TEXT`): Description of the course.
 - _Duration_ (`INTEGER`): Duration of the course (in years).
 - _Tuition_ (`INTEGER`): Tuition fees for the course.
-- _AcceptanceStandards_ (`INTEGER`): Standards for acceptance.
+- _AcceptsInternationals_ (`BOOLEAN`): Whether the course accepts international students or not.
 - _Area_ (`INTEGER`): Foreign key referencing the area (linked to `Areas`).
-- _Language_ (`TEXT`): Language of instruction for the course.
+- _Language_ (`TEXT`): Language of instruction for the course. Can be more than one language.
 - Note: Most fields are optional, as information could not be available for us.
 
 **5. Subjects Table**
