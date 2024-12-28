@@ -1,8 +1,8 @@
 # UniMatch
 
-This README.md template is designed to provide a clear and structured guide for documenting your chatbot project. It outlines the essential sections that should be included in your repository to ensure that anyone reviewing or contributing to the project can easily understand its functionality, setup process, and testing methodology. By following this template, you'll ensure that your project is well-documented, making it easier for team members and future contributors to maintain and extend the chatbot.
+This is a complete description of the project *UniMatch* created for the *Capstone Project* at NOVA IMS Information Management School.
 
-## 1. Project Overview - DONE
+## 1. Project Overview 
 
 - **Company Name**: UniMatch
 - **Group 10**:
@@ -13,6 +13,10 @@ This README.md template is designed to provide a clear and structured guide for 
    - Tomás Gonçalves - 20221894
 - **Description**:  
   UniMatch is an AI-powered platform to guide students in their higher education journey. It provides a personalized search engine for universities and customized recommendations on universities (called *matches*); moreover, it is also able to analyze external documents and answer specific questions about it. It interacts with users through a friendly chatbot who is able to query the universities database and provide tailored answers. The overall objective of UniMatch is to offer students a starting point for their path in higher education, enabling them to explore their options in a deeper manner leveraging AI.
+
+<p align="center">
+  <img src="images/UniMatch logotipo.png" />
+</p>
 
 ---
 
@@ -94,7 +98,9 @@ Alternatively, if a more tech-savvy approach is preferred, you can run the CLI-b
 
 UniMatch uses the following database schema to store information about users and universities:
 
-![UNIMATCH DATABASE SCHEMA](images/database_schema.svg)
+<p align="center">
+  <img src="images/database_schema.svg" />
+</p>
 
 ### 4.2 Table Descriptions
 Here is a detailed description of the database schema given above.
