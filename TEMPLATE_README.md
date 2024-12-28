@@ -175,7 +175,7 @@ UniMatch's chatbot is designed to handle the following user intentions:
 
 - **Search Universities, Courses, Scholarships and International Opportunities**
 1. Do you have universities with courses in Artificial Intelligence? -> The chatbot should successfully provide a tailored answer describing the Bachelor's degree course in "Artificial Intelligence and Data Analytics" at the University of Trieste. 
-2. Search for courses specializing in Economy -> Same as above, but with another course
+2. Do you have scholarships in Trieste? -> The chatbot successfully finds a scholarship and describes it
 3. Give me universities with courses in magic -> The bot tells the user that no such university could be found and encourages the user to consider into looking other programmes
 
 - **Make Matches**
@@ -209,7 +209,7 @@ Note: Upload the following files to the chatbot for testing the below prompts
 
 - **Chitchat**
 1. Hi! Do you like skiing?
-2. Greetings, could you tell me what is 5+5?
+2. Who is Dirichlet?
 3. When is summer holidays in San Francisco?
 
 In each prompt the chatbot will tell that they are not specialized in such topics, while providing a friendly answer. In any way, the chatbot will attempt to redirect the user towards making more pertinent prompts related to universities, scholarships, et cetera...
