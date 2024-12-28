@@ -1,6 +1,6 @@
 import streamlit as st
 from UniMatch.data.login import validate_login, handle_login
-
+import time
 
 # Login Page
 def login_page():
@@ -12,6 +12,7 @@ def login_page():
 
     if st.button("Back"):
         st.session_state["show_login"] = False
+        st.rerun()
 
     if login_button:
         login_result = validate_login(username, password) 
@@ -21,6 +22,9 @@ def login_page():
             st.session_state["show_login"] = False
             st.session_state['user_id'] = login_result
             st.success(handle_login(login_result))
+            time.sleep(1)
+            st.rerun()
+
         else:
             st.error(handle_login(login_result))
 

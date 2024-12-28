@@ -2,6 +2,7 @@ import streamlit as st
 from UniMatch.data.register import register, handle_registration
 from UniMatch.data.user_info import modify_user_preferences
 from UniMatch.data.database_auxiliars import get_areas, get_countries
+import time
 
 # Register Page
 def register_page():
@@ -67,6 +68,7 @@ def register_page():
 
     if st.button("Back"):
         st.session_state["show_register"] = False
+        st.rerun()
 
     if register_button:
         # check weights before registering
@@ -74,9 +76,6 @@ def register_page():
         if w1 + w2 + w3 != 100:
             st.error("Invalid Preferences Weight")
             error_flag = True
-
-        else:
-            st.success("Good weights")
 
         if not error_flag:
             result = register(**payload)
@@ -87,6 +86,8 @@ def register_page():
                 st.session_state["show_login"] = False
                 st.session_state['user_id'] = result
                 st.success(handle_registration(result))
+                time.sleep(1)
+                st.rerun()
 
             else:
                 st.error(handle_registration(result))

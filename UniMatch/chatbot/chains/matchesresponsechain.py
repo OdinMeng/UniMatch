@@ -14,7 +14,7 @@ class MatchesResponseChain(Runnable):
                                 
         You have access to chat history, user information, user prompt to personalize your answer.
         
-        Do NOT include any information not mentioned in the matches.        
+        Do NOT include any information not mentioned in the matches.
                                                
         User Information:
         {user_info}
@@ -34,6 +34,7 @@ class MatchesResponseChain(Runnable):
         < End enumerated list >
         < Conclusion phrase: if the user has any further questions, they can either ask the chatbot or look for further documents to upload into the chatbot >
         
+        You may modify the structure to satisfy further user's specification.
         ''',
         human_template='User Prompt: \n {matches}')
         self.prompt = generate_prompt_templates(prompt, memory=True)

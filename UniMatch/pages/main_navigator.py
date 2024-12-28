@@ -24,6 +24,8 @@ def add_header():
                 st.session_state["logged_in"] = False
                 st.session_state["current_user"] = ""
                 st.session_state['user_id'] = '-1'
+                st.rerun()
+                
         else:
             if st.button("Login"):
                 st.session_state["show_login"] = True

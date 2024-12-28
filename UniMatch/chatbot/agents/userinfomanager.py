@@ -1,8 +1,6 @@
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from UniMatch.chatbot.agents.tools import InformUserTool, ModifyBasicUserInfoTool, ModifyUserPreferencesTool
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_agent_prompt_template
-from langgraph.prebuilt import create_react_agent
-from langchain.tools import BaseTool
 
 class UserInfoManager:
     def __init__(self, llm):

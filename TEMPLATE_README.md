@@ -2,7 +2,7 @@
 
 This README.md template is designed to provide a clear and structured guide for documenting your chatbot project. It outlines the essential sections that should be included in your repository to ensure that anyone reviewing or contributing to the project can easily understand its functionality, setup process, and testing methodology. By following this template, you'll ensure that your project is well-documented, making it easier for team members and future contributors to maintain and extend the chatbot.
 
-## 1. Project Overview
+## 1. Project Overview - DONE
 
 - **Company Name**: UniMatch
 - **Group 10**:
@@ -12,62 +12,207 @@ This README.md template is designed to provide a clear and structured guide for 
    - Peter Lekszycki - 20221840
    - Tomás Gonçalves - 20221894
 - **Description**:  
-  Provide a concise overview of the company and the chatbot's purpose. Outline its core functionality and the intended use cases it addresses, including how it interacts with users, the types of queries it handles, and its overall objective.
+  UniMatch is an AI-powered platform to guide students in their higher education journey. It provides a personalized search engine for universities and customized recommendations on universities (called *matches*); moreover, it is also able to analyze external documents and answer specific questions about it. It interacts with users through a friendly chatbot who is able to query the universities database and provide tailored answers. The overall objective of UniMatch is to offer students a starting point for their path in higher education, enabling them to explore their options in a deeper manner leveraging AI.
 
 ---
 
-## 2. How to Test the Chatbot - TODO
+## 2. How to Test the Chatbot - DONE
 
 ### 2.1 Prerequisites
 
 - **Python Version**: Python 3.12.7
-- **Dependencies**:  
-  List all the required libraries and frameworks.
-- **Environment Setup**:  
-  Instructions for setting up the environment, such as creating a virtual environment or conda environment.
 
+- **Dependencies**: If you wish to run UniMatch without using any dedicated environments, you can manually install the following libraries:
+
+**LangChain Ecosystem:**  
+`langchain=0.3.13`, `langchain-openai=0.2.10`, `langchain-pinecone=0.2.0`, `langchain-community=0.3.4`
+
+**Pinecone Integration:**  
+`pinecone-client=5.0.1`
+
+**OpenAI Integration:**  
+`openai=1.55.3`
+
+**Data Processing:**  
+`pandas=2.2.3`, `openpyxl=3.1.3`
+
+- **Environment Setup**: To set up the Anaconda environment, open the command line at the base folder (`./UniMatch`) and type the following commands:
+  - `conda create -n UniMatch python=3.12.7`
+  - `conda activate UniMatch`
+  - `pip install -r requirements.txt`
+If any prompts come out, type `y` to proceed.
+  
+If you wish to uninstall the environment, you can simply type `conda remove -n UniMatch --all` and type `y` to every prompt. Do not forget to de-activate your environment by typing `conda deactivate`!
+  
 ### 2.2 How to Run the Chatbot
 
 Provide a clear, step-by-step guide on how to launch and interact with the chatbot. Include any necessary commands, parameters, or configurations. Groups should provide information of an existing user so i can test the chatbot using information of that user, i will also test the registration process.
 
-## 3. Database Schema - TODO
+Assuming the environment set up has been done, the user can run the web-based app by simply typing `streamlit run app.py`.
+
+Users can log-in into a dummy user with the following credentials:
+- username: `Alice`
+- password: `P@ssw0rd!`
+
+However, let it be noted that it is not strictly necessary to log in to interact with the chatbot; it is possible use the chatbot in *Guest Mode*, meaning without being logged in. However this is meant to be as some sort of *"trial version"* of the product, as most of the crucial features involving personalization are unavailable.
+
+Alternatively, if a more tech-savvy approach is preferred, you can run the CLI-based interface by typing `python app_cli.py`. However this type is interface is more limited and features involving user registration and personalization are unavailable.
+
+## 3. Database Schema - DONE
 
 ### 3.1 Database Overview and Schema Diagram
 
 Provide an overview of the database used by the chatbot system. Include a diagram of the database schema to visually represent the structure of tables, their relationships, and data flow. (with image)
 
+UniMatch uses the following database schema to store information about users and universities:
+
 ![UNIMATCH DATABASE SCHEMA](images/database_schema.svg)
 
 ### 3.2 Table Descriptions - TODO
+Here is a detailed description of the database schema given above.
 
-Describe each table in the database schema, including its columns and their purpose.
+**1. Users Table**
+- _IDUser_ (`INTEGER`): Unique identifier for the user. This will be used as a key for the bot.
+- _Username_ (`TEXT`): User's chosen username. This will be used as a unique identifier for the login and registration system.
+- _Age_ (`INTEGER`): User's age.
+- _Password_ (`TEXT`): User's password.
+- _CountryCode_ (`TEXT`): Code referencing the user's country.
+- _CountryOfArrival_ (`TEXT`): The country where the user is arriving or located.
+- _MainArea_ (`INTEGER`): Foreign key referencing the main area of interest (linked to `Areas`).
+
+**2. UserPreferences Table**
+- _IDPreference_ (`INTEGER`): Unique identifier for the preference.
+- _IDUser_ (`INTEGER`): Foreign key referencing the user.
+- _Preferences_ (`TEXT`): Description of the user's preferences.
+- _Weight_ (`INTEGER`): Priority or weight assigned to the preference. All weights for each user must sum to 100; this will be checked with back-end external functions.
+
+**3. Universities Table**
+- _IDUniversity_ (`INTEGER`): Unique identifier for the university.
+- _CountryCode_ (`TEXT`): Code of the country where the university is located.
+- _UniversityName_ (`TEXT`): Name of the university.
+- _MainWebsite_ (`TEXT`): Main website of the university.
+
+**4. Courses Table**
+- _IDCourse_ (`INTEGER`): Unique identifier for the course.
+- _IDUniversity_ (`INTEGER`): Foreign key referencing the university.
+- _CourseName_ (`TEXT`): Name of the course.
+- _CourseDescription_ (`TEXT`): Description of the course.
+- _Duration_ (`INTEGER`): Duration of the course (in years).
+- _Tuition_ (`INTEGER`): Tuition fees for the course.
+- _AcceptanceStandards_ (`INTEGER`): Standards for acceptance.
+- _Area_ (`INTEGER`): Foreign key referencing the area (linked to `Areas`).
+- _Language_ (`TEXT`): Language of instruction for the course.
+- Note: Most fields are optional, as information could not be available for us.
+
+**5. Subjects Table**
+- _IDSubject_ (`INTEGER`): Unique identifier for the subject.
+- _IDCourse_ (`INTEGER`): Foreign key referencing the course.
+- _SubjectName_ (`TEXT`): Name of the subject.
+- _SubjectDescription_ (`TEXT`): Description of the subject.
+- _ECTS_ (`REAL`): Number of European Credit Transfer and Accumulation System credits.
+- _WeekHours_ (`REAL`): Weekly hours allocated for the subject.
+- _Semester_ (`REAL`): The semester in which the subject is offered.
+- Note: Most fields are optional, as information could not be available for us.
+
+**6. Internationals Table**
+- _IDInternational_ (`INTEGER`): Unique identifier for international data.
+- _IDUniversity_ (`INTEGER`): Foreign key referencing the university.
+- _Destination_ (`TEXT`): Destination country or university.
+
+**7. Scholarships Table**
+- _IDScholarship_ (`INTEGER`): Unique identifier for the scholarship.
+- _IDUniversity_ (`INTEGER`): Foreign key referencing the university.
+- _ScholarshipName_ (`TEXT`): Name of the scholarship.
+- _MaxAmount_ (`REAL`): Maximum monetary amount covered.
+- _MinAmount_ (`REAL`): Minimum monetary amount covered.
+- _Benefits_ (`TEXT`): Description of the benefits offered.
+- Note: if the scholarship offers a constant amount, we put _MaxAmount_ = _MinAmount_
+
+**8. Requisites Table**
+- _IDRequisite_ (`INTEGER`): Unique identifier for the requisite.
+- _IDCourse_ (`INTEGER`): Foreign key referencing the course.
+- _IDScholarship_ (`INTEGER`): Foreign key referencing the scholarship.
+- _Requisites_ (`TEXT`): Requirements or prerequisites.
+- Note: Usually a requisite references either a course or a scholarship. Therefore _IDCourse_ and _IDScholarship_ are both optional fields, but only one should be non-null.
+
+**9. Areas Table**
+- _IDArea_ (`INTEGER`): Unique identifier for the area.
+- _AreaName_ (`TEXT`): Name of the area 
+
+**10. Matches Table**
+- _IDUser_ (`INTEGER`): Foreign key referencing the user.
+- _IDScholarship_ (`INTEGER`): Foreign key referencing scholarships.
+
+
+**11. Countries Table**
+- _CountryCode_ (`TEXT`): Unique code for the country (e.g., ISO country code).
+- _Country_ (`TEXT`): Name of the country.
+- Note: this is a simple hash-table to convert country codes to countries.
 
 ---
 
-## 4. User Intentions - TODO
+## 4. User Intentions - DONE
 
 ### 4.1 Implemented Intentions
 
-List and briefly describe the user intentions that the chatbot is designed to handle. For example:
+UniMatch's chatbot is designed to handle the following user intentions:
 
-- **Product Information**: User requests details about a specific product or product category.
-- **Order Status**: User queries the status of an existing order based on an order ID.
-- **Create Order**: User intends to create a new order, and the chatbot processes the order request.
+- **Manage Personal Information**: User either requests to modify his personal information or asks the chatbot to describe himself, including user preferences.
+- **Search Universities, Courses, Scholarships and International Opportunities**: User wants to search for universities, courses, scholarships or international opportunities available in the system's database and a brief description of it.
+- **Make Matches**: User wants the chatbot to make matches for his universities, giving a good amount of possibilities and starting points.
+- **Query Matches**: User wants to search the matches that the chatbot has previously done.
+- **Upload External Files**: User wants to upload external files containing information about universities, courses or similarly related topics. 
+- **Analyze External Files**: Having uploaded the external files, user wants to analyze the file by making some specific questions about it.
+- **Get Company Information**: User wants to receive information about the company UniMatch and what it offers.
+- **Chitchat**: User intends to simply make chatter with the chatbot. 
 
 ### 4.2 How to Test Each Intention - TODO (Dino)
 
-For each intention, provide 3 examples of test messages that users can use to verify the chatbot's functionality. Include both typical and edge-case inputs to ensure the chatbot handles various scenarios.
+- **Manage Personal Information**
+1. Who am I? -> The chatbot should provide a clear and concise profile of yourself.
+2. Change my age to 25 -> The chatbot should successfully modify your age to 25 and communicate you such result.
+3. I want to change my user preferences; now I prefer to live in a chill town and study in a natural campus -> The chabot should successfully change your user preferences and communicate such results.
 
-#### Product Information
+- **Search Universities, Courses, Scholarships and International Opportunities**
+1. Do you have universities with courses in Artificial Intelligence? -> The chatbot should successfully provide a tailored answer describing the Bachelor's degree course in "Artificial Intelligence and Data Analytics" at the University of Trieste. 
+2. Search for courses specializing in Economy -> Same as above, but with another course
+3. Give me universities with courses in magic -> The bot tells the user that no such university could be found and encourages the user to consider into looking other programmes
 
-**Test Messages:**
+- **Make Matches**
+Note: this is a lengthy operation and could take minutes for the chatbot to complete.
 
-1. "Tell me about the latest phone models."
-2. "Give me more details about the tablet in your store."
-3. "What products do you offer in the electronics section?"
+1. I want some matches for universities. Look for universities in Hungary -> The chatbot will return five possible matches, representing different courses in the Technical University of Budapest.
+2. Make me matches, with universities in Draconia -> Error occurs due to the absurdity of the input and the chatbot will communicate such result
+3. Make matches for universities, make it various universities -> The chatbot will successfully make matches with five universities, each being a different course of a different university.
 
-**Expected Behavior:**  
-The chatbot should retrieve and present information about the specific product or category the user is inquiring about.
+- **Query Maches**
+1. Query my previously-made matches. -> The chabot will successfully query your previously-made matches, the descriptions being almost identical 
+2. Look at my previous matches and focus on explaining why they are a good fit for me -> Same as above, but the chatbot will explain the compatibility between your preferences and the university more clearly, all while recalling your user preferences.
+3. Search my matches and find potential incompatibilities -> Same as above, but the chatbot tries to explain some potential incompatibilities with the user preferences
+
+- **Upload External Files**
+This is handled through user UI
+
+- **Analyze External Files**
+Note: Upload the following files to the chatbot for testing the below prompts
+- *PDF*: https://sites.units.it/internationalia/moduli/Information%20sheet%20Trieste.pdf
+- *Website Link*: https://www.ulisboa.pt/en/curso/mestrado/data-science
+
+1. I have uploaded a PDF file. What are the main campuses? -> Bot successfully finds the answer, indicating relevant elements
+2. I have uploaded a link to a website. What is the course about? -> Same as above, but with another type of content
+3. I have uploaded a PDF file. What is 1+1? -> Bot says that he couldn't find the answer in the context
+
+- **Get Company Information**
+1. What is UniMatch? -> Bot successfully describes what is UniMatch
+2. Is is true that UniMatch is expensive? -> Bot finds no context about the information as is it not indicated in any of the files.
+3. Who founded UniMatch? -> Bot successfully describes what kind of people founded UniMatch
+
+- **Chitchat**
+1. Hi! Do you like skiing?
+2. Greetings, could you tell me what is 5+5?
+3. When is summer holidays in San Francisco?
+
+In each prompt the chatbot will tell that they are not specialized in such topics, while providing a friendly answer. In any way, the chatbot will attempt to redirect the user towards making more pertinent prompts related to universities, scholarships, et cetera...
 
 ---
 

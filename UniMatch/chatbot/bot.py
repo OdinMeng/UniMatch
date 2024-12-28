@@ -26,6 +26,8 @@ from UniMatch.chatbot.chains.denyuserintentionchain import DenyUserIntentionChai
 from UniMatch.chatbot.memory import MemoryManager
 from UniMatch.chatbot.router.loader import load_intention_classifier
 
+from UniMatch.chatbot.chains.handleerrorchain import HandleErrorChain
+
 #TODO: DELETE
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToPreferences
 
@@ -69,6 +71,7 @@ class MainChatbot:
         self.userinfomanager = UserInfoManager(llm = self.llm)
 
         self.denier = DenyUserIntentionChain(llm = self.llm)
+        self.errorhandler = HandleErrorChain(llm = self.llm)
 
         # Map intent names to their corresponding reasoning and response chains
         self.chain_map = {
@@ -160,7 +163,7 @@ class MainChatbot:
             The agent instance for the intent.
         """
         return self.agent_map[intent]
-
+    
     def get_user_intent(self, user_input: Dict):
         """Classify the user intent based on the input text.
 
@@ -215,6 +218,24 @@ class MainChatbot:
 
         return response.content    
     '''
+    def handle_error(self, error_input: Dict[str, str]) -> str:
+        """Fallback chain to handle errors."""
+        input_message = {}
+        input_message['user_prompt'] = error_input['customer_input']
+        input_message["chat_history"] = self.memory.get_session_history(
+            self.user_id, self.conversation_id
+        ).messages
+        input_message['exception'] = error_input['exception']
+
+        content = self.errorhandler.invoke(input_message).content
+
+        memory = self.memory.get_session_history(self.user_id, self.conversation_id)
+
+        memory.add_user_message(error_input["customer_input"])
+        memory.add_ai_message(content)
+
+        return content
+    
     def handle_denial(self, user_input: Dict[str, str]) -> str:
         input_message = {}
         input_message['user_prompt'] = user_input['customer_input']
@@ -251,7 +272,13 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        out = self.userinfomanager.invoke(input_message)
+        try:
+            out = self.userinfomanager.invoke(input_message)
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
+        
         try:
             content = out.content
         except:
@@ -287,7 +314,12 @@ class MainChatbot:
         to_describe = self.uniinfosearcher.invoke({'customer_input': user_input['customer_input']})
         input_message['to_describe'] = to_describe
 
-        response = self.uniinforeponser.invoke(input_message).content
+        try:
+            response = self.uniinforeponser.invoke(input_message).content
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory.add_user_message(user_input["customer_input"])
         memory.add_ai_message(response)
@@ -308,7 +340,12 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        matches = self.matchmaker.invoke(input_message)
+        try:
+            matches = self.matchmaker.invoke(input_message)
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         final_message['id'] = self.user_id
         final_message['user_message'] = user_input['customer_input']
@@ -317,7 +354,12 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        out = self.matchesreponder.invoke(final_message).content
+        try:
+            out = self.matchesreponder.invoke(final_message).content
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory = self.memory.get_session_history(self.user_id, self.conversation_id)
         memory.add_user_message(user_input["customer_input"])
@@ -346,7 +388,12 @@ class MainChatbot:
 
         memory = self.memory.get_session_history(self.user_id, self.conversation_id)
 
-        out = self.matchesreponder.invoke(final_message).content
+        try:
+            out = self.matchesreponder.invoke(final_message).content
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory.add_user_message(user_input["customer_input"])
         memory.add_ai_message(out)
@@ -388,7 +435,12 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        output = companyinfo_chain.invoke(input_message)
+        try:
+            output = companyinfo_chain.invoke(input_message)
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory.add_user_message(user_input["customer_input"])
         memory.add_ai_message(output.content)
@@ -417,7 +469,12 @@ class MainChatbot:
 
         memory = self.memory.get_session_history(self.user_id, self.conversation_id)
 
-        chitchat_output = chitchat_reasoning_chain.invoke(input_message)
+        try:
+            chitchat_output = chitchat_reasoning_chain.invoke(input_message)
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory.add_user_message(user_input["customer_input"])
         memory.add_ai_message(chitchat_output.content)
@@ -432,7 +489,12 @@ class MainChatbot:
             self.user_id, self.conversation_id
         ).messages
 
-        bot_output = self.discourager.invoke(input_message).content
+        try:
+            bot_output = self.discourager.invoke(input_message).content
+        except Exception as e:
+            print("DEBUG: ERROR OCCURRED", e)
+            user_input['exception'] = str(e)
+            return self.handle_error(user_input)
 
         memory = self.memory.get_session_history(self.user_id, self.conversation_id)
         memory.add_user_message(user_input["customer_input"])

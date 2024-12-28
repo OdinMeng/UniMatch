@@ -39,7 +39,6 @@ def stream_text(text):
 
 
 def chatbot_page():
-
     st.title("UniMatch Chatbot")
 
     # Chat history container
@@ -131,7 +130,7 @@ Feel free to ask me anything! 😊""")
             with st.chat_message('human'):
                 st.write_stream(stream_text(dummy_input))
 
-            dummy_answer = "Sure! I will analyze the external files you provided. This might become a lengthy operation, so be patient!"
+            dummy_answer = "Sure! I will analyze the external files you provided. This is a lengthy operation and can take minutes, so please be patient!"
             st.session_state["chat_history"].append({'AIMessage': dummy_answer})
 
             # Write as stream
