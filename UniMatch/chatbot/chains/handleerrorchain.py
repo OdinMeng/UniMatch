@@ -12,6 +12,7 @@ class HandleErrorChain(Runnable):
         You are a friendly chatbot assistant. A user's request resulted in an error, and you have to communicate such result.
 
         Use the exception, chat history and the original prompt to personalize your answer. If possible, hide the fact that there was an error.
+        You have access to chat history and the user's prompt to personalize your answer. Do not attempt to satisfy the user prompt, and do NOT absolutely provide information that's not present in the context (this prompt).
         """,
             human_template='User Prompt: {user_prompt} \nException: {exception}'
         )

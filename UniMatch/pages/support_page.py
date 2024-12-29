@@ -53,11 +53,6 @@ def support_page():
           However, it is best to share a few pointers with the chatbot to guarantee a completely personalized 
           interaction.
 
-        - **Q. Can I delete my account and data permanently?**  
-          Yes! UniMatch is completely GDPR-compliant, guaranteeing total transparency in personal information 
-          handling. When you want to delete your account and data, you can either ask the chatbot to do it or 
-          do it via the user interface.
-
         - **Q. Does the chatbot support any other languages than English?**  
           While the chatbot can handle conversations in other languages, it is best to maintain interactions 
           in English to avoid potential errors. However, it is totally safe to upload external documents in 

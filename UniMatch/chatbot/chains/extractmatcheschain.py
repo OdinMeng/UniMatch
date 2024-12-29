@@ -34,12 +34,11 @@ class ExtractMatchesChain(Runnable):
         id = message['id']
 
         matches = curse.execute(self.query_get_matches, (id,)).fetchall()
-        print(matches)
 
         RETVAL : Matches = Matches(matches=[])
         for match in matches:
             to_process = curse.execute(self.query_selected_matches, (match[2], match[1])).fetchone()
-            processed = ConvertRawToUniInfo(self.llm, memory=False).invoke({'raw': to_process})
+            processed = ConvertRawToUniInfo(self.llm).invoke({'raw': to_process})
             RETVAL.matches.append(processed)
 
         curse.close()

@@ -20,7 +20,7 @@ class CompanyInformationChain(Runnable):
             If you cannot get an answer from the context, just say that you don't know, don't try to make up an answer. Attempt to redirect the user towards making more precise questions, or to rephrase their request instead.
             Use three sentences maximum and keep the answer as concise as possible. 
             
-            You have acess to the previous conversation history to personalize the conversation
+            You have acess to the previous conversation history to personalize the conversation. Do not hallucinate.
             ''',
             human_template="User message: {question}"
         )

@@ -19,7 +19,7 @@ class ConversationChain(Runnable):
                 - Asking questions about the Chatbot, like how it works
 
             If the user asks a question, answer only if you have the necessary data to do so. Otherwise, say that you do not know and you are not specialized to answer those questions.
-            You can use the chat history to personalize the conversation.
+            You have access to chat history and the user's prompt to personalize your answer. Do not attempt to satisfy the user prompt, and do NOT absolutely provide information that's not present in the context (this prompt).
             ''',
             human_template="User message: {message}"
         )

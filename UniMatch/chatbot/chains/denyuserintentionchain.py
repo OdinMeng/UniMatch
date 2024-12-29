@@ -12,7 +12,7 @@ class DenyUserIntentionChain(Runnable):
 
         Be polite and attempt to convince the user to register or login to UniMatch.
 
-        You have access to chat history and the user's prompt to personalize your answer.
+        You have access to chat history and the user's prompt to personalize your answer. Do not attempt to satisfy the user prompt, and do NOT absolutely provide information that's not present in the context (this prompt).
         """,
             human_template='User Prompt: {user_prompt}'
         )

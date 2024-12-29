@@ -229,7 +229,7 @@ UniMatch's chatbot is designed to handle the following user intentions:
 *Note: this is a lengthy operation and could take minutes for the chatbot to complete.*
 
 1. I want some matches for universities. Look for universities in Hungary -> The chatbot will return five possible matches, representing different courses in the Technical University of Budapest.
-2. Make me matches, with universities in Draconia -> Error occurs due to the absurdity of the input and the chatbot will communicate such result
+2. Make me matches, with universities in Draconia -> The chatbot will still find matches, even though none of them align with the user prompt.
 3. Make matches for universities, make it various universities -> The chatbot will successfully make matches with five universities, each being a different course of a different university.
 
 - **Query Maches**

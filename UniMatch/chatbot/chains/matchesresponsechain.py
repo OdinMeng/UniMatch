@@ -30,7 +30,8 @@ class MatchesResponseChain(Runnable):
         < Introductory phase, where you say that you are going to enumerate every university reccomendation >
         < Enumerated list >
             < Match Number 1: University and Course Name>
-                < Insert relevant text for the match >
+                - < Insert relevant text for the match, such as a description or explaination why it is a good or bad match > : two or three sentences
+                - < Other relevant sentences which could be prompted by the user>
             ... continue until you finished all of the matches
         < End enumerated list >
         < Conclusion phrase: if the user has any further questions, they can either ask the chatbot or look for further documents to upload into the chatbot >
