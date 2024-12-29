@@ -2,6 +2,8 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class UniInfoResponseChain(Runnable):
+    """Given a UniInfo object, describe it to the user."""
+
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -33,8 +35,10 @@ class UniInfoResponseChain(Runnable):
         self.negative_chain = self.negative_answer | self.llm
         self.positive_chain = self.positive_answer | self.llm
 
-    def invoke(self, message):
+    def invoke(self, message): 
+        # If query yielded no results, generate negative answer
         if message['to_describe'] in ["None", None]:
             return self.negative_chain.invoke({'customer_message': message['customer_input'], 'chat_history': message['chat_history']})
+        # If it yielded results, generate a description
         else:
             return self.positive_chain.invoke({'to_describe': message['to_describe'], 'user_info': message['user_info'], 'customer_message': message['customer_input'], 'chat_history': message['chat_history']})

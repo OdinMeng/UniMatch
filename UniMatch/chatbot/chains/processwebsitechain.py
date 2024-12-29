@@ -1,21 +1,12 @@
-from langchain import callbacks
-from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
-
-from pydantic import BaseModel, Field
-from UniMatch.chatbot.bot_objects import UniInfo
-from dotenv import load_dotenv
-
-from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToUniInfo
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 from UniMatch.chatbot.rag.extract_data import get_text_from_link
 from UniMatch.chatbot.rag.extract_data import translate_docs
 from UniMatch.chatbot.rag.manage_pinecone import store_documents, clear_db
 from UniMatch.chatbot.rag.query_pinecone import get_context_from_pineconedb
 
-load_dotenv()
-
 class ProcessWebsiteChain(Runnable):
+    """Process website link. Not a real chain, but kept it as a chain for conceptual purposes."""
     def __init__(self):
         super().__init__()
 
@@ -35,10 +26,11 @@ class ProcessWebsiteChain(Runnable):
             return 0
 
 class ReasoningWebsiteChain(Runnable):
-    def __init__(self, llm, memory=False):
+    """Chain to handle questions about the website link"""
+    
+    def __init__(self, llm):
         super().__init__()
         self.llm = llm
-        self.memory = memory
 
         self.reason = PromptTemplate(
             system_template='''You are a chatbot tasked with answering a user's question about an external source of text. 
@@ -55,11 +47,11 @@ class ReasoningWebsiteChain(Runnable):
             human_template='''Question: {question}'''
         )
 
-        self.question_answerer = generate_prompt_templates(self.reason, memory=self.memory)
+        self.question_answerer = generate_prompt_templates(self.reason, memory=True)
 
         self.chain2 = self.question_answerer | self.llm
 
     def invoke(self, message):
         ctx = get_context_from_pineconedb(database_name='htmlindex', prompt=message['customer_input'])
         
-        return self.chain2.invoke({'context': ctx, 'question': message['customer_input']})
+        return self.chain2.invoke({'context': ctx, 'question': message['customer_input'], 'chat_history': message['chat_history']})

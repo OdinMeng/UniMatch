@@ -1,25 +1,23 @@
 # Prompt templates for parsing text data (or SQL queries) into chatbot objects, namely:
 #   - UserInfo
 #   - UniInfo
-#   - Matches
+#   - Preferences
 
 # Import necessary modules and classes
-from langchain import callbacks
 from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 
-from pydantic import BaseModel, Field
-from UniMatch.chatbot.bot_objects import UniInfo, UserInfo, Matches, Preferences
-from dotenv import load_dotenv
+from UniMatch.chatbot.bot_objects import UniInfo, UserInfo, Preferences
 from langchain.output_parsers import PydanticOutputParser
 
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class ConvertRawToUniInfo(Runnable):
-    def __init__(self, llm, memory=False):
+    """Convert a raw message (either a SQL query or text) to a UniInfo instance"""
+
+    def __init__(self, llm):
         super().__init__()
         self.llm = llm
-        self.memory = False
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting information about a university or a course from a raw source of data, given in the last row. It can be either tuples representing a query result, or it can be raw text.
         You have to extract the following informations and attempt to structure it in JSON, which can be parsed later:
@@ -36,7 +34,7 @@ class ConvertRawToUniInfo(Runnable):
         {format_instructions}''',
         human_template='''Raw source to extract from:{raw}''')
 
-        self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
+        self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=False)
         self.output_parser = PydanticOutputParser(pydantic_object=UniInfo)
         self.format_instructions = self.output_parser.get_format_instructions()
 
@@ -47,17 +45,18 @@ class ConvertRawToUniInfo(Runnable):
 
 
 class ConvertRawToUserInfo(Runnable):
-    def __init__(self, llm, memory=False):
+    """Convert a raw message (either a SQL query or text) to a UserInfo instance"""
+
+    def __init__(self, llm):
         super().__init__()
         self.llm = llm
-        self.memory = False
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting information about a user of an application.
         You have to extract the following informations:
             - name: Name of the user
             - age: Age of the user
             - country: Country of the user
-            - education_level: the education level. It is represented by a number, 0 stands for high school degree, 1 for bachelor's degree, 2 for master's degree and 3 for PhD. Make sure to convert the integer to string, with the previously defined convention.
+            - education_level: the user's current education level. 
             - preferences: Preferences of the user, represented as a dictionary with string associated to a number (its weight).
             - main_area: Main thematic academic area of the user, as a string
         If you cannot extract something, just omit it.
@@ -66,7 +65,7 @@ class ConvertRawToUserInfo(Runnable):
         {format_instructions}''',
         human_template='''Raw source to extract from: {raw} ''')
 
-        self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
+        self.prompt = generate_prompt_templates(prompt_template=prompt_template, memory=False)
         self.output_parser = PydanticOutputParser(pydantic_object=UserInfo)
         self.format_instructions = self.output_parser.get_format_instructions()
 
@@ -76,10 +75,11 @@ class ConvertRawToUserInfo(Runnable):
         return self.chain.invoke({'raw': raw, 'format_instructions': self.format_instructions})
 
 class ConvertRawToPreferences(Runnable):
-    def __init__(self, llm, memory=False):
+    """Convert raw message to user preferences."""
+
+    def __init__(self, llm):
         super().__init__()
         self.llm = llm
-        self.memory = False
 
         prompt_template = PromptTemplate(system_template='''You are tasked with extracting the preferences of an user.
         You have to extract a preference and associate it to a weight. Structure it as a dictionary containing two lists, namely:
@@ -99,11 +99,13 @@ class ConvertRawToPreferences(Runnable):
         - weights: a number associated to the preference. make sure weights sum up to 100''',
         human_template='''To verify:{weights}''')
 
-        self.prompt_makepreferences = generate_prompt_templates(prompt_template=prompt_template, memory=self.memory)
-        self.prompt_checkweights = generate_prompt_templates(prompt_template=prompt_template_2, memory=self.memory)
+        # Define prompts
+        self.prompt_makepreferences = generate_prompt_templates(prompt_template=prompt_template, memory=False)
+        self.prompt_checkweights = generate_prompt_templates(prompt_template=prompt_template_2, memory=False)
         self.output_parser = PydanticOutputParser(pydantic_object=Preferences)
         self.format_instructions = self.output_parser.get_format_instructions()
 
+        # Two chains: one to extract user preferences, another to check the weights.
         self.chain1 = self.prompt_makepreferences | self.llm | self.output_parser
         self.chain2 = self.prompt_checkweights | self.llm | self.output_parser
 

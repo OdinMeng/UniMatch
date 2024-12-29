@@ -3,15 +3,21 @@
 from UniMatch.data import loader
 import sqlite3
 
-def register(username, password, educationlevel=None, age=None, countrycode=None, mainarea=None):
-    """
-    Attempts to register a user into the database.
-        If successful, returns the new ID
-        If failed, returns the following values:
-            -1 if username is not unique
-            -2 if password is an empty string (vulnerability issues)
-            -3 if education level is invalid    
-            -4 for internal SQL errors
+def register(username: str, 
+             password: str, 
+             educationlevel: str=None, 
+             age: int=None, 
+             countrycode: str=None, 
+             mainarea: int=None
+    ) -> int:
+    """ Attempts to register a user into the database.
+        
+    If successful, returns the new ID
+    If failed, returns the following values:
+        -1 if username is not unique
+        -2 if password is an empty string (vulnerability issues)
+        -3 if education level is invalid    
+        -4 for internal SQL errors
     """
     
     # Preliminary checks
@@ -33,6 +39,7 @@ def register(username, password, educationlevel=None, age=None, countrycode=None
         return -1
     
     except Exception as e:
+        # Rollback in case of integrity errors
         print(e)
         conn.rollback()
         curse.close()
@@ -50,10 +57,8 @@ def register(username, password, educationlevel=None, age=None, countrycode=None
 
         return x # Return user's ID
 
-def handle_registration(result):
-    """
-    Parses registration attempt result code as a string, for UI/UX purposes
-    """
+def handle_registration(result: int) -> str:
+    """ Parses registration attempt result code as a string, for UI/UX purposes """
     hashmap = {
         -1: 'Username already taken',
         -2: 'Insert a password',

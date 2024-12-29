@@ -2,6 +2,7 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class ClassifyRAG(Runnable):
+    """Chain to classify questions for the RAG-related intentions."""
     def __init__(self, llm):
         super().__init__()
 

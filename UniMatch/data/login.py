@@ -3,9 +3,9 @@
 from UniMatch.data import loader
 import sqlite3
 
-def validate_login(username, password):
-    """
-    Processes a login attempt. Variables are self-explanatory.
+def validate_login(username: str, password: str) -> int:
+    """ Processes a login attempt. Variables are self-explanatory.
+    
     Output:
         If the login attempt is valid, returns the user ID (any integer >1)
         If the login attempt is invalid, returns -1
@@ -13,10 +13,12 @@ def validate_login(username, password):
     """
     conn = sqlite3.connect(loader.get_sqlite_database_path())
     curse = conn.cursor()
+
     try:
         result = curse.execute(f'SELECT * FROM Users WHERE Username=? AND Password=?', (username, password))
     except Exception as e:
         return -2
+    
     info = (result.fetchone())
     curse.close()
     conn.close()
@@ -27,10 +29,9 @@ def validate_login(username, password):
     elif len(info) > 1:
         return info[0]
     
-def handle_login(result):
-    """
-    Parses login result into a string.
-    """
+def handle_login(result: int) -> str:
+    """ Translates login result into a string."""
+
     if result == -1:
         return 'Invalid username or password'
     elif result == -2:

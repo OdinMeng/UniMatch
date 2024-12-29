@@ -1,13 +1,17 @@
+# Import basic modules
 import streamlit as st
 import os
-BASE_DIR = os.path.dirname(__file__)
 
+# Import other pages
 from UniMatch.pages.about_page import about_page
 from UniMatch.pages.login_page import login_page
 from UniMatch.pages.main_page import home_page
 from UniMatch.pages.register_page import register_page
 from UniMatch.pages.chatbot_page import chatbot_page
 from UniMatch.pages.support_page import support_page
+
+# Define base directory
+BASE_DIR = os.path.dirname(__file__)
 
 def add_header():
     col1, col2 = st.columns([1, 3])  # Logo and Buttons Column

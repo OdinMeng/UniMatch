@@ -5,9 +5,12 @@ from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templat
 from pydantic import BaseModel
 
 class IsHarmful(BaseModel):
+    """Boolean object to classify whether a user message is harmful or not"""
     is_harmful : bool
 
 class ControlChain(Runnable):
+    """Chain to classify whether a message user is harmful or not"""
+
     def __init__(self, llm):
         super().__init__()
 
@@ -35,9 +38,14 @@ class ControlChain(Runnable):
         self.output_parser = PydanticOutputParser(pydantic_object=IsHarmful)
         self.format_instructions = self.output_parser.get_format_instructions()
 
+        # Define Chain
         self.chain = self.prompt | self.llm | self.output_parser
 
     def invoke(self, message):
+        """
+        Arguments:
+            - to_check: user prompt
+        """
         return self.chain.invoke(
             {
                 'to_check': message,
@@ -46,6 +54,8 @@ class ControlChain(Runnable):
         )
     
 class DiscourageUserChain(Runnable):
+    """Given that a user message is harmful, generate a message to discourage user from continuing his attempt."""
+
     def __init__(self, llm):
         super().__init__()
 
@@ -63,9 +73,15 @@ class DiscourageUserChain(Runnable):
         )
         self.prompt = generate_prompt_templates(prompt_template, memory=True)
 
+        # Define chain
         self.chain = self.prompt | self.llm 
 
     def invoke(self, message):
+        """
+        Arguments:
+            - customer_input: user prompt
+            - chat_history
+        """
         return self.chain.invoke(
             {
                 'customer_input': message['customer_input'],

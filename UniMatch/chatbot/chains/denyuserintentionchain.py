@@ -2,6 +2,7 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class DenyUserIntentionChain(Runnable):
+    """Chain to handle denied user intentions (for guest mode)."""
     def __init__(self, llm):
         self.llm = llm
 
@@ -19,8 +20,8 @@ class DenyUserIntentionChain(Runnable):
         self.chain = self.prompt | self.llm
 
     def invoke(self, user_payload):
-        """ARGS:
-            - user_prompt
+        """Arguments:
+            - user_prompt: user prompt
             - chat_history
         """
         return self.chain.invoke({'user_prompt': user_payload['user_prompt'],

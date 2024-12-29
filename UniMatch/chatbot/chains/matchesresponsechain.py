@@ -3,6 +3,8 @@ from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templat
 from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
 
 class MatchesResponseChain(Runnable):
+    """Chain to describe matches for a user."""
+
     def __init__(self, llm):
         self.llm = llm
 
@@ -28,8 +30,7 @@ class MatchesResponseChain(Runnable):
         < Introductory phase, where you say that you are going to enumerate every university reccomendation >
         < Enumerated list >
             < Match Number 1: University and Course Name>
-                < Insert Course/University Description >
-                < Insert explaination for this match, possible alignments and misalignments >
+                < Insert relevant text for the match >
             ... continue until you finished all of the matches
         < End enumerated list >
         < Conclusion phrase: if the user has any further questions, they can either ask the chatbot or look for further documents to upload into the chatbot >
@@ -43,7 +44,7 @@ class MatchesResponseChain(Runnable):
 
     def invoke(self, message):
         """
-        TO INCLUDE:
+        Arguments:
             - chat_history: Chat history
             - user_message: User prompt
             - matches: Matches of user (already extracted or generated)

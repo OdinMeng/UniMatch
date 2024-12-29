@@ -8,7 +8,7 @@
 #       - Extracts user info (chain)
 
 # Import modules
-from typing import Type, Any, Dict
+from typing import Type
 from langchain.tools import BaseTool
 from langchain_openai import ChatOpenAI
 
@@ -17,11 +17,11 @@ from UniMatch.data.user_info import modify_user_info, modify_user_preferences
 from UniMatch.chatbot.chains.userinfofetchchain import UserInfoFetchChain
 from UniMatch.chatbot.chains.extractmodificationrequestchain import ExtractModificationRequestChain, ModificationRequest
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToPreferences
-from UniMatch.chatbot.bot_objects import Preferences
+from UniMatch.chatbot.bot_objects import Preferences, UserInfo
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
 class CustomerInput(BaseModel):
+    """Class to define the user's input"""
     id: int
     customer_message: str
 
@@ -32,11 +32,14 @@ class InformUserTool(BaseTool):
     args_schema: Type[BaseModel] = CustomerInput
     return_direct: bool = False
 
-    def _run(self, id: int, customer_message: str) -> str:
+    def _run(self, id: int, customer_message: str) -> UserInfo:
         """
-        ARGUMENTS:
+        Arguments:
             - id: User ID
-            - customer_message: User Input
+            - customer_message: User Input (not used)
+
+        Returns:
+            - Returns UserInfo instance
         """
         llm = ChatOpenAI(model="gpt-4o-mini")
         userinfofetcher = UserInfoFetchChain(llm)
@@ -53,15 +56,19 @@ class ModifyBasicUserInfoTool(BaseTool):
 
     def _run(self, id: int, customer_message: str) -> str:
         """
-        ARGUMENTS:
+        Arguments:
             - id: User ID
             - customer_message: User Input
+
+        Returns:
+            - Generic message about the operation
         """
         llm = ChatOpenAI(model="gpt-4o-mini")
         extractor = ExtractModificationRequestChain(llm)
         modifier = modify_user_info
 
         args : ModificationRequest = extractor.invoke({'customer_input': customer_message})
+        print(args)
 
         if args.column==None or args.new_info==None:
             return "Operation Not Accepted"
@@ -86,6 +93,9 @@ class ModifyUserPreferencesTool(BaseTool):
         ARGUMENTS:
             - id: User ID
             - customer_message: User Input
+        
+        RETURNS:
+            - Generic message about the operation's state
         """
         llm = ChatOpenAI(model="gpt-4o-mini")
         preferences_parser = ConvertRawToPreferences(llm)

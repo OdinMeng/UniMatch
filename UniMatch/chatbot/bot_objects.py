@@ -1,10 +1,8 @@
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 from pydantic import BaseModel
 
 class UniInfo(BaseModel):
-    """
-    Represents information about a university or course, including its opportunities.
-    """
+    """ Represents information about a university or course, including its opportunities. Can be represented as a string. """
     name: Optional[str]
     location: Optional[str]
     courses: Optional[List[str]]
@@ -57,9 +55,7 @@ class UniInfo(BaseModel):
 
 
 class Matches(BaseModel):
-    """
-    Represents a list of university/course matches.
-    """
+    """ Represents a list of university/course matches. Can be represented as a string. """
     matches: List[UniInfo]
 
     def __str__(self) -> str:
@@ -76,9 +72,7 @@ class Matches(BaseModel):
 
 
 class UserInfo(BaseModel):
-    """
-    Represents information about the user and their preferences.
-    """
+    """ Represents information about the user and their preferences. Can be represented as a string. """
     name: Optional[str]
     age: Optional[int]
     country: Optional[str]
@@ -101,9 +95,7 @@ class UserInfo(BaseModel):
         )
 
 class Preferences(BaseModel):
-    """
-    Represents preferences of a user
-    """
+    """ Represents preferences of a user. Can be represented as a dictionary """
     preferences: List[str]
     weights: List[int]
 

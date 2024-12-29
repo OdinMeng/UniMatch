@@ -1,11 +1,21 @@
 import streamlit as st
 from dotenv import load_dotenv  # Import dotenv to load environment variables
-from UniMatch.data.login import validate_login, handle_login
 from UniMatch.pages.main_navigator import main as st_main
+from UniMatch.config_pinecone.create_indexes import initialize_indexes
+from UniMatch.config_pinecone.populate_unimatch_index import populate 
 
 if __name__ == '__main__':
+    # Load environment variables
     load_dotenv()
-    st.set_page_config("UniMatch")
+
+    # Set up pinecone databases if necessary
+    initialize_indexes()
+    populate()
+
+    # Define page title
+    st.set_page_config("UniMatch") 
+    
+    # Debug
     print("Starting UniMatch...")
 
     # Main Streamlit Page

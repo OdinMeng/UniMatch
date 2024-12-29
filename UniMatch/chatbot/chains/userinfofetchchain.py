@@ -1,15 +1,10 @@
-from langchain import callbacks
-from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 import sqlite3
-
-from pydantic import BaseModel, Field
-from UniMatch.chatbot.bot_objects import UniInfo
-from dotenv import load_dotenv
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToUserInfo
 from UniMatch.data.loader import get_sqlite_database_path
 
 class UserInfoFetchChain(Runnable):
+    """Pseudo-chain to fetch UserInfo from the database."""
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -28,7 +23,7 @@ class UserInfoFetchChain(Runnable):
                             FROM
                                 USERS U 
                                     LEFT JOIN COUNTRIES C
-                                        ON U.COUNTRYCODE = C.COUNTRY
+                                        ON U.COUNTRYCODE = C.COUNTRYCODE
                                     LEFT JOIN USERPREFERENCES UP
                                         ON U.IDUSER = UP.USERID
                                     LEFT JOIN AREAS A
@@ -38,18 +33,18 @@ class UserInfoFetchChain(Runnable):
 '''
 
     def invoke(self, userid):
+        # Connect to DB
         conn = sqlite3.connect(get_sqlite_database_path())
         cursor = conn.cursor()
 
+        # Get relevant rows of a user
         res = cursor.execute(self.sql_query, (userid,))
-
         all_rows = res.fetchall()
 
         cursor.close()
         conn.close()
 
-        print(all_rows)
-
+        # Transform to UserInfo object
         RETVAL = ConvertRawToUserInfo(self.llm).invoke(all_rows)
 
         return RETVAL

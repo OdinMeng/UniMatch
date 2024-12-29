@@ -3,10 +3,15 @@ from UniMatch.chatbot.agents.tools import InformUserTool, ModifyBasicUserInfoToo
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_agent_prompt_template
 
 class UserInfoManager:
+    """Agent for managing personal user's information."""
+
     def __init__(self, llm):
         self.llm = llm
+
+        # Define toolkit
         self.toolkit = [InformUserTool(), ModifyBasicUserInfoTool(), ModifyUserPreferencesTool()]
 
+        # Define prompt template
         prompt_template = PromptTemplate(
         system_template = """
         You are a helpful and resourceful assistant, tasked with managing users' personal information.
@@ -30,13 +35,14 @@ class UserInfoManager:
         human_template="User ID: {id}\nUser's Request: {customer_message}"
         )
 
+        # Define prompt and agent
         self.prompt = generate_agent_prompt_template(prompt_template=prompt_template)
         self.agent = create_tool_calling_agent(llm, self.toolkit, self.prompt)
-        self.agent_executor = AgentExecutor(agent=self.agent, tools=self.toolkit)
+        self.agent_executor = AgentExecutor(agent=self.agent, tools=self.toolkit, verbose=True)
 
     def invoke(self, customer_input):
         """
-        NEEDED:
+        Arguments:
             - chat_history
             - id
             - customer_message        

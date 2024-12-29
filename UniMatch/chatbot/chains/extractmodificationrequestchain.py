@@ -1,4 +1,3 @@
-from langchain import callbacks
 from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 from typing import Literal, Any, Optional
@@ -7,10 +6,13 @@ from pydantic import BaseModel
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class ModificationRequest(BaseModel):
+    """Object to define a user modification"""
     column: Optional[Literal['username', 'age', 'countrycode', 'educationlevel', 'mainarea']]
     new_info: Optional[Any]
 
 class ExtractModificationRequestChain(Runnable):
+    """Chain to extract arguments of a user's request to modify personal information"""
+
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -24,6 +26,9 @@ class ExtractModificationRequestChain(Runnable):
                 - countrycode
                 - educationlevel
                 - mainarea
+            
+            Certain columns have a limited range of accepted value.
+            educationlevel must have either one of these values: High School, Bachelor's Degree, Master's Degree, PhD; convert if it's necessary    
             
             Example:
             User: I want to change my age to 15
@@ -44,7 +49,7 @@ class ExtractModificationRequestChain(Runnable):
 
     def invoke(self, user_input):
         """
-        REQUIRED ARGUMENTS:
+        Arguments:
             - customer_input: User's request input
         """
         return self.chain.invoke({'customer_input': user_input['customer_input'], 'format_instructions': self.format_instructions})

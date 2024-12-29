@@ -2,8 +2,6 @@
 import streamlit as st
 from UniMatch import MainChatbot  # Import the chatbot class
 
-from UniMatch.chatbot.chains.processpdfchain import ProcessPDFChain
-from UniMatch.chatbot.chains.processwebsitechain import ProcessWebsiteChain
 from UniMatch.data.loader import get_user_pdfs_folder
 
 import os 
@@ -64,12 +62,13 @@ Hi there! 👋 We're thrilled to have you here. Whether you're exploring options
 Feel free to ask me anything! 😊""")
     
     # Caixa de texto para interação com o chatbot
-    to_load = bot.memory.get_filename(bot.user_id, bot.conversation_id)
-    try:
-        with open(to_load, "r") as f:
-            st.session_state['chat_history'] = json.load(f)
-    except:
-        st.session_state["chat_history"] = []
+    if 'chat_history' not in st.session_state:
+        to_load = bot.memory.get_filename(bot.user_id, bot.conversation_id)
+        try:
+            with open(to_load, "r") as f:
+                st.session_state['chat_history'] = json.load(f)
+        except:
+            st.session_state["chat_history"] = []
 
     # Exibir histórico de mensagens
     with chat_container:
@@ -92,11 +91,12 @@ Feel free to ask me anything! 😊""")
 
     if chat_input:
         with chat_container:
-            # Process and save to memory
+            # Process message and save to memory
             st.session_state["chat_history"].append({'HumanMessage': chat_input})
             with st.chat_message('human'):
-                st.markdown(chat_input)
+                st.write_stream(stream_text(chat_input))
 
+            # Get bot response
             bot_response = bot.process_user_input({"customer_input": chat_input})
             st.session_state["chat_history"].append({'AIMessage': bot_response})
 
@@ -155,7 +155,6 @@ Feel free to ask me anything! 😊""")
                 
     if delete:
         del st.session_state["chat_history"]
-        st.session_state['chat_history'] = []  
 
         session = bot.memory.get_session_history(bot.user_id, bot.conversation_id)
         if session == None:

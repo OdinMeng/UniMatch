@@ -62,9 +62,7 @@ class MemoryManager:
     def get_filename(
             self, user_id: str, conversation_id: str
     ) -> str:
-        """
-        Return JSON filename from username ID and conversation ID
-        """
+        """ Return JSON filename from username ID and conversation ID """
         return os.path.join(BASE_DIR, 'chatlogs', f"{user_id}_{conversation_id}_history.json")
 
     def load_session_history(
@@ -77,7 +75,7 @@ class MemoryManager:
             conversation_id: conversation id
 
         Returns:
-            Nothing, it just modifies its insternal variables
+            Nothing, it just modifies its internal variables
         """
         filename = self.get_filename(user_id, conversation_id)
         try:
@@ -125,7 +123,7 @@ class MemoryManager:
     def save_session_history(self, user_id: str, conversation_id: str) -> None:
         """Save the session history as a structured JSON file.
 
-        Args:
+        Arguments:
             user_id: Identifier for the user.
             conversation_id: Identifier for the conversation.
 

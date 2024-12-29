@@ -15,11 +15,6 @@ def register_page():
 
     st.title("Register")
     with st.form("register_form"):
-        # TO DO:
-        # Add age
-        # Add Country Selection
-        # Add Education Level
-        # Add Main Area Selection
         payload = {}
 
         st.header("Basic Information")

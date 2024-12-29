@@ -1,9 +1,9 @@
-from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 from UniMatch.chatbot.rag.query_pinecone import get_context_from_pineconedb
 
 class CompanyInformationChain(Runnable):
+    """Chain to answer a user's question about the company UniMatch."""
     def __init__(self, llm):
         super().__init__()
 
@@ -29,6 +29,12 @@ class CompanyInformationChain(Runnable):
         self.chain = self.prompt | self.llm
 
     def invoke(self, message):
+        """
+        Arguments:
+            - question: user prompt
+            - chat_history
+            - context: context found by the vector database search
+        """
         # Find context with vector DB
         ctx = get_context_from_pineconedb('unimatch', message['customer_input'])
 

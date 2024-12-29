@@ -68,7 +68,7 @@ def get_text_from_link(link: str) -> List[Document]:
     
 def translate_docs(docs: List[Document]) -> List[Document]:
     """
-    Given a list of documents, translate each of them in English.
+    Given a list of documents, translate each of them in English. This functionality ended up being dropped as it is too expensive.
     """
     # Set up retval 
     translated_docs: List[Document] = []

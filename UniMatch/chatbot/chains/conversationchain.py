@@ -1,8 +1,9 @@
-from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class ConversationChain(Runnable):
+    """Chain to handle chatter, for unknown intents."""
+
     def __init__(self, llm):
         super().__init__()
 
@@ -25,8 +26,14 @@ class ConversationChain(Runnable):
 
         self.prompt = generate_prompt_templates(prompt_template, memory=True)
 
+        # Define chain
         self.chain = self.prompt | self.llm
 
     def invoke(self, message):
+        """
+        Arguments: 
+            - message: user prompt
+            - chat_history
+        """
         return self.chain.invoke({'message': message['customer_input'],
                                   'chat_history': message['chat_history']})

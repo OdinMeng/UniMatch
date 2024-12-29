@@ -1,15 +1,11 @@
-from langchain import callbacks
-from langchain.output_parsers import PydanticOutputParser
 from langchain.schema.runnable.base import Runnable
 import sqlite3
-
-from dotenv import load_dotenv
 from UniMatch.chatbot.chains.parse_to_objects import ConvertRawToUniInfo
 from UniMatch.data.loader import get_sqlite_database_path
-
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class UniInfoSearchChain(Runnable):
+    """Chain to search universities given a prompt"""
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -111,19 +107,25 @@ class UniInfoSearchChain(Runnable):
 
                                           Return the result as a string containing exclusively the SQL statement""",
                                           human_template='query: {query}')
+        
         self.sql_checker = generate_prompt_templates(prompt_check_sql, memory=False)
 
+        # Define necessary chains
         self.initial_chain = self.keywords_finder | self.llm
         self.sql_gen_chain = self.sql_generator | self.llm
         self.check_sql_chain = self.sql_checker | self.llm
 
     def invoke(self, message):
+        # Get keywords from the message
         keywords = self.initial_chain.invoke({'message': message['customer_input']}).content
 
+        # Generte SQLite query
         query = self.sql_gen_chain.invoke({'schema': self.schema, 'keywords': keywords}).content
         
+        # Check SQLite query
         query_checked = self.check_sql_chain.invoke({'schema': self.schema, 'query': query}).content
 
+        # Execute query
         con = sqlite3.connect(get_sqlite_database_path())
         cursor = con.cursor()
         try:
@@ -131,12 +133,12 @@ class UniInfoSearchChain(Runnable):
         except Exception as e:
             cursor.close()
             con.close()
-            print(e)
             raise Exception('Internal server error. Please retry.')
 
         cursor.close()
         con.close()
 
+        # Return UniInfo instance converted to string
         if result == []:
             return None
         else:

@@ -1,5 +1,5 @@
 """
-This file should be the entrypoint of your Streamlit App.
+Command-Line-Interface based app. Limited functionalities.
 """
 
 from dotenv import load_dotenv  # Import dotenv to load environment variables

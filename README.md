@@ -23,7 +23,7 @@ This is a complete description of the project *UniMatch* created for the *Capsto
 ## 2. Repository Structure: Deviations from the Template
 We have used the project template for the Capstone Project course and modified it to accomodate our features. 
 
-```python
+```plaintext
 UniMatch
 ├───images
 └───UniMatch
@@ -49,6 +49,7 @@ In particular we have made the following changes:
 + We added `UniMatch/UniMatch/data/user_files` to allow users to upload their own PDF files for the chatbot to analyze
 + We added `UniMatch/images` to let us to load images in this README.md file
 + We added `UniMatch/pages/images` to let us load images in the website application 
++ We added `UniMatch/config_pinecone` to write scripts for automatically initializing the PineCone databases and populating them, if necessary.
 
 ---
 
@@ -70,7 +71,7 @@ In particular we have made the following changes:
 `openai=1.55.3`
 
 **Data Processing:**  
-`pandas=2.2.3`, `openpyxl=3.1.3`
+`pandas=2.2.3`, `openpyxl=3.1.3`, `PyMuPDF=1.24.14`
 
 - **Environment Setup**: To set up the Anaconda environment, open the command line at the base folder (`./UniMatch`) and type the following commands:
   - `conda create -n UniMatch python=3.12.7`
@@ -82,7 +83,18 @@ In particular we have made the following changes:
   
 ### 3.2 How to Run the Chatbot
 
-Assuming the environment set up has been done, the user can run the web-based app by simply typing `streamlit run app.py`.
+Assuming the environment set up has been done, the user has still to insert the necessary API keys to run the product. 
+
+In particular, they have to create a file in the base folder called `.env`, where they will insert:
+- `OPENAI_API_KEY='<your_key>'`
+- `PINECONE_API_KEY='<your_key>'`
+Replace `<your_key>` with the actual API keys. No further configurations with the PineCone database is necessary, as it is automatically handled by the scripts.
+
+For more information on obtaining the API keys, please consult the following websites:
+- https://www.pinecone.io/
+- https://openai.com/
+
+Now the user is ready to run the web-based app by simply typing `streamlit run app.py`.
 
 Users can log-in into a dummy user with the following credentials:
 - username: `Alice`
@@ -234,7 +246,7 @@ Note: Upload the following files to the chatbot for testing the below prompts
 - *Website Link*: https://www.ulisboa.pt/en/curso/mestrado/data-science
 
 1. I have uploaded a PDF file. What are the main campuses? -> Bot successfully finds the answer, indicating relevant elements
-2. I have uploaded a link to a website. What is the course about? -> Same as above, but with another type of content
+2. I have uploaded a link to a website. What is the course's goal? -> Same as above, but with another type of content
 3. I have uploaded a PDF file. What is 1+1? -> Bot says that he couldn't find the answer in the context
 
 - **Get Company Information**
@@ -260,6 +272,8 @@ In each prompt the chatbot will tell that they are not specialized in such topic
 For each intention we synthetically generated 50 messages, through LLMs (see the script `UniMatch/chatbot/router/generate_intentions.ipynb`), with an additional of 25 irrelevant messages. Moreover, we created other fifty synthetic intentions for the "Manage Personal Information" intention, as by testing we felt that it was the most misclassified one.
 
 We stored the synthetic messages in `UniMatch/chatbot/router/synthetic_intentions.json` and the manually-made ones in `UniMatch/chatbot/router/new_intentions.json` 
+
+Then we split the synthetic messages into *train* and *test*, with a proportion of 70/30. We chose this in order to make the test score a more reliable metric.
 
 ### 6.2 Semantic Router Training
 
@@ -292,7 +306,7 @@ For further details about the evaluation see the notebook at `UniMatch/chatbot/r
 ---
 
 ## 7. Intention Router Accuracy Testing Results
-As we fine-tuned our router classifier, we evaluated it with the test data, giving us this result (stored in `UniMatch/UniMatch/chatbot/rag/router/evaluation_results.xlsx`)
+In the end, we re-trained the router-accuracy with the final hyperparameters by making another split of the utterances (this time 90-10 for test-split proportion), and we have obtained the following results for the test messages:
 
 | Intentions                             | Total | Misclassified | Accuracy |
 | -------------------------------------- | ----- | ------------- | -------- |
@@ -304,4 +318,4 @@ As we fine-tuned our router classifier, we evaluated it with the test data, givi
 | Leverage RAG (User-Uploaded Files)     | 5     | 0             | 100%     |
 | Company Information                    | 6     | 0             | 100%     |
 | None                                   | 3     | 2             | 33%      |
-| All                                    | 46    | 3             | 85%      |
+| All                                    | 46    | 3             | 93%      |

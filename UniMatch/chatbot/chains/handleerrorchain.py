@@ -2,6 +2,8 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class HandleErrorChain(Runnable):
+    """Fallback chain to handle exceptions. It may use the exception for a smarter answer"""
+
     def __init__(self, llm):
         self.llm = llm
 
@@ -18,7 +20,7 @@ class HandleErrorChain(Runnable):
         self.chain = self.prompt | self.llm
 
     def invoke(self, user_payload):
-        """ARGS:
+        """Arguments:
             - user_prompt
             - chat_history
             - exception

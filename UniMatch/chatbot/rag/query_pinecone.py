@@ -1,11 +1,9 @@
 # Script to query from a pinecone DB
 
 from dotenv import load_dotenv
-from langchain_core.documents.base import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from pinecone import Index, Pinecone
+from pinecone import Pinecone
 
 load_dotenv()
 

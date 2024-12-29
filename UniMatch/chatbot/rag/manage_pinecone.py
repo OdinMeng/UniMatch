@@ -6,7 +6,7 @@ from langchain_core.documents.base import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from pinecone import Index, Pinecone
+from pinecone import Pinecone
 
 load_dotenv()
 
@@ -21,7 +21,7 @@ def store_documents(database_name: str, docs: List[Document]):
     for doc in docs:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=500,  # Maximum size of each chunk
-            chunk_overlap=75,  # Overlap between chunks to preserve context
+            chunk_overlap=100,  # Overlap between chunks to preserve context
             separators=["\n\n", "\n", "\t", ""], # Define separators
             add_start_index=True
             )

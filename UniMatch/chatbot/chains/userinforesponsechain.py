@@ -3,6 +3,8 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.chatbot.chains.base import PromptTemplate, generate_prompt_templates
 
 class UserInfoResponseChain(Runnable):
+    """Chain to describe users."""
+
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -23,7 +25,7 @@ class UserInfoResponseChain(Runnable):
 
     def invoke(self, customer_message):
         """
-        ARGUMENTS:
+        Arguments:
             - customer_message: User prompt
             - user_info: UserInfo object
         """

@@ -5,6 +5,8 @@ from langchain.schema.runnable.base import Runnable
 from UniMatch.data.loader import get_sqlite_database_path
 
 class ExtractMatchesChain(Runnable):
+    """A pseudo-chain to extract matches from a user. It is written as a chain to maintain code consistency for the chatbot."""
+
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -23,6 +25,8 @@ class ExtractMatchesChain(Runnable):
         """
         Required argument:
             - id: User ID
+        Returns:
+            - Matches object
         """
         con = sqlite3.connect(get_sqlite_database_path())
         curse = con.cursor()

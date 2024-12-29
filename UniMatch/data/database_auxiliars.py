@@ -3,6 +3,7 @@ Auxiliar functions for the Streamlit pages.
     - get_countries: Get a dictionary of country codes
     - get_areas: Get area levels
 """
+
 import sqlite3
 from typing import Dict
 from UniMatch.data.loader import get_sqlite_database_path

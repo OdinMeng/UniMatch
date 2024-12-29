@@ -11,14 +11,17 @@ from UniMatch.chatbot.bot_objects import Matches
 from UniMatch.data.manage_matches import clear_matches, add_matches
 
 class MatchRankings(BaseModel):
+    """Object to define a ranking for a university course with the user"""
     IDUniversity: int
     IDCourse: Optional[int]
     rating: int
 
 class Rating(BaseModel):
+    """Object to define a rating"""
     rating: int
 
 class MakeMatchesChain(Runnable):
+    """Chain to handle matchmaking."""
     def __init__(self, llm):
         super().__init__()
         self.llm = llm
@@ -66,15 +69,20 @@ class MakeMatchesChain(Runnable):
             WHERE C.IDCOURSE=? AND U.IDUNIVERSITY = ? AND C.IDCOURSE = CS.IDCOURSE; 
         '''
 
+        # Define chain to make rankings
         self.rank_chain = self.evaluate_uni | llm | self.output_parser
 
-    def invoke(self, message):
+    def invoke(self, message) -> Matches:
         """
-        TO INCLUDE:
+        Arguments:
             - id: id of user
             - customer_message: input
-            - chat_history: chat history    
+            - chat_history: chat history
+
+        Returns:
+            - Matches object    
         """
+        # Connect to database
         con = sqlite3.connect(get_sqlite_database_path())
         curse = con.cursor()
         
@@ -84,7 +92,7 @@ class MakeMatchesChain(Runnable):
         user_info = UserInfoFetchChain(self.llm).invoke(id)
         mainarea = curse.execute(self.get_mainarea_query, (id,)).fetchone()[0]
 
-        # Case where user did not indicate a preferred area (it impedes to avoid excessive token usage)
+        # Case where user did not indicate a preferred area (it returs None to avoid excessive token usage)
         if not(isinstance(mainarea, int)):
             return None
         
@@ -92,6 +100,8 @@ class MakeMatchesChain(Runnable):
 
         # Get candidates
         candidates = curse.execute(self.get_candidates_query, (mainarea,)).fetchall()
+
+        # Iterate for each candidate to get a rating
         for candidate in candidates:
             rankings.append(
             MatchRankings(
@@ -110,6 +120,7 @@ class MakeMatchesChain(Runnable):
         k = len(candidates)//3 + 1
         k = min(k, 5) # Limit to 5 for performance issues
 
+        # Sort rankings
         rankings = sorted(rankings, key=lambda x: x.rating)
         best_candidates = rankings[::-1][0:k]
 
