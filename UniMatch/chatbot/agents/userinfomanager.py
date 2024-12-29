@@ -30,6 +30,8 @@ class UserInfoManager:
         4. Return the tool's result and parse it as a friendly answer
 
         You have access to the chat history to personalize the answer. If you think that you cannot handle the user requests with your tools, do not do anything and say that to the user.
+
+        If there are unrelated requests to manage a user's personal information, ignore them and say that you are not made to handle such requests. 
         """,
 
         human_template="User ID: {id}\nUser's Request: {customer_message}"

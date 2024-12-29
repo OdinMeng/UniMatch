@@ -161,9 +161,8 @@ class MakeMatchesChain(Runnable):
                 )
             )
             
-        # Get top k candidates with best ratings (k:=|candidates|//3+1)
-        k = len(candidates)//3 + 1
-        k = min(k, 5) # Limit to 5 for performance issues
+        # Get top 5 candidates with best ratings
+        k = 5 
 
         # Sort rankings
         rankings = sorted(rankings, key=lambda x: x.rating)

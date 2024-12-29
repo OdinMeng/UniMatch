@@ -8,14 +8,16 @@ import os
 import time
 import json
 
-
 BASE_DIR = os.path.dirname(__file__)
 
 @st.cache_resource
 def load_bot():
+    """Loads chatbot into the cache resource."""
+
     bot = MainChatbot()
 
     print(st.session_state['user_id'], st.session_state['logged_in'])
+    # User mode
     if "logged_in" in st.session_state and st.session_state['logged_in']:
         bot.user_login(
             user_id=st.session_state['user_id'],
@@ -23,6 +25,7 @@ def load_bot():
         )
 
     else:
+    # Guest mode
         bot.user_login(
             user_id='-1',
             conversation_id='1'
@@ -31,12 +34,23 @@ def load_bot():
     return bot
 
 def stream_text(text):
+    """Given a text, turn a string into a stream of text."""
     for word in text.split(" "):
         yield word + " "
         time.sleep(0.02)
 
 
 def chatbot_page():
+    # Load bot    
+    bot = load_bot()
+
+    # Reloads bot if the user has changed his status (logged on, out, changed user, et cetera...)
+    if st.session_state['user_id'] != bot.user_id:
+        print("DEBUG: RELOADING BOT...")
+        st.cache_resource.clear()    
+        load_bot()
+        st.rerun()
+
     st.title("UniMatch Chatbot")
 
     # Chat history container
@@ -45,9 +59,6 @@ def chatbot_page():
     # Input section
     input_container = st.container()
 
-    bot = load_bot()
-
-        
     # To add: Warn guest is in user mode if not logged in
     if bot.user_id == "-1":
         with chat_container:
@@ -163,11 +174,4 @@ Feel free to ask me anything! 😊""")
         session.clear()
         bot.memory.save_session_history(user_id=bot.user_id, conversation_id=bot.conversation_id)
 
-        st.rerun()
-
-    if st.session_state['user_id'] != bot.user_id:
-        # Reloads bot if the user has changed his status (logged on, out, changed user, et cetera...)
-        print(st.session_state['user_id'], bot.user_id)
-        st.cache_resource.clear()    
-        load_bot()
         st.rerun()

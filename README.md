@@ -33,13 +33,14 @@ UniMatch
     │   ├───chatlogs
     │   ├───rag
     │   └───router
+    ├───config_pinecone
     ├───data
     │   ├───database
     │   ├───extracted_data
     │   ├───pdf
     │   └───user_files
     └───pages
-        └───images        
+        └───images
 ```
 
 In particular we have made the following changes:

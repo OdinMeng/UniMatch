@@ -4,9 +4,9 @@ INSERT INTO universities_search
     WHERE UNIVERSITIES.COUNTRYCODE = COUNTRIES.COUNTRYCODE;
 
 INSERT INTO Courses_Search
-    SELECT IDCourse, IDUniversity, CourseName || ' ' || CourseDescription || ' ' || CourseType || ' ' || AreaName || ' ' || Language
-    FROM Courses, Areas
-    WHERE COURSES.AREA = AREAS.IDAREA;
+    SELECT COURSES.IDCourse, COURSES.IDUniversity,  Country || ' ' || CourseName || ' ' || CourseDescription || ' ' || CourseType || ' ' || AreaName || ' ' || Language 
+    FROM Courses, Areas, Countries, Universities
+    WHERE COURSES.AREA = AREAS.IDAREA AND UNIVERSITIES.IDUniversity = COURSES.IDUniversity AND UNIVERSITIES.COUNTRYCODE = COUNTRIES.COUNTRYCODE;
     
 INSERT INTO Subjects_Search
     SELECT IDSubject, IDCourse, SubjectName || ' ' || SubjectDescription
