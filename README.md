@@ -217,11 +217,11 @@ UniMatch's chatbot is designed to handle the following user intentions:
 
 - **Manage Personal Information**
 1. Who am I? -> The chatbot should provide a clear and concise profile of yourself.
-2. Change my age to 25 -> The chatbot should successfully modify your age to 25 and communicate you such result.
+2. Change my age to 21 -> The chatbot should successfully modify your age to 25 and communicate you such result.
 3. I want to change my user preferences; now I prefer to live in a chill town and study in a natural campus -> The chabot should successfully change your user preferences and communicate such results.
 
 - **Search Universities, Courses, Scholarships and International Opportunities**
-1. Do you have universities with courses in Artificial Intelligence? -> The chatbot should successfully provide a tailored answer describing the Bachelor's degree course in "Artificial Intelligence and Data Analytics" at the University of Trieste. 
+1. Do you have universities with courses in Biomedical Engineering? -> The chatbot should successfully provide a tailored answer 
 2. Do you have scholarships in Trieste? -> The chatbot successfully finds a scholarship and describes it
 3. Give me universities with courses in magic -> The bot tells the user that no such university could be found and encourages the user to consider into looking other programmes
 
@@ -239,12 +239,12 @@ UniMatch's chatbot is designed to handle the following user intentions:
 3. Search my matches and find potential incompatibilities -> Same as above, but the chatbot tries to explain some potential incompatibilities with the user preferences
 
 - **Upload External Files**
-This is handled through user UI
-
-- **Analyze External Files**
-Note: Upload the following files to the chatbot for testing the below prompts
+This is handled through user UI. Upload the following files to the chatbot for testing:
 - *PDF*: https://sites.units.it/internationalia/moduli/Information%20sheet%20Trieste.pdf
 - *Website Link*: https://www.ulisboa.pt/en/curso/mestrado/data-science
+
+- **Analyze External Files**
+Note: This uses the files mentioned above
 
 1. I have uploaded a PDF file. What are the main campuses? -> Bot successfully finds the answer, indicating relevant elements
 2. I have uploaded a link to a website. What is the course's goal? -> Same as above, but with another type of content

@@ -96,17 +96,21 @@ def register_page():
                 st.session_state["show_login"] = False
                 st.session_state['user_id'] = result
                 st.success(handle_registration(result))
-                time.sleep(1)
-                st.rerun()
 
             else:
                 st.error(handle_registration(result))
+                st.rerun()
 
             # Insert Preferences
             if secondary_result := modify_user_preferences(result, preferences_payload) != 0:
                 st.error("Error in inserting user preferences")
             
             else:
-                pass
+                st.session_state["show_register"] = False
+                time.sleep(1)
+                st.rerun()
+
+
+
 
             

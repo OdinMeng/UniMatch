@@ -78,7 +78,7 @@ class MakeMatchesChain(Runnable):
                         2. Extract the most relevant keywords or phrases representing universities, course names, fields of study, levels of education (e.g., bachelor's, master's), and geographical locations.
 
                         Guidelines:
-                        - Focus on proper nouns (e.g., university names, course titles, city names) and important descriptors (e.g., "online," "scholarship," "distance learning").
+                        - Focus on proper nouns (e.g., university names, course titles, city names, countries, et cetera...) and important descriptors (e.g., "online," "scholarship," "distance learning").
                         - Avoid generic terms like "I want to" or "tell me about," unless they are part of a proper noun or key phrase.
                         - Include up to 5-15 keywords that are the most representative of the query's intent and topic.
                         - Make the keywords only a single term. Split im more keywords if necessary.
@@ -139,7 +139,9 @@ class MakeMatchesChain(Runnable):
                                                           'user_info': str(user_info), 
                                                           'format_instructions': self.keywords_instructions}
                                                           )
-        keywords_query = ' OR '.join(keywords.keywords)
+        # clean keywords from quotation marks to avoid errors
+        keywords = [keyword.replace("'", "").replace('"', "") for keyword in keywords.keywords]
+        keywords_query = ' OR '.join(keywords)
         keywords_query = f"{keywords_query}"
 
         # Get candidates
