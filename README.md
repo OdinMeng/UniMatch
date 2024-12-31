@@ -78,6 +78,7 @@ In particular we have made the following changes:
   - `conda create -n UniMatch python=3.12.7`
   - `conda activate UniMatch`
   - `pip install -r requirements.txt`
+  
   If any prompts come out, type `y` to proceed.
   
   If you wish to uninstall the environment, you can simply type `conda remove -n UniMatch --all` and type `y` to every prompt. Do not forget to de-activate your environment by typing `conda deactivate`!
@@ -89,7 +90,9 @@ Assuming the environment set up has been done, the user has still to insert the 
 In particular, they have to create a file in the base folder called `.env`, where they will insert:
 - `OPENAI_API_KEY='<your_key>'`
 - `PINECONE_API_KEY='<your_key>'`
-Replace `<your_key>` with the actual API keys. No further configurations with the PineCone database is necessary, as it is automatically handled by the scripts.
+Replace `<your_key>` with the actual API keys. 
+
+*Note*: No further configurations with the PineCone database is necessary, as it is automatically handled by the application.
 
 For more information on obtaining the API keys, please consult the following websites:
 - https://www.pinecone.io/
@@ -216,11 +219,13 @@ UniMatch's chatbot is designed to handle the following user intentions:
 ### 5.2 How to Test Each Intention
 
 - **Manage Personal Information**
+
 1. Who am I? -> The chatbot should provide a clear and concise profile of yourself.
 2. Change my age to 21 -> The chatbot should successfully modify your age to 25 and communicate you such result.
 3. I want to change my user preferences; now I prefer to live in a chill town and study in a natural campus -> The chabot should successfully change your user preferences and communicate such results.
 
 - **Search Universities, Courses, Scholarships and International Opportunities**
+
 1. Do you have universities with courses in Biomedical Engineering? -> The chatbot should successfully provide a tailored answer 
 2. Do you have scholarships in Trieste? -> The chatbot successfully finds a scholarship and describes it
 3. Give me universities with courses in magic -> The bot tells the user that no such university could be found and encourages the user to consider into looking other programmes
@@ -234,11 +239,13 @@ UniMatch's chatbot is designed to handle the following user intentions:
 3. Make matches for universities, make it various universities -> The chatbot will successfully make matches with five universities, each being a different course of a different university.
 
 - **Query Maches**
+
 1. Query my previously-made matches. -> The chatbot will successfully query your previously-made matches, the descriptions being almost identical 
 2. Look at my previous matches and focus on explaining why they are a good fit for me -> Same as above, but the chatbot will explain the compatibility between your preferences and the university more clearly, all while recalling your user preferences.
 3. Search my matches and find potential incompatibilities -> Same as above, but the chatbot tries to explain some potential incompatibilities with the user preferences
 
 - **Upload External Files**
+
 This is handled through user UI. Upload the following files to the chatbot for testing:
 - *PDF*: https://sites.units.it/internationalia/moduli/Information%20sheet%20Trieste.pdf
 - *Website Link*: https://www.ulisboa.pt/en/curso/mestrado/data-science

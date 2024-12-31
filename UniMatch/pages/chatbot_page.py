@@ -54,12 +54,12 @@ def chatbot_page():
     st.title("UniMatch Chatbot")
 
     # Chat history container
-    chat_container = st.container()
+    chat_container = st.container(border=True)
 
     # Input section
     input_container = st.container()
 
-    # To add: Warn guest is in user mode if not logged in
+    # Warn guest he is in user mode if not logged in
     if bot.user_id == "-1":
         with chat_container:
             with st.chat_message('ai'):
@@ -163,11 +163,11 @@ Feel free to ask me anything! 😊""")
 
         bot.memory.save_session_history(user_id=bot.user_id, conversation_id=bot.conversation_id)
 
-                
     if delete:
         del st.session_state["chat_history"]
 
         session = bot.memory.get_session_history(bot.user_id, bot.conversation_id)
+        # If there was no session to begin with, don't do anything 
         if session == None:
             st.rerun()
 
